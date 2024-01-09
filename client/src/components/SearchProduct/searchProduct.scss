@@ -1,0 +1,95 @@
+.searchProductWindow {
+    >form {
+        // border: 2px solid blueviolet;
+        width: 100%;
+        padding: 1rem;
+
+
+        >input {
+            padding: .5rem 1rem;
+            width: 18rem;
+        }
+
+        >button {
+            padding: .5rem 1.5rem;
+            margin-left: 1rem;
+            background-color: blueviolet;
+            color: white;
+            border: 2px solid transparent;
+            font-weight: bold;
+            letter-spacing: 1px;
+            cursor: pointer;
+
+            &:hover {
+                // border: 2px solid blueviolet;
+                background-color: white;
+                color: blueviolet;
+                transition: .4s all;
+
+
+            }
+
+        }
+    }
+
+
+    >.searchedItemList {
+
+        >.searchedItemHeader {
+            // border: 2px solid blue;
+            font-family: 'Reem Kufi', sans-serif;
+            color: black;
+            font-weight: bold;
+            font-size: medium;
+            display: grid;
+            grid-template-columns: 5% 10% 15% 20% 8% 8% 10% 9% 15%;
+            background-color: rgba(98, 97, 97, 0.354);
+
+
+            >p {
+                border: 1px solid rgba(128, 128, 128, 0.161);
+                padding: .5rem .5rem;
+                // border-right: 1px solid black;
+            }
+        }
+
+        >.searchedItem {
+            // border: 2px solid red;
+            max-height: 35rem;
+            overflow: scroll;
+
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+            >div {
+                // border: 2px solid blue;
+                font-family: 'Reem Kufi', sans-serif;
+                color: gray;
+                display: grid;
+                grid-template-columns: 5% 10% 15% 20% 8% 8% 10% 9% 15%;
+                // place-items: center;
+
+                >p {
+                    border: 1px solid rgba(128, 128, 128, 0.161);
+                    padding: .5rem .5rem;
+
+                    >img {
+                        width: 90%;
+                    }
+
+                    display: flex;
+                    align-items: center;
+
+                }
+
+                &:hover {
+                    background-color: rgba(178, 178, 178, 0.243);
+                    color: black;
+
+                }
+            }
+        }
+    }
+}

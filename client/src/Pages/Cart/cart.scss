@@ -1,0 +1,276 @@
+.cartWindow {
+    // border: 2px solid green;
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    display: flex;
+    z-index: 100;
+    top: 0;
+
+
+
+    >.left {
+        // border: 2px solid red;
+        width: 75%;
+        background-color: rgba(33, 33, 33, 0.761);
+
+        position: relative;
+        animation: slider 2s;
+
+        @keyframes slider {
+
+            from {
+                right: 75rem;
+
+            }
+
+            to {
+                right: 0rem;
+
+            }
+
+        }
+
+        @keyframes outer {
+            from {
+                right: 0rem;
+
+            }
+
+            to {
+                right: 75rem;
+            }
+
+            0% {
+                display: block;
+            }
+
+            100% {
+                display: none;
+            }
+        }
+
+
+
+    }
+
+    >.right {
+
+        position: relative;
+
+        animation: mymove 2s;
+        // animation: rightOuter ease 2s forwards;
+
+
+        @keyframes mymove {
+            from {
+                left: 26rem;
+            }
+
+            to {
+                left: 0px;
+            }
+        }
+
+        @keyframes rightOuter {
+            from {
+                left: 0rem;
+            }
+
+            to {
+                left: 26rem;
+            }
+
+            0% {
+                display: block;
+            }
+
+            100% {
+                display: none;
+                display: hidden;
+            }
+
+        }
+
+
+        // border: 2px solid blue;
+        width: 25%;
+        background-color: white;
+        padding: 0rem 1rem;
+        display: flex;
+        flex-direction: column;
+        // justify-content: space-evenly;
+
+        >.header {
+            // border: 2px solid green;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0rem;
+            font-size: large;
+            font-family: 'roboto';
+            font-weight: bold;
+            letter-spacing: 1px;
+            border-bottom: 1px solid gray;
+
+            >span {
+                font-size: small;
+                // border: 2px solid green;
+                padding: .3rem .5rem;
+
+                &:hover {
+                    background-color: black;
+                    color: white;
+                    transition: .3s all;
+                }
+
+            }
+        }
+
+        >.cartList {
+            // border: 2px solid green;
+            // min-height: 41rem;
+            height: 80vh;
+            overflow: scroll;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+            >.cartItem {
+                // border: 2px solid red;
+                text-decoration: none;
+                color: black;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: .7rem .7rem;
+                // margin: 1rem 0rem;
+
+
+                &:hover {
+                    background-color: rgba(128, 128, 128, 0.308);
+                }
+
+
+                >.photo {
+                    // border: 2px solid purple;
+                    width: 30%;
+                    height: 6.2rem;
+                    border: 1px solid gray;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    overflow: hidden;
+
+                    >img {
+                        width: 100%;
+                    }
+                }
+
+
+                >.itemDetails {
+                    // border: 2px solid blue;
+                    font-family: 'roboto';
+                    width: 60%;
+                    height: 5.5rem;
+                    font-weight: bold;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    // padding: .7rem .5rem;
+
+                    >span {
+                        color: orangered;
+
+                    }
+
+                    >div {
+                        // border: 2px solid green;
+                        display: flex;
+                        align-items: center;
+                        font-size: small;
+                        // margin-top: 1rem;
+
+                        gap: 12px;
+
+                        >span {
+                            // border: 2px solid red;
+                            display: flex;
+                            color: gray;
+                            font-weight: normal;
+
+                            &:hover {
+                                color: orangered;
+                                cursor: pointer;
+                            }
+                        }
+                    }
+
+                }
+
+                >.isOrder {
+                    // border: 2px solid green;
+                    display: flex;
+                    align-items: center;
+                    // padding: .5rem;
+                }
+            }
+        }
+
+        >.orderNow {
+            // border: 2px solid green;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: .5rem;
+            border-top: 1px solid gray;
+            margin-top: .5rem;
+
+            >.totalAmmount {
+                // border: 2px solid red;
+                font-family: 'roboto';
+                text-align: center;
+
+
+                >p {
+                    // border: 2px solid green;
+                    // padding: 1rem ;
+                    font-weight: bold;
+                    font-size: x-large;
+                    margin-bottom: .5rem;
+                    color: orangered;
+
+                }
+
+                >span {
+                    // border: 2px solid blue;
+                    font-size: large;
+                }
+            }
+
+            >.orderBtn {
+                // border: 2px solid blue;
+                height: fit-content;
+
+                >button {
+                    padding: .5rem 2rem;
+                    background-color: orangered;
+                    border: none;
+                    color: white;
+                    font-size: large;
+
+                    &:hover {
+                        background-color: white;
+                        color: orangered;
+                        border: 2px solid orangered;
+                    }
+
+                }
+            }
+        }
+
+    }
+
+
+}
