@@ -1,15 +1,19 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { HiOutlineShoppingBag } from 'react-icons/hi';
 import { BiUserCircle } from 'react-icons/bi';
 import { AiOutlineHeart } from 'react-icons/ai';
 import Cart from '../../Pages/Cart/Cart.jsx';
 import { Link } from 'react-router-dom';
 import './header.scss';
-import { Context } from '../../main.jsx';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const Header = () => {
 
-    const { isCart, setIscart } = useContext(Context);
+    const { userAuthenticated } = useSelector(state => state.user);
+
+    const [isCart, setIscart] = useState();
+
 
 
     return (
@@ -19,14 +23,20 @@ const Header = () => {
             </div>
 
             <div className="headerBar">
+
                 <div className="brandName">
                     <span>Decor<span>Trove</span></span>
                 </div>
+
                 <div className="menu">
+
                     {/* <a href="">Home</a> */}
+
                     <Link to={'/'}>Home</Link>
                     <Link to={'/productes'}>Products</Link>
-                    <Link to={'/service'}>Services</Link>
+
+                    {/* <Link to={'/service'}>Services</Link> */}
+
                     <Link to={'/contactus'}>Contact</Link>
                 </div>
 
@@ -35,15 +45,35 @@ const Header = () => {
                     <Link to={'/wishlist'}>
                         <span><AiOutlineHeart /></span>
                     </Link>
+
                     <Link  >
+
                         <span onClick={() => setIscart(true)}> <HiOutlineShoppingBag /></span>
 
-
                     </Link>
 
-                    <Link to={'/login'}>
-                        <span><BiUserCircle /></span>
-                    </Link>
+                    <div>
+
+                    </div>
+
+                    {
+                        userAuthenticated ?
+                            <Link to={'/profile'}>
+
+                                <span><BiUserCircle /></span>
+
+                            </Link>
+
+                            :
+
+                            <Link to={'/login'}>
+
+                                <span><BiUserCircle /></span>
+
+                            </Link>
+                    }
+
+
                 </div>
             </div >
 

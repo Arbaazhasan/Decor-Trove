@@ -1,12 +1,13 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './cart.scss';
 import { AiOutlineHeart } from "react-icons/ai";
-import { Context } from '../../main';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 const Cart = () => {
 
-    const { isCart, setIscart } = useContext(Context);
+    const [isCart, setIscart] = useState();
+
 
 
     return (
@@ -18,7 +19,11 @@ const Cart = () => {
 
                     <div className="header">
                         <p>item(s)</p>
-                        <span onClick={() => { setIscart(false); }}>X</span>
+                        <span onClick={() => { setIscart(false); }}>
+                            <Link to={'/cart'}>
+                                X
+                            </Link>
+                        </span>
                     </div>
 
                     <div className="cartList">

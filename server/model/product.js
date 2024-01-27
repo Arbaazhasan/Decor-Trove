@@ -12,10 +12,9 @@ const productSchema = new mongoose.Schema({
         type: String
     },
     price: {
-        string: Number
-    },
-    size: {
-        type: String
+        type: String,
+        require: true
+
     },
     color: {
         type: String
@@ -24,12 +23,12 @@ const productSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    isStock: {
-        type: Boolean,
-        default: true
+    available: {
+        type: String,
+
     },
-    photo: {
-        type: String
+    images: {
+        type: []
     }
 });
 

@@ -2,8 +2,9 @@
     // border: 2px solid green;
     width: 100%;
     min-height: 41rem;
-    height: 91vh;
+    height: 100vh;
     display: flex;
+
 
     >.left {
         // border: 2px solid red;
@@ -92,7 +93,7 @@
 
                     >input {
                         padding: 1rem .5rem;
-                        width: 18rem;
+                        width: 17rem;
                         border: 1px solid black;
 
                         &:focus {

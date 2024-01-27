@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 
 const popularProductSchema = mongoose.Schema({
-    sno: {
-        type: String
+    tabNo: {
+        type: Number
     },
 
-    productNo: {
+    pNo: {
         type: String
     }
 });

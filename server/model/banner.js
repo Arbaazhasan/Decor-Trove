@@ -2,17 +2,12 @@ import mongoose from "mongoose";
 
 const BannerModel = mongoose.Schema({
 
-    bannerNo: {
-        type: String,
-        require: true,
-
-    },
-    imageName: {
+    bNo: {
         type: String,
     },
 
-    img: {
-        type: String
+    image: {
+        type: {}
     },
 
     bannerText: {
@@ -21,4 +16,4 @@ const BannerModel = mongoose.Schema({
 
 });
 
-export const bannerDoc = new mongoose.model("banner", BannerModel);
+export const bannerModel = new mongoose.model("banner", BannerModel);

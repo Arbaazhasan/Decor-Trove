@@ -26,10 +26,10 @@ export const register = async (req, res) => {
         });
 
 
-        const token = jwt.sign({ _id: User._id }, process.env.JWT_URI);
+        const userToken = jwt.sign({ _id: User._id }, process.env.JWT_URI);
         // console.log(token);
 
-        res.status(200).cookie("token", token, {
+        res.status(200).cookie("userToken", userToken, {
             maxAge: 1000 * 60 * 60,
             httpOnly: true,
 
@@ -68,10 +68,10 @@ export const login = async (req, res) => {
             message: "Incorrect user or Password !"
         });
 
-        const token = jwt.sign({ _id: User._id }, process.env.JWT_URI);
+        const userToken = jwt.sign({ _id: User._id }, process.env.JWT_URI);
         // console.log(token);
 
-        res.status(200).cookie("token", token, {
+        res.status(200).cookie("userToken", userToken, {
             maxAge: 1000 * 60 * 60,
             httpOnly: true
         }).json({
@@ -93,7 +93,7 @@ export const login = async (req, res) => {
 export const logout = (req, res) => {
 
     try {
-        res.status(200).cookie("token", null, {
+        res.status(200).cookie("userToken", null, {
             expires: new Date(Date.now()),
             httpOnly: true
         }).json({

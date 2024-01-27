@@ -50,25 +50,41 @@
                 margin-bottom: 1rem;
             }
 
-            >button {
-                width: 5rem;
-                height: 2rem;
-                font-family: 'roboto';
-                font-weight: bold;
-                background-color: blueviolet;
-                color: white;
-                cursor: pointer;
-                border: none;
-                border: 2px solid transparent;
-                border-radius: 4px;
+            >div {
+
+                >button {
+                    width: 5rem;
+                    height: 2rem;
+                    font-family: 'roboto';
+                    font-weight: bold;
+                    background-color: blueviolet;
+                    color: white;
+                    cursor: pointer;
+                    border: none;
+                    border: 2px solid transparent;
+                    border-radius: 4px;
+                    margin-right: 1rem;
 
 
-                &:hover {
-                    border: 2px solid blueviolet;
-                    color: blueviolet;
-                    background-color: transparent;
-                    transition: .4s all;
+                    &:hover {
+                        border: 2px solid blueviolet;
+                        color: blueviolet;
+                        background-color: transparent;
+                        transition: .4s all;
+                    }
+
                 }
+
+                >button:nth-child(2) {
+                    background-color: red;
+
+                    &:hover {
+                        background-color: white;
+                        color: red;
+                        border: 2px solid red;
+                    }
+                }
+
 
             }
         }

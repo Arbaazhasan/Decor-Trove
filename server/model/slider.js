@@ -1,22 +1,22 @@
 import mongoose from "mongoose";
 
-const sliderModel = mongoose.Schema({
+const slider = mongoose.Schema({
 
-    sliderNo: {
+    slideNo: {
         type: Number,
         require: true,
         unique: true
     }
     ,
-    sliderImg: {
-        type: String,
+    slideImage: {
+        type: [],
     },
 
-    sliderText: {
+    slideText: {
         type: String,
     }
 
 });
 
 
-export const sliderDoc = new mongoose.model("Slider", sliderModel);
+export const sliderModel = new mongoose.model("Slider", slider);

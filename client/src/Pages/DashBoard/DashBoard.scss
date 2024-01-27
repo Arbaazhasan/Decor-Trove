@@ -1,0 +1,128 @@
+.deshBoard {
+    // border: 2px solid green;
+    display: flex;
+    min-height: 45rem;
+    height: 100vh;
+
+
+    >.left {
+        // border: 2px solid red;
+        width: 20%;
+        font-family: 'Open Sans', sans-serif;
+        box-shadow: -3px 0px 8px gray;
+
+        // overflow: hidden;
+
+        >h1 {
+            font-weight: bold;
+            font-family: 'Reem Kufi', sans-serif;
+            // border: 2px solid red;
+            background-color: rgba(128, 128, 128, 0.11);
+            box-shadow: -3px 0px 8px gray;
+            padding: .5rem 1rem;
+            color: blueviolet;
+
+        }
+
+        >div {
+
+            // border: 2px solid red;
+
+            // box-shadow: 0px 10px 8px gray;
+
+            >div {
+                // border: 2px solid green;
+                padding: 1rem;
+                font-family: 'Roboto', sans-serif;
+
+
+                >h2 {
+                    font-size: med;
+                    // border: 2px solid black;
+                    border-bottom: 2px solid black;
+                    padding: .3rem .5rem;
+                    font-weight: bolder;
+                    margin-bottom: 1rem;
+
+
+                }
+
+                >p {
+                    margin: 0rem 1.5rem;
+                    margin-top: 1.5rem;
+                    border-bottom: 1px solid transparent;
+                    color: black;
+                    cursor: pointer;
+
+
+                    &:hover {
+                        color: blueviolet;
+                        font-weight: bolder;
+                        border-bottom: 1px solid blueviolet;
+                    }
+
+
+
+
+                }
+
+            }
+        }
+
+    }
+
+
+    .right {
+        // border: 2px solid green;
+        width: 80%;
+        height: 100%;
+        overflow: hidden;
+
+        >.top {
+            // border-bottom: 1px solid gray;
+            font-family: 'Roboto', sans-serif;
+            background-color: rgba(128, 128, 128, 0.11);
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0px 0px 8px gray;
+
+
+
+            >h1 {
+                // border: 2px solid red;
+                padding: 1rem;
+                font-weight: bold;
+                font-family: 'Reem Kufi', sans-serif;
+                padding: .5rem 1rem;
+                color: blueviolet;
+            }
+
+            >button {
+                height: 2rem;
+                width: 5rem;
+                margin-right: 2rem;
+                color: blueviolet;
+                font-weight: bold;
+
+                &:hover {
+                    background-color: blueviolet;
+                    color: white;
+                    border: none;
+                    cursor: pointer;
+                }
+
+            }
+        }
+
+        >.bottom {
+            // border: 2px solid blue;
+
+
+
+
+
+        }
+    }
+}

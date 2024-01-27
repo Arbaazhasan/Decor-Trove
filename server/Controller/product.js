@@ -1,9 +1,17 @@
 import multer from "multer";
 import { product } from "../model/product.js";
-import { sliderDoc } from "../model/slider.js";
-import { bannerDoc } from "../model/banner.js";
+import { sliderModel } from "../model/slider.js";
+import { bannerModel } from "../model/banner.js";
 import { newArrivalsModel } from "../model/newArrivals.js";
 import { popularProductModel } from "../model/popularProducts.js";
+// import { uploadOncloudinary } from "../middleware/postUpload.js";
+import { uploadOncloudinary } from "../utils/dataUri.js";
+import { v2 as cloudinary } from 'cloudinary';
+
+import path from "path";
+
+
+
 
 
 
@@ -12,14 +20,45 @@ import { popularProductModel } from "../model/popularProducts.js";
 
 
 // New Product
-export const newProduct = (req, res) => {
+export const newProduct = async (req, res) => {
 
     try {
-        const { pNo, name, desc, price, size, color, category, isStock, photo } = req.body;
-        // console.log(pNo, name, desc, price, size, color, category, isStock, photo);
+        const { pNo, name, desc, price, size, color, category, available, images } = req.body;
 
-        const Product = product.create({
-            pNo, name, desc, price, size, color, category, isStock, photo
+        const files = req.files;
+        const getUriArray = [];
+
+
+        const isProduct = await product.findOne({ pNo: pNo });
+
+        if (isProduct) return res.status(403).json({
+            success: true,
+            message: "Product Already Exits !!!"
+        });
+
+        // Use Promise.all to wait for all uploads
+
+        await Promise.all(files.map(async (file) => {
+
+            try {
+                const getUri = uploadOncloudinary(file);
+                const response = await cloudinary.uploader.upload(getUri.content);
+
+                getUriArray.push({
+                    url: response.url,
+                    public_id: response.public_id
+                });
+            } catch (error) {
+                console.error('Error uploading file:', error);
+            }
+        }));
+
+        console.log("getUriArray : ", getUriArray);
+
+
+        const Product = await product.create({
+            pNo, name, desc, price, size, color, category, available,
+            images: getUriArray,
         });
         res.status(201).json({
             success: true,
@@ -28,7 +67,7 @@ export const newProduct = (req, res) => {
     } catch (error) {
         res.status(400).json({
             success: false,
-            message: error
+            message: error.message
         });
     }
 
@@ -38,23 +77,102 @@ export const newProduct = (req, res) => {
 
 // Update Product 
 
-export const updateProduct = async (req, res) => {
 
+export const updateProduct = async (req, res) => {
     try {
         const find = req.params.pno;
         console.log(find);
-        const { pNo, name, desc, price, size, color, category, isStock, photo } = req.body;
+
+        const {
+            pNo,
+            name,
+            desc,
+            price,
+            color,
+            category,
+            available,
+            imageArray,
+            deleteImages
+        } = req.body;
 
         const isProduct = await product.findOne({ pNo: find });
 
-        if (!isProduct) return res.status(404).json({
-            success: false,
-            message: "Product not found"
-        });
+        if (!isProduct) {
+            return res.status(404).json({
+                success: false,
+                message: "Product not found"
+            });
+        }
 
-        await product.updateOne({ pNo: find }, {
-            pNo, name, desc, price, size, color, category, isStock, photo
-        });
+        console.log(deleteImages);
+
+        if (deleteImages) {
+
+            if (deleteImages.length === 0) {
+                await Promise.all(deleteImages.map(async (i) => {
+                    try {
+                        cloudinary.uploader.destroy(i, (error, result) => {
+                            if (error) return console.error('Error deleting file:', error);
+                        });
+
+                    } catch (error) {
+                        console.error('Error deleting file:', error);
+                    }
+                }));
+            } else {
+                try {
+                    cloudinary.uploader.destroy(deleteImages, (error, result) => {
+                        if (error) return console.error('Error deleting file:', error);
+                    });
+
+                } catch (error) {
+                    console.error('Error deleting file:', error);
+                }
+
+            }
+        }
+
+
+        const files = req.files;
+        const getUriArray = [];
+
+        if (files.length > 0) {
+            await Promise.all(files.map(async (file) => {
+                try {
+                    const getUri = uploadOncloudinary(file);
+                    const response = await cloudinary.uploader.upload(getUri.content);
+
+                    getUriArray.push({
+                        url: response.url,
+                        public_id: response.public_id
+                    });
+                } catch (error) {
+                    console.error('Error uploading file:', error);
+                }
+            }));
+        }
+
+
+
+        const updateImagesArray = imageArray ? imageArray.map(JSON.parse) : [];
+
+        // Combine newImagesArray and uploaded images
+        const finalImagesArray = getUriArray ? updateImagesArray.concat(getUriArray) : updateImagesArray;
+
+
+
+        const updateFields = {
+            ...(pNo && { pNo }),
+            ...(name && { name }),
+            ...(desc && { desc }),
+            ...(price && { price }),
+            ...(color && { color }),
+            ...(category && { category }),
+            ...(available && { available }),
+            ...(finalImagesArray && { images: finalImagesArray })
+        };
+
+        await product.updateOne({ pNo: find }, updateFields);
 
         res.status(200).json({
             success: true,
@@ -63,40 +181,61 @@ export const updateProduct = async (req, res) => {
     } catch (error) {
         res.status(400).json({
             success: false,
-            message: error
+            message: error.message
         });
     }
 };
 
 
+
+
 // Delete Product
+
 export const deleteProduct = async (req, res) => {
-
     try {
-        const find = req.params.pno;
+        const pNo = req.params.pno;
 
-        const isProduct = await product.findOne({ pNo: find });
+        // console.log(pNo);
 
-        if (!isProduct) return res.status(404).json({
-            success: false,
-            message: "Product not Found!"
-        });
+        const isProduct = await product.findById({ _id: pNo });
 
-        await product.deleteOne({ pNo: find });
+        if (!isProduct) {
+            return res.status(404).json({
+                success: false,
+                message: "Product not Found !!!"
+            });
+        }
+
+        // console.log(isProduct.images);
+
+        await Promise.all(isProduct.images.map(async (pId) => {
+            try {
+                cloudinary.uploader.destroy(pId.public_id, (error, result) => {
+                    if (error) return console.error('Error deleting file:', error);
+                });
+
+            } catch (error) {
+                console.error('Error deleting file:', error);
+            }
+        }));
+
+        await newArrivalsModel.deleteOne({ pNo: isProduct.pNo });
+        await popularProductModel.deleteOne({ pNo: isProduct.pNo });
+
+        await product.deleteOne({ _id: pNo });
+
 
         res.status(200).json({
             success: true,
             message: "Delete"
         });
     } catch (error) {
-        res.status(400).josn({
+        res.status(400).json({
             success: false,
-            message: error
+            message: error.message
         });
-
     }
 };
-
 
 // Get All Products 
 export const getAllProducts = async (req, res) => {
@@ -106,7 +245,7 @@ export const getAllProducts = async (req, res) => {
 
         res.status(200).json({
             success: true,
-            message: allProducts
+            allProducts: allProducts
         });
     } catch (error) {
         res.status(400).json({
@@ -125,19 +264,23 @@ export const getProduct = async (req, res) => {
 
         const Product = await product.findOne({ pNo: find });
 
+        if (!Product) return res.status(404).json({
+            success: false,
+            Product: "Product not Found !!!"
+        });
+
         res.status(200).json({
             success: true,
-            message: Product
+            Product
         });
     } catch (error) {
 
         res.status(400).json({
             success: false,
-            message: error
+            Product: error,
         });
     }
 };
-
 
 
 // ********* Page Content *********
@@ -147,36 +290,54 @@ export const getProduct = async (req, res) => {
 
 export const slider = async (req, res) => {
 
-    const { sliderNo, sliderImg, sliderText } = req.body;
-    const { sno } = req.params;
+    const { slideNo, slideText } = req.body;
+
+    const file = req.files;
+
+    const getUri = uploadOncloudinary(file[0]);
+
+    const response = await cloudinary.uploader.upload(getUri.content);
+
+    const imageObj = {
+        url: response.url,
+        public_id: response.public_id
+    };
 
     try {
 
-        const isSlider = await sliderDoc.findOne({ sliderNo: sno });
+        const isSlider = await sliderModel.findOne({ slideNo: slideNo });
 
         if (!isSlider) {
-            await sliderDoc.create({
-                sliderNo, sliderImg, sliderText
+            await sliderModel.create({
+                slideNo, slideImage: imageObj, slideText
             });
             return res.status(201).json({
                 success: true,
                 message: "Created"
             });
-
         }
 
-        await sliderDoc.updateOne({ sliderNo: sno }, { sliderImg, sliderText });
 
+        const public_id = await isSlider.slideImage[0].public_id;
+
+        // Deleteing old Image from server 
+        cloudinary.uploader.destroy(public_id, (error, result) => {
+            if (error) return console.error('Error deleting file:', error);
+        });
+
+        await sliderModel.updateOne({ slideNo }, { slideImage: imageObj, slideText });
 
         res.status(200).json({
             success: true,
-            message: "Updat"
+            message: "Update"
         });
+
+
     } catch (error) {
 
         res.status(400).json({
             success: false,
-            message: error
+            message: error.message
         });
 
     }
@@ -184,19 +345,31 @@ export const slider = async (req, res) => {
 };
 
 
+
 // Delete Slider
 
 export const deleteSlider = async (req, res) => {
 
-    const { sno } = req.params;
-    const isSlider = await sliderDoc.findOne({ sliderNo: sno });
+    const { slideno } = req.params;
+
+
+    const isSlider = await sliderModel.findOne({ slideNo: slideno });
 
     if (!isSlider) return res.status(404).json({
         success: false,
-        message: "Slider isn't Exists !!!"
+        message: "Slide not Exists !!!"
     });
 
-    await sliderDoc.deleteOne({ sliderNo: sno });
+
+    const public_id = await isSlider.slideImage[0].public_id;
+
+    // Deleteing old Image from server 
+    cloudinary.uploader.destroy(public_id, (error, result) => {
+        if (error) return console.error('Error deleting file:', error);
+    });
+
+
+    await sliderModel.deleteOne({ slideNo: slideno });
 
     res.status(200).json({
         success: true,
@@ -210,7 +383,7 @@ export const deleteSlider = async (req, res) => {
 // Get Slider SLide
 
 export const getSliderSlide = async (req, res) => {
-    const data = await sliderDoc.find();
+    const data = await sliderModel.find();
 
 
     res.status(200).json({
@@ -221,82 +394,113 @@ export const getSliderSlide = async (req, res) => {
 
 
 // Banner 
-export const bannerAdd = async (req, res) => {
+export const addBanner = async (req, res) => {
 
-    const { sno } = req.params;
-    const { imageName, img, bannerText } = req.body;
+    const { bNo, bannerText } = req.body;
 
-    const isBanner = await bannerDoc.findOne({ bannerNo: sno });
+    const file = await req.files;
+
+    const getUri = uploadOncloudinary(file[0]);
+
+    const response = await cloudinary.uploader.upload(getUri.content);
+
+    const imageObj = {
+        url: response.url,
+        public_id: response.public_id
+    };
+
+
+    const isBanner = await bannerModel.findOne({ bNo });
 
     if (!isBanner) {
-
-        await bannerDoc.create({
-            bannerNo: sno,
-            imageName, img, bannerText
-
+        await bannerModel.create({
+            bNo, bannerText, image: imageObj
         });
 
-        return res.status(201).json({
+        return res.status(200).json({
             success: true,
-            message: "Upload"
+            message: "Successfully Upload"
         });
     }
 
-    console.log(isBanner);
 
-    await bannerDoc.updateOne({ bannerNo: sno }, {
-        imageName, img, bannerText
+    const public_id = await isBanner.image.public_id;
+
+    cloudinary.uploader.destroy(public_id, (error, result) => {
+        if (error) return console.error('Error deleting file:', error);
     });
+
+    await bannerModel.findOneAndUpdate({ bNo }, { $set: { bannerText, image: imageObj } });
 
     res.status(200).json({
         success: true,
-        message: "Update"
+        message: "Upload"
     });
 
 };
 
 
-// New Arrivals 
 
 export const newArrivals = async (req, res) => {
-    const { sno } = req.params;
-    const { category, productNo } = req.body;
+
+    try {
+        const { tabNo, pNo } = req.body;
 
 
-    const isProduct = await product.find({ pNo: productNo });
+        const isProduct = await product.findOne({ pNo });
 
-    if (!isProduct) return res.status(404).json({
-        success: false,
-        message: "product not Exits"
-    });
-
-
-
-    const isNewArrival = await newArrivalsModel.findOne({ itemNo: sno, category: category });
-
-
-    if (!isNewArrival) {
-        await newArrivalsModel.create({
-            itemNo: sno, category, productNo,
+        if (!isProduct) return res.status(404).json({
+            success: false,
+            message: "Product not Exits !!!"
         });
 
-        return res.status(201).json({
+
+        const isExits = await newArrivalsModel.findOne({
+            $and: [
+                { pNo: pNo },
+                { category: isProduct.category }
+            ]
+        });
+
+        if (isExits) return res.status(409).json({
+            success: false,
+            message: "Product already Exits !!!",
+        });
+
+        // console.log("tabNo : ", tabNo, "pNo :", pNo);
+
+        const isTab = await newArrivalsModel.findOne({
+            $and: [
+                { tabNo: tabNo },
+                { category: isProduct.category }
+            ]
+        });
+
+
+        if (!isTab) {
+
+            await newArrivalsModel.create({ tabNo, category: isProduct.category, pNo });
+
+            return res.status(200).json({
+                success: true,
+                message: "Added Successfully"
+            });
+        }
+
+        await newArrivalsModel.findOneAndUpdate({ tabNo, category }, { $set: { pNo, category: isProduct.category } });
+
+        res.status(200).json({
             success: true,
-            message: "Upload"
+            message: "Add Successfull"
         });
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
     }
-
-    await newArrivalsModel.updateOne({ itemNo: sno, category: category }, {
-        itemNo: sno, category, productNo,
-
-    });
-
-    res.status(200).json({
-        success: true,
-        message: "Update"
-    });
-
-
 };
 
 
@@ -313,14 +517,13 @@ export const updateArrivalCategory = async (req, res) => {
     });
 };
 
-
 export const getArrivalProducts = async (req, res) => {
     const { category } = req.body;
 
     const data = await newArrivalsModel.find({ category });
 
     if (!data) return console.log("Not");
-    console.log(data);
+    // console.log(data);
 
     res.status(200).json({
         success: true,
@@ -328,42 +531,78 @@ export const getArrivalProducts = async (req, res) => {
     });
 };
 
+export const getArrivalProductCategory = async (req, res) => {
 
-// *******Popular Product *********
+    const data = await newArrivalsModel.find();
+    const categoryArray = [];
 
-export const addPopulatProduct = async (req, res) => {
+    for (let i = 0; i < data.length; i++) {
+        const currentCategory = data[i].category;
 
-    const { sno } = req.params;
-
-    const { productNo } = req.body;
-
-    const isProdcut = await product.findOne({ pNo: sno });
-
-    if (!isProdcut) return res.status(404).json({
-        success: false,
-        message: "Proudct not Exits !!!"
-    });
-
-    const isItem = await popularProductModel.findOne({ sno });
-
-    if (!isItem) {
-        popularProductModel.create({
-            sno, productNo
-        });
-
-        return res.status(200).json({
-            success: true,
-            message: "Upload"
-        });
+        if (!categoryArray.includes(currentCategory)) {
+            categoryArray.push(currentCategory);
+        }
     }
 
-    await popularProductModel.updateOne({ sno }, {
-        sno, productNo
-    });
 
     res.status(200).json({
+
         success: true,
-        message: "Update"
+        category: categoryArray
     });
+
+};
+
+
+// *******Popular Product *********
+export const addPopularProduct = async (req, res) => {
+
+
+    try {
+
+        const { tabNo, pNo } = req.body;
+
+        const isProduct = await product.findOne({ pNo });
+
+        if (!isProduct) return res.status(404).json({
+            success: false,
+            message: "Product not Exits !!!",
+        });
+
+        const isExits = await popularProductModel.findOne({ pNo });
+
+        if (isExits) return res.status(409).json({
+            success: false,
+            message: "Product Exits !!!"
+        });
+
+
+        const isTab = await popularProductModel.findOne({ tabNo });
+
+        if (!isTab) {
+            await popularProductModel.create({ tabNo, pNo });
+
+            return res.status(200).json({
+                success: true,
+                message: "Added Successfully"
+            });
+        }
+
+        await popularProductModel.findOneAndUpdate({ tabNo }, { $set: { pNo: pNo } });
+
+        res.status(200).json({
+            success: true,
+            message: "Add Successfull"
+        });
+
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error
+        });
+
+    }
 
 };

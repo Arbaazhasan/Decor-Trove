@@ -2,16 +2,15 @@ import mongoose, { mongo } from "mongoose";
 
 const newArrivalsSchema = mongoose.Schema({
 
-    itemNo: {
+    tabNo: {
         type: Number
     },
     category: {
         type: String,
         require: true,
-        unique: true
     },
 
-    productNo: {
+    pNo: {
         type: String
     }
 });

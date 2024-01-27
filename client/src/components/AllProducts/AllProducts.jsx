@@ -1,6 +1,24 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { getAllProduct, imageViewerLoader } from '../../redux/action/dashboard';
+
 
 const AllProducts = () => {
+
+    const { allProducts } = useSelector(state => state.dashboard);
+    const dispatch = useDispatch();
+
+
+    const imageViewerHandler = (i) => {
+        imageViewerLoader(dispatch, { imageArray: i.images });
+    };
+
+
+    useEffect(() => {
+        getAllProduct(dispatch);
+    }, []);
+
     return (
         <div>
 
@@ -20,266 +38,32 @@ const AllProducts = () => {
                         <p>Image</p>
                     </div>
 
-                    <div className="searchedItem" style={{/* border: "2px solid green", */ maxHeight: "85vh" }}>
-
-
-
-                        <div>
-                            <p><span>1</span></p>
-                            <p><span>SKU-001</span></p>
-                            <p><span>Floral BOwl</span></p>
-                            <p><span>Lorem ipsum dolor sit amet.</span></p>
-                            <p><span>Copper</span></p>
-                            <p><span>$12.55</span></p>
-                            <p><span>Kitchen Ware</span></p>
-                            <p><span>100 pcs.</span></p>
-                            <p>
-                                <img src="slide1.jpg" alt="error" />
-                            </p>
-                        </div>
-
-
-
-
-
-
-
-                        <div>
-                            <p><span>1</span></p>
-                            <p><span>SKU-001</span></p>
-                            <p><span>Floral BOwl</span></p>
-                            <p><span>Lorem ipsum dolor sit amet.</span></p>
-                            <p><span>Copper</span></p>
-                            <p><span>$12.55</span></p>
-                            <p><span>Kitchen Ware</span></p>
-                            <p><span>100 pcs.</span></p>
-                            <p>
-                                <img src="slide1.jpg" alt="error" />
-                            </p>
-                        </div>
-
-
-
-
-
-
-
-                        <div>
-                            <p><span>1</span></p>
-                            <p><span>SKU-001</span></p>
-                            <p><span>Floral BOwl</span></p>
-                            <p><span>Lorem ipsum dolor sit amet.</span></p>
-                            <p><span>Copper</span></p>
-                            <p><span>$12.55</span></p>
-                            <p><span>Kitchen Ware</span></p>
-                            <p><span>100 pcs.</span></p>
-                            <p>
-                                <img src="slide1.jpg" alt="error" />
-                            </p>
-                        </div>
-
-
-
-
-
-
-
-                        <div>
-                            <p><span>1</span></p>
-                            <p><span>SKU-001</span></p>
-                            <p><span>Floral BOwl</span></p>
-                            <p><span>Lorem ipsum dolor sit amet.</span></p>
-                            <p><span>Copper</span></p>
-                            <p><span>$12.55</span></p>
-                            <p><span>Kitchen Ware</span></p>
-                            <p><span>100 pcs.</span></p>
-                            <p>
-                                <img src="slide1.jpg" alt="error" />
-                            </p>
-                        </div>
-
-
-
-
-
-
-
-                        <div>
-                            <p><span>1</span></p>
-                            <p><span>SKU-001</span></p>
-                            <p><span>Floral BOwl</span></p>
-                            <p><span>Lorem ipsum dolor sit amet.</span></p>
-                            <p><span>Copper</span></p>
-                            <p><span>$12.55</span></p>
-                            <p><span>Kitchen Ware</span></p>
-                            <p><span>100 pcs.</span></p>
-                            <p>
-                                <img src="slide1.jpg" alt="error" />
-                            </p>
-                        </div>
-
-
-
-
-
-
-
-                        <div>
-                            <p><span>1</span></p>
-                            <p><span>SKU-001</span></p>
-                            <p><span>Floral BOwl</span></p>
-                            <p><span>Lorem ipsum dolor sit amet.</span></p>
-                            <p><span>Copper</span></p>
-                            <p><span>$12.55</span></p>
-                            <p><span>Kitchen Ware</span></p>
-                            <p><span>100 pcs.</span></p>
-                            <p>
-                                <img src="slide1.jpg" alt="error" />
-                            </p>
-                        </div>
-
-
-
-
-
-
-
-                        <div>
-                            <p><span>1</span></p>
-                            <p><span>SKU-001</span></p>
-                            <p><span>Floral BOwl</span></p>
-                            <p><span>Lorem ipsum dolor sit amet.</span></p>
-                            <p><span>Copper</span></p>
-                            <p><span>$12.55</span></p>
-                            <p><span>Kitchen Ware</span></p>
-                            <p><span>100 pcs.</span></p>
-                            <p>
-                                <img src="slide1.jpg" alt="error" />
-                            </p>
-                        </div>
-
-
-
-
-
-
-
-                        <div>
-                            <p><span>1</span></p>
-                            <p><span>SKU-001</span></p>
-                            <p><span>Floral BOwl</span></p>
-                            <p><span>Lorem ipsum dolor sit amet.</span></p>
-                            <p><span>Copper</span></p>
-                            <p><span>$12.55</span></p>
-                            <p><span>Kitchen Ware</span></p>
-                            <p><span>100 pcs.</span></p>
-                            <p>
-                                <img src="slide1.jpg" alt="error" />
-                            </p>
-                        </div>
-
-
-
-
-
-
-
-                        <div>
-                            <p><span>1</span></p>
-                            <p><span>SKU-001</span></p>
-                            <p><span>Floral BOwl</span></p>
-                            <p><span>Lorem ipsum dolor sit amet.</span></p>
-                            <p><span>Copper</span></p>
-                            <p><span>$12.55</span></p>
-                            <p><span>Kitchen Ware</span></p>
-                            <p><span>100 pcs.</span></p>
-                            <p>
-                                <img src="slide1.jpg" alt="error" />
-                            </p>
-                        </div>
-
-
-
-
-
-
-
-                        <div>
-                            <p><span>1</span></p>
-                            <p><span>SKU-001</span></p>
-                            <p><span>Floral BOwl</span></p>
-                            <p><span>Lorem ipsum dolor sit amet.</span></p>
-                            <p><span>Copper</span></p>
-                            <p><span>$12.55</span></p>
-                            <p><span>Kitchen Ware</span></p>
-                            <p><span>100 pcs.</span></p>
-                            <p>
-                                <img src="slide1.jpg" alt="error" />
-                            </p>
-                        </div>
-
-
-
-
-
-
-
-                        <div>
-                            <p><span>1</span></p>
-                            <p><span>SKU-001</span></p>
-                            <p><span>Floral BOwl</span></p>
-                            <p><span>Lorem ipsum dolor sit amet.</span></p>
-                            <p><span>Copper</span></p>
-                            <p><span>$12.55</span></p>
-                            <p><span>Kitchen Ware</span></p>
-                            <p><span>100 pcs.</span></p>
-                            <p>
-                                <img src="slide1.jpg" alt="error" />
-                            </p>
-                        </div>
-
-
-
-
-
-
-
-                        <div>
-                            <p><span>1</span></p>
-                            <p><span>SKU-001</span></p>
-                            <p><span>Floral BOwl</span></p>
-                            <p><span>Lorem ipsum dolor sit amet.</span></p>
-                            <p><span>Copper</span></p>
-                            <p><span>$12.55</span></p>
-                            <p><span>Kitchen Ware</span></p>
-                            <p><span>100 pcs.</span></p>
-                            <p>
-                                <img src="slide1.jpg" alt="error" />
-                            </p>
-                        </div>
-
-
-
-
-
-
-
-                        <div>
-                            <p><span>1</span></p>
-                            <p><span>SKU-001</span></p>
-                            <p><span>Floral BOwl</span></p>
-                            <p><span>Lorem ipsum dolor sit amet.</span></p>
-                            <p><span>Copper</span></p>
-                            <p><span>$12.55</span></p>
-                            <p><span>Kitchen Ware</span></p>
-                            <p><span>100 pcs.</span></p>
-                            <p>
-                                <img src="slide1.jpg" alt="error" />
-                            </p>
-                        </div>
-
-
-
+                    <div className="searchedItem" style={{ maxHeight: "85vh" }}>
+
+
+                        {
+                            allProducts &&
+                            allProducts.map((i, index) => (
+                                <div key={i._id}>
+                                    <p><span>{index + 1}</span></p>
+                                    <p><span>{i.pNo}</span></p>
+                                    <p><span>{i.name}</span></p>
+                                    <p><span>{i.desc}</span></p>
+                                    <p><span>{i.color}</span></p>
+                                    <p><span>{i.price}</span></p>
+                                    <p><span>{i.category}</span></p>
+                                    <p><span>{i.available}</span></p>
+                                    <p onClick={() => imageViewerHandler(i)}>
+                                        {i.images.length > 0 ? (
+                                            <img src={i.images[0].url} alt="error" />
+                                        ) : (
+                                            <span>No Image</span>
+                                        )}
+                                    </p>
+                                </div>
+                            ))
+
+                        }
 
 
                     </div>

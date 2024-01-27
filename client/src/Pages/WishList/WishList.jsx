@@ -10,6 +10,7 @@ const WishList = () => {
             <div className="wishList">
                 <h2>Wish List</h2>
 
+
                 <div className="itemsList">
 
 

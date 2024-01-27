@@ -1,18 +1,43 @@
 import React from 'react';
-import './deleteProductController.scss'
+import './deleteProductController.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteProduct, getSearchProduct, imageViewerLoader } from '../../redux/action/dashboard';
+import { useState } from 'react';
 
 const DeleteProductController = () => {
+
+    const [searchItem, setSearchItem] = useState();
+
+    const dispatch = useDispatch();
+
+    const { product } = useSelector(state => state.dashboard);
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+        getSearchProduct(dispatch, searchItem);
+
+    };
+
+    const deleteHandler = () => {
+        deleteProduct(dispatch, product._id);
+    };
+
+
+    const imageViewerHandler = () => {
+        imageViewerLoader(dispatch, { imageArray: product.images });
+    };
+
     return (
         <div>
             <div className="searchProductWindow">
 
-                <form action="">
-                    <input type="text" placeholder='Enter the item no.' />
+                <form action="" onSubmit={submitHandler}>
+                    <input type="text" placeholder='Enter the item no.' onChange={(e) => setSearchItem(e.target.value)} />
                     <button>Search</button>
                 </form>
 
 
-                <div className="searchedItemList">
+                <div className="searchedItemList" style={{ "overflow": "hidden" }}>
                     <div className="searchedItemHeader">
                         <p>index</p>
                         <p>item No.</p>
@@ -27,21 +52,27 @@ const DeleteProductController = () => {
 
                     <div className="searchedItem">
 
+                        {
+                            product.pNo &&
+
+                            <div >
+                                <p><span>{1}</span></p>
+                                <p><span>{product.pNo}</span></p>
+                                <p><span>{product.name}</span></p>
+                                <p><span>{product.desc}</span></p>
+                                <p><span>{product.color}</span></p>
+                                <p><span>{product.price}</span></p>
+                                <p><span>{product.category}</span></p>
+                                <p><span>{product.available}</span></p>
+                                <p onClick={imageViewerHandler}>
+                                    <img src={product.images[0].url} alt="error" />
+                                </p>
+                            </div>
+                        }
 
 
-                        <div>
-                            <p><span>1</span></p>
-                            <p><span>SKU-001</span></p>
-                            <p><span>Floral BOwl</span></p>
-                            <p><span>Lorem ipsum dolor sit amet.</span></p>
-                            <p><span>Copper</span></p>
-                            <p><span>$12.55</span></p>
-                            <p><span>Kitchen Ware</span></p>
-                            <p><span>100 pcs.</span></p>
-                            <p>
-                                <img src="slide1.jpg" alt="error" />
-                            </p>
-                        </div>
+
+
                     </div>
 
                 </div>
@@ -49,7 +80,7 @@ const DeleteProductController = () => {
             </div>
 
             <div className="productDeleteBtn">
-                <button>Delete</button>
+                <button onClick={deleteHandler}>Delete</button>
             </div>
 
         </div>
