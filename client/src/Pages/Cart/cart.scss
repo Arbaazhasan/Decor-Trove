@@ -6,100 +6,72 @@
     display: flex;
     z-index: 100;
     top: 0;
-
+    overflow: hidden;
 
 
     >.left {
         // border: 2px solid red;
-        width: 75%;
+        // width: 70%;
         background-color: rgba(33, 33, 33, 0.761);
-
         position: relative;
-        animation: slider 2s;
+        // animation: name duration timing-function delay iteration-count direction fill-mode;
+        // animation: lefttoRight 2s ease-out;
+        animation: lefttoRight 1s ease-out;
+        // animation-duration: 2s all;
+        // animation-timing-function: ease-out;
 
-        @keyframes slider {
-
-            from {
-                right: 75rem;
-
-            }
+        @keyframes lefttoRight {
 
             to {
-                right: 0rem;
+                right: 0;
+            }
 
+            from {
+                right: 100%;
+                display: 0%;
             }
 
         }
 
-        @keyframes outer {
-            from {
-                right: 0rem;
-
-            }
+        @keyframes righttoLeft {
 
             to {
-                right: 75rem;
+                right: 0;
             }
 
-            0% {
-                display: block;
+            from {
+                right: 100%;
+                display: 0%;
             }
 
-            100% {
-                display: none;
-            }
         }
-
-
 
     }
 
     >.right {
 
-        position: relative;
-
-        animation: mymove 2s;
-        // animation: rightOuter ease 2s forwards;
-
-
-        @keyframes mymove {
-            from {
-                left: 26rem;
-            }
-
-            to {
-                left: 0px;
-            }
-        }
-
-        @keyframes rightOuter {
-            from {
-                left: 0rem;
-            }
-
-            to {
-                left: 26rem;
-            }
-
-            0% {
-                display: block;
-            }
-
-            100% {
-                display: none;
-                display: hidden;
-            }
-
-        }
-
-
         // border: 2px solid blue;
-        width: 25%;
+        width: 35%;
         background-color: white;
         padding: 0rem 1rem;
         display: flex;
         flex-direction: column;
-        // justify-content: space-evenly;
+        position: relative;
+        animation: righttoLeft 1s ease-out;
+
+
+
+        @keyframes righttoLeft {
+            to {
+                left: 0;
+            }
+
+            from {
+                left: 100%;
+            }
+
+        }
+
 
         >.header {
             // border: 2px solid green;
@@ -125,6 +97,7 @@
                 }
 
             }
+
         }
 
         >.cartList {

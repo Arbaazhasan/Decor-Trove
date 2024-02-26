@@ -53,9 +53,9 @@ export const adminIsAuthonticated = async (req, res, next) => {
 
         const decoded = jwt.verify(token, process.env.JWT_URI);
 
-        req.userData = await admin.findById(decoded);
+        req.adminData = await admin.findById(decoded);
 
-        if (!req.userData) {
+        if (!req.adminData) {
             return res.status(404).json({
                 success: false,
                 message: "User not Exits",

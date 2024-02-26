@@ -3,8 +3,19 @@ import './wishList.scss';
 
 import { AiFillStar } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 const WishList = () => {
+
+    const { wishlistArray } = useSelector(state => state.product);
+
+    useEffect(() => {
+        // console.log(wishlistArray.Wishlist);
+
+    }, [wishlistArray.Wishlist]);
+
+
     return (
         <div>
             <div className="wishList">

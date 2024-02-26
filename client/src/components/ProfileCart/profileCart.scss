@@ -26,7 +26,7 @@
 
             >.photo {
                 border: 2px solid purple;
-                width: 10rem;
+                width: 15rem;
                 height: 10rem;
                 border: 1px solid gray;
                 display: flex;
@@ -41,54 +41,106 @@
 
 
             >.itemDetails {
-                // border: 2px solid blue;
-                font-family: 'roboto';
-                width: 80%;
-                height: 9.5rem;
-                font-weight: bold;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
+                // border: 2px solid green;
+                // display: flex;
 
+                >a {
 
+                    // border: 2px solid blue;
+                    text-decoration: none;
+                    color: black;
 
-                >p {
-                    font-size: x-large;
-                }
-
-                >p:nth-child(3) {
-                    font-size: small;
-                    color: gray;
-                    font-weight: normal;
-                    width: 90%;
-
-                }
-
-                >span {
-                    color: orangered;
-                    font-size: x-large;
-                }
-
-                >div {
-                    // border: 2px solid green;
-                    display: flex;
-                    align-items: center;
-                    font-size: small;
-                    // margin-top: 1rem;
-
-                    gap: 1rem;
-
-                    >span {
-                        // border: 2px solid red;
+                    >div {
+                        // border: 2px solid blue;
+                        font-family: 'roboto';
+                        // width: 80%;
+                        font-weight: bold;
                         display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+                        gap: .5rem;
+                        margin-bottom: .5rem;
+
+                        >p {
+                            font-size: x-large;
+                        }
+
+                        >p:nth-child(3) {
+                            font-size: small;
+                            color: gray;
+                            font-weight: normal;
+                            width: 90%;
+
+                        }
+
+                        >span {
+                            color: orangered;
+                            font-size: x-large;
+                        }
+
+                    }
+
+                }
+
+
+
+
+                >.addAndremoveBtn {
+                    // border: 2px solid green;
+
+                    >button {
                         color: gray;
-                        font-weight: normal;
+                        font-weight: bold;
+                        border: none;
+                        background-color: transparent;
+                        margin-right: 1rem;
 
                         &:hover {
                             color: orangered;
-                            cursor: pointer;
+                        }
+
+                    }
+
+                }
+
+
+            }
+
+            >.cartItemQty {
+                // border: 2px solid red;
+                width: 11rem;
+                border: 1px solid black;
+
+                >.productQty {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    // border: 2px solid green;
+
+                    >button {
+                        padding: .7rem 1rem;
+                        background-color: transparent;
+                        border: none;
+                        font-size: large;
+
+                        &:hover {
+                            background-color: black;
+                            color: white;
+                            transition: .3s all;
+
                         }
                     }
+
+                    >span {
+                        // padding: 0rem .5rem;
+                        width: 2rem;
+                        text-align: center;
+                        // border: 2px solid red;
+                        font-weight: bold;
+
+                    }
+
                 }
 
             }

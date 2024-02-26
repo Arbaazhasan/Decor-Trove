@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './login.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { adminLogin, getAdminProfile } from '../../redux/action/adminLogin';
-import { userLogin } from '../../redux/action/userLogin';
+import { getUserProfile, userLogin } from '../../redux/action/userLogin';
 import toast from 'react-hot-toast';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -18,6 +18,7 @@ const Login = () => {
     const [password, setPassword] = useState();
 
     const { adminAuthenticated } = useSelector(state => state.admin);
+    const { userAuthenticated } = useSelector(state => state.user);
 
     const dispatch = useDispatch();
 
@@ -38,8 +39,10 @@ const Login = () => {
 
 
         getAdminProfile(dispatch);
+        getUserProfile(dispatch);
+        console.log(userAuthenticated);
 
-    }, [adminAuthenticated]);
+    }, [adminAuthenticated, userAuthenticated]);
 
 
     return (

@@ -28,6 +28,7 @@
 
             &:hover {
                 border: 1px solid orangered;
+                cursor: pointer;
             }
         }
     }
@@ -62,7 +63,7 @@
                 // border: 2px solid green;
                 width: 100%;
                 height: 15rem;
-                background-image: url('../../../public/Ap.jpg');
+                // background-image: url('../../../public/Ap.jpg');
                 background-size: cover;
                 background-position: center;
                 display: flex;

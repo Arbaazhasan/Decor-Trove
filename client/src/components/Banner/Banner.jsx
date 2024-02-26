@@ -1,7 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './banner.scss';
+import { useSelector } from 'react-redux';
 
 const Banner = () => {
+
+    const { banners } = useSelector(state => state.product);
+
+    const [bannerImage, setBannerImage] = useState();
+    const [bannerText, setBannerText] = useState();
+
+    useEffect(() => {
+        banners.data && setBannerImage(banners.data[0].image.url);
+        banners.data && setBannerText(banners.data[0].bannerText);
+        // banners.data && console.log(banners.data);
+    }, [banners]);
+
+
     return (
         <div>
             <div className="bannerWindow">
@@ -25,13 +39,15 @@ const Banner = () => {
 
                 <div className="bannerAdds">
 
-                    <div className="bannerAdd">
+                    <div className="bannerAdd" style={{ backgroundImage: `url(${banners.data && banners.data[1].image.url})` }}>
                         <div className="bannerImg">
-                            <img src="add2.jpg" alt="" />
+                            <img src={banners.data && banners.data[0].image.url} alt="" />
                         </div>
 
                         <div className="bannerContent">
                             <p>Sale of 50%</p>
+                            {/* <p>{banners.data && banners.data[2].bannerText}</p> */}
+
                             <span>Show Now</span>
                         </div>
                     </div>
@@ -39,13 +55,17 @@ const Banner = () => {
 
 
 
-                    <div className="bannerAdd">
+                    <div className="bannerAdd" style={{ backgroundImage: `url(${banners.data && banners.data[3].image.url})` }}>
                         <div className="bannerImg">
-                            <img src="add2.jpg" alt="" />
+
+                            <img src={banners.data && banners.data[2].image.url} alt="" />
+
                         </div>
 
                         <div className="bannerContent">
+                            {/* <p>{banners.data && banners.data[2].bannerText}</p> */}
                             <p>Sale of 50%</p>
+
                             <span>Show Now</span>
                         </div>
                     </div>

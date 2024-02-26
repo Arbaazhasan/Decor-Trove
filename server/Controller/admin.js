@@ -124,7 +124,7 @@ export const getAdmin = (req, res) => {
 
         res.status(200).json({
             success: true,
-            userData: req.userData
+            userData: req.adminData
         });
 
     } catch (error) {

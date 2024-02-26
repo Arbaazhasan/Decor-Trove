@@ -1,24 +1,44 @@
 import React from 'react';
+import './header.scss';
+
 import { HiOutlineShoppingBag } from 'react-icons/hi';
 import { BiUserCircle } from 'react-icons/bi';
 import { AiOutlineHeart } from 'react-icons/ai';
 import Cart from '../../Pages/Cart/Cart.jsx';
 import { Link } from 'react-router-dom';
-import './header.scss';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserProfileWindow } from '../../redux/Reducer/userReducer.js';
+import { isCartMainWindow } from '../../redux/action/userLogin.js';
+import { useEffect } from 'react';
 
 const Header = () => {
 
-    const { userAuthenticated } = useSelector(state => state.user);
+    const { userAuthenticated, isCartWindow, isProfilWindow } = useSelector(state => state.user);
+    const dispatch = useDispatch();
 
-    const [isCart, setIscart] = useState();
+    const clickHanlder = (val) => {
+
+        dispatch(setUserProfileWindow(val));
+    };
+
+    const cartHandler = () => {
+
+        isCartMainWindow(dispatch, !isCartWindow);
+
+    };
+
+    
+
+    useEffect(() => {
+
+    }, [isCartWindow]);
 
 
 
     return (
         <div>
-            <div style={{ display: `${isCart ? "block" : "none"}` }}>
+            <div className='headerClassComponent' onClick={cartHandler} style={{ display: `${isCartWindow ? "flex" : "none"}` }}>
                 <Cart />
             </div>
 
@@ -32,7 +52,7 @@ const Header = () => {
 
                     {/* <a href="">Home</a> */}
 
-                    <Link to={'/'}>Home</Link>
+                    <Link to={userAuthenticated ? '/me' : '/'}>Home</Link>
                     <Link to={'/productes'}>Products</Link>
 
                     {/* <Link to={'/service'}>Services</Link> */}
@@ -48,7 +68,7 @@ const Header = () => {
 
                     <Link  >
 
-                        <span onClick={() => setIscart(true)}> <HiOutlineShoppingBag /></span>
+                        <span onClick={cartHandler}> <HiOutlineShoppingBag /></span>
 
                     </Link>
 
@@ -60,7 +80,7 @@ const Header = () => {
                         userAuthenticated ?
                             <Link to={'/profile'}>
 
-                                <span><BiUserCircle /></span>
+                                <span onClick={() => clickHanlder(true)}><BiUserCircle /></span>
 
                             </Link>
 
@@ -82,4 +102,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default Header;;;

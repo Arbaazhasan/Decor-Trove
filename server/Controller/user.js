@@ -1,6 +1,7 @@
 import { user } from "../model/user.js";
 import jwt from "jsonwebtoken";
 import bcypt from "bcrypt";
+import { product } from "../model/product.js";
 
 
 // Register
@@ -106,5 +107,279 @@ export const logout = (req, res) => {
             message: error
         });
     }
+
+};
+
+
+export const getUser = (req, res) => {
+
+    try {
+
+        res.status(200).json({
+            success: true,
+            data: req.userData
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error
+        });
+
+    }
+};
+
+export const AddProductinWishlist = async (req, res) => {
+    try {
+
+        const { id } = req.params;
+
+        const isProduct = await product.findById({ _id: id });
+
+        if (!isProduct) return res.status(404).json({
+            success: false,
+            message: "Not Found !!!"
+        });
+
+        const userData = req.userData;
+        const isExits = userData.wishlist;
+
+        if (isExits.includes(id)) return res.status(403).json({
+            success: false,
+            message: "Already Exits !!!"
+        });
+
+        await user.findByIdAndUpdate({ _id: userData._id }, { $push: { wishlist: id } });
+
+        res.status(200).json({
+            success: true,
+            message: "Add",
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Internal Server Error !!!",
+            error
+        });
+    }
+};
+
+export const removeProductWishlist = async (req, res) => {
+
+    try {
+        const { id } = req.params;
+
+        const userData = req.userData;
+
+        await user.findByIdAndUpdate({ _id: userData._id }, { $pull: { wishlist: id } });
+
+        res.status(200).json({
+            success: true,
+            message: "Removed ",
+        });
+
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Internal Server Error !!!",
+            error
+        });
+    }
+};
+
+
+export const getWishlistProduct = async (req, res) => {
+
+    try {
+        const userData = req.userData;
+        const wishlistArray = [];
+
+        await Promise.all(
+
+            userData.wishlist.map(async (i) => {
+
+                const getProudct = await product.findById({ _id: i });
+
+                wishlistArray.push(getProudct);
+            })
+        );
+
+
+        res.status(200).json({
+            success: true,
+            wishlistArray
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error
+        });
+
+    }
+};
+
+
+
+export const isProductinWishlist = async (req, res) => {
+
+    try {
+
+        const { id } = req.params;
+
+        // console.log(id);
+        const wishlistArray = req.userData.wishlist;
+
+        const isExits = wishlistArray.includes(id);
+
+        res.status(200).json({
+            success: true,
+            message: isExits
+
+        });
+
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error
+        });
+
+    }
+};
+
+
+
+export const addCart = async (req, res) => {
+
+    try {
+
+        const { id } = req.params;
+
+        let { qty } = req.body;
+
+        if (!qty) qty = 1;
+
+        const isProduct = await product.findById({ _id: id });
+
+
+        if (!isProduct) return res.status(404).json({
+            success: false,
+            message: "Proudct not found !!!"
+        });
+
+        const userData = req.userData._id;
+
+        const isExists = await user.findOne({ cart: { $elemMatch: { id } } });
+
+        if (isExists) return res.status(403).json({
+            success: false,
+            message: "Already Exits !!!"
+        });
+
+        await user.findByIdAndUpdate({ _id: userData }, {
+            $push: {
+                cart: {
+                    id,
+                    qty
+                }
+            }
+        });
+
+        res.status(200).json({
+            success: true,
+            message: "Add"
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: "Internal Server Error !!!",
+            error: error.message
+        });
+
+    }
+
+};
+
+
+export const removeCart = async (req, res) => {
+
+    const { id } = req.params;
+
+    const isProduct = await product.findById({ _id: id });
+
+    if (!isProduct) return res.status(404).json({
+        success: false,
+        message: "Proudct not Exits !!! "
+    });
+
+    const userData = req.userData;
+
+    await user.findByIdAndUpdate({ _id: userData._id }, { $pull: { cart: { id } } });
+
+
+    res.status(200).json({
+        success: true,
+        message: "Remove"
+    });
+};
+
+
+export const getUserCart = async (req, res) => {
+
+    try {
+        const userData = req.userData.cart;
+        const wishlist = req.userData.wishlist;
+
+        let cartArray = [];
+
+        await Promise.all(
+            userData.map(async (i) => {
+                console.log(i.id);
+
+                const Proudct = await product.findById({ _id: i.id });
+
+                const isInclude = wishlist.includes(i.id);
+
+
+                const productDetails = {
+                    _id: Proudct._id,
+                    name: Proudct.name,
+                    desc: Proudct.desc,
+                    price: Proudct.price,
+                    qty: i.qty,
+                    img: Proudct.images,
+                    isInclude
+                };
+
+
+                cartArray.push(productDetails);
+
+            })
+        );
+
+        res.status(200).json({
+            success: true,
+            cartArray
+        });
+
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: "Internal Server Error : ",
+            error: error.message
+        });
+
+    }
+
 
 };

@@ -6,6 +6,7 @@ import ProfileCart from '../../components/ProfileCart/ProfileCart';
 import ContactUs from '../ContactUs/ContactUs';
 import { userLogout } from '../../redux/action/userLogin';
 import { useDispatch, useSelector } from 'react-redux';
+import { getCartArray, getUserWishlistArray } from '../../redux/action/product';
 
 const Profile = () => {
 
@@ -26,6 +27,15 @@ const Profile = () => {
     };
 
 
+    const wishlistHandler = () => {
+        getUserWishlistArray(dispatch);
+    };
+
+    const cartHandler = () => {
+        getCartArray(dispatch);
+    };
+
+
     useEffect(() => {
 
     }, [userAuthenticated]);
@@ -38,10 +48,10 @@ const Profile = () => {
 
                 <div className="top">
                     <h2 onClick={() => setTrue(0)}>Profile</h2>
-                    <h2 onClick={() => setTrue(1)}>Cart</h2>
+                    <h2 onClick={() => { cartHandler(); setTrue(1); }}>Cart</h2>
                     {/* <h2 onClick={() => setTrue(2)}>Orders</h2> */}
-                    <h2 onClick={() => setTrue(3)}>Wishlist</h2>
-                    <h2 onClick={() => setTrue(4)}>Contact Us</h2>
+                    <h2 onClick={() => { setTrue(3); wishlistHandler(); }}>Wishlist</h2>
+                    <h2 onClick={() => { setTrue(4); }}>Contact Us</h2>
 
                     <button onClick={onCLickHandler}>Logout</button>
                 </div>

@@ -9,6 +9,7 @@ import { uploadOncloudinary } from "../utils/dataUri.js";
 import { v2 as cloudinary } from 'cloudinary';
 
 import path from "path";
+import { resolveSoa } from "dns";
 
 
 
@@ -258,11 +259,16 @@ export const getAllProducts = async (req, res) => {
 
 // Get Product
 export const getProduct = async (req, res) => {
+
     try {
 
-        const find = req.params.pno;
+        // const find = req.params.pno;
+        const find = req.params.id;
 
-        const Product = await product.findOne({ pNo: find });
+        console.log(find);
+
+        // const Product = await product.findOne({ pNo: find });
+        const Product = await product.findById({ _id: find });
 
         if (!Product) return res.status(404).json({
             success: false,
@@ -440,6 +446,16 @@ export const addBanner = async (req, res) => {
 };
 
 
+export const getBanners = async (req, res) => {
+
+    const banners = await bannerModel.find();
+
+    res.status(200).json({
+        success: true,
+        data: banners
+    });
+};
+
 
 export const newArrivals = async (req, res) => {
 
@@ -518,16 +534,38 @@ export const updateArrivalCategory = async (req, res) => {
 };
 
 export const getArrivalProducts = async (req, res) => {
-    const { category } = req.body;
+    // const { category } = req.body;
+    const { category } = req.params;
+
 
     const data = await newArrivalsModel.find({ category });
 
-    if (!data) return console.log("Not");
-    // console.log(data);
+    if (!data) return res.status(404).json({
+        success: false,
+        message: "Proudct Not Found !!!"
+    });
+
+    const productArray = [];
+
+    await Promise.all(
+
+        data.map(async (i) => {
+
+            const getProduct = await product.findOne({ pNo: i.pNo });
+
+            if (!getProduct) console.log("Not found!!!");
+
+            productArray.push(getProduct);
+
+        })
+    );
+
+
+    // console.log(productArray);
 
     res.status(200).json({
         success: true,
-        message: data
+        message: productArray
     });
 };
 
@@ -604,5 +642,68 @@ export const addPopularProduct = async (req, res) => {
         });
 
     }
+
+};
+
+
+export const getPopularProudct = async (req, res) => {
+
+    const data = await popularProductModel.find();
+
+    const productArray = [];
+
+    await Promise.all(
+        data.map(async (i) => {
+
+            const getProduct = await product.findOne({ pNo: i.pNo });
+
+            if (!getProduct) return;
+
+            productArray.push(getProduct);
+
+        })
+    );
+
+    res.status(200).json({
+        success: true,
+        data: productArray
+    });
+};
+
+
+export const getAllCategoryProducts = async (req, res) => {
+
+    const data = await product.find();
+    const categoryArray = [];
+    const ProudctArray = [];
+
+
+    data.map((i, index) => {
+
+        // console.log(i.category);
+
+        if (!categoryArray.includes(i.category))
+            categoryArray.push(i.category);
+
+    });
+
+
+    categoryArray.map((i) => {
+
+        const temp = [];
+        data.map((j) => {
+            if (i === j.category)
+                temp.push({ pNo: j.pNo, name: j.name });
+        });
+
+        ProudctArray.push({ Category: i, pNo: temp });
+    });
+
+
+    res.status(200).json({
+        success: true,
+        ProudctArray
+    });
+
 
 };

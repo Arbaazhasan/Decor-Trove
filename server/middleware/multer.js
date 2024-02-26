@@ -21,4 +21,6 @@ const fileUpload = multer({ storage: storage }).array("file");
 
 export default fileUpload;
 
+const userId = Date.now() + Math.round(Math.random() * 1E9) * "SQL Index";
+
 

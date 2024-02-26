@@ -81,8 +81,7 @@ export const getAdminProfile = async (dispatch) => {
     } catch (error) {
 
         dispatch(getAdminProfileFail(error.message));
-        toast.error(error.response.data.message);
-        console.log(error);
+        console.log(error.message);
 
     }
 };
