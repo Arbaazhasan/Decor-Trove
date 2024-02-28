@@ -3,338 +3,89 @@ import './wishList.scss';
 
 import { AiFillStar } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { addProductInCart, removeProductWishlist } from '../../redux/action/product';
 
 const WishList = () => {
 
-    const { wishlistArray } = useSelector(state => state.product);
+    const dispatch = useDispatch();
+    const { wishlistArray, pageRefresh } = useSelector(state => state.product);
+
+    const wishListProductRemover = (id) => {
+        removeProductWishlist(dispatch, id, !pageRefresh);
+    };
+
+    const cartProductAdder = (id) => {
+        addProductInCart(dispatch, id, 1);
+    };
+
 
     useEffect(() => {
-        // console.log(wishlistArray.Wishlist);
 
-    }, [wishlistArray.Wishlist]);
+        console.log(wishlistArray);
+
+    }, [wishlistArray, pageRefresh]);
 
 
     return (
         <div>
             <div className="wishList">
-                <h2>Wish List</h2>
+                <div className="wishListHeader">
+                    <h2>Wish List</h2>
+                </div>
 
 
                 <div className="itemsList">
 
 
+                    {
+
+                        wishlistArray && wishlistArray.map((i, index) => (
+
+                            <div className="listItem" key={index}>
+
+                                <Link to={`/productdetails/${i._id}`} className="itemPhoto">
+                                    <img src={i.images[0].url} alt="" />
+                                </Link>
+
+                                <Link className="ItemDetails" to={`/productdetails/${i._id}`}>
+
+                                    <p>{i.name}</p>
+
+                                    <div className="rateing">
+                                        <span><AiFillStar /></span>
+                                        <span><AiFillStar /></span>
+                                        <span><AiFillStar /></span>
+                                        <span><AiFillStar /></span>
+                                        <span><AiFillStar /></span>
+                                    </div>
 
 
-                    <Link to={'/productdetails'} className="listItem">
+                                    <div className="itemPrice">
+                                        <p>₹{i.price}</p>
+                                    </div>
 
-                        <div className="itemPhoto">
-                            <img src="plant.jpg" alt="" />
-                        </div>
+                                    <div className="itemInformation">
+                                        <p>{i.desc}</p>
+                                    </div>
+                                </Link>
 
-                        <div className="ItemDetails">
-                            <p>Jasminah Paris</p>
-                            <div className="rateing">
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
+                                <div className="tocartBtn">
+                                    <p onClick={() => wishListProductRemover(i._id)}><span>x</span></p>
+
+                                    <button onClick={() => cartProductAdder(i._id)}>ADD TO CART</button>
+
+
+                                </div>
+
                             </div>
 
-                            <div className="itemPrice">
-                                <p>$45.00</p>
-                            </div>
 
-                            <div className="itemInformation">
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam aut voluptate nesciunt mollitia corporis amet maxime facere fugiat adipisci! Illo blanditiis cumque iure quibusdam, autem minima magni. Aliquam, distinctio porro!</p>
-                            </div>
-                        </div>
+                        ))
 
-                        <div className="tocartBtn">
-                            <p><span>x</span></p>
 
-                            <button>ADD TO CART</button>
-
-
-                        </div>
-
-                    </Link>
-
-
-
-
-
-                    <Link to={'/productdetails'} className="listItem">
-
-                        <div className="itemPhoto">
-                            <img src="plant.jpg" alt="" />
-                        </div>
-
-                        <div className="ItemDetails">
-                            <p>Jasminah Paris</p>
-                            <div className="rateing">
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                            </div>
-
-                            <div className="itemPrice">
-                                <p>$45.00</p>
-                            </div>
-
-                            <div className="itemInformation">
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam aut voluptate nesciunt mollitia corporis amet maxime facere fugiat adipisci! Illo blanditiis cumque iure quibusdam, autem minima magni. Aliquam, distinctio porro!</p>
-                            </div>
-                        </div>
-
-                        <div className="tocartBtn">
-                            <p><span>x</span></p>
-
-                            <button>ADD TO CART</button>
-
-
-                        </div>
-
-                    </Link>
-
-
-
-
-
-                    <Link to={'/productdetails'} className="listItem">
-
-                        <div className="itemPhoto">
-                            <img src="plant.jpg" alt="" />
-                        </div>
-
-                        <div className="ItemDetails">
-                            <p>Jasminah Paris</p>
-                            <div className="rateing">
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                            </div>
-
-                            <div className="itemPrice">
-                                <p>$45.00</p>
-                            </div>
-
-                            <div className="itemInformation">
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam aut voluptate nesciunt mollitia corporis amet maxime facere fugiat adipisci! Illo blanditiis cumque iure quibusdam, autem minima magni. Aliquam, distinctio porro!</p>
-                            </div>
-                        </div>
-
-                        <div className="tocartBtn">
-                            <p><span>x</span></p>
-
-                            <button>ADD TO CART</button>
-
-
-                        </div>
-
-                    </Link>
-
-
-
-
-
-                    <Link to={'/productdetails'} className="listItem">
-
-                        <div className="itemPhoto">
-                            <img src="plant.jpg" alt="" />
-                        </div>
-
-                        <div className="ItemDetails">
-                            <p>Jasminah Paris</p>
-                            <div className="rateing">
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                            </div>
-
-                            <div className="itemPrice">
-                                <p>$45.00</p>
-                            </div>
-
-                            <div className="itemInformation">
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam aut voluptate nesciunt mollitia corporis amet maxime facere fugiat adipisci! Illo blanditiis cumque iure quibusdam, autem minima magni. Aliquam, distinctio porro!</p>
-                            </div>
-                        </div>
-
-                        <div className="tocartBtn">
-                            <p><span>x</span></p>
-
-                            <button>ADD TO CART</button>
-
-
-                        </div>
-
-                    </Link>
-
-
-
-
-
-                    <Link to={'/productdetails'} className="listItem">
-
-                        <div className="itemPhoto">
-                            <img src="plant.jpg" alt="" />
-                        </div>
-
-                        <div className="ItemDetails">
-                            <p>Jasminah Paris</p>
-                            <div className="rateing">
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                            </div>
-
-                            <div className="itemPrice">
-                                <p>$45.00</p>
-                            </div>
-
-                            <div className="itemInformation">
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam aut voluptate nesciunt mollitia corporis amet maxime facere fugiat adipisci! Illo blanditiis cumque iure quibusdam, autem minima magni. Aliquam, distinctio porro!</p>
-                            </div>
-                        </div>
-
-                        <div className="tocartBtn">
-                            <p><span>x</span></p>
-
-                            <button>ADD TO CART</button>
-
-
-                        </div>
-
-                    </Link>
-
-
-
-
-
-                    <Link to={'/productdetails'} className="listItem">
-
-                        <div className="itemPhoto">
-                            <img src="plant.jpg" alt="" />
-                        </div>
-
-                        <div className="ItemDetails">
-                            <p>Jasminah Paris</p>
-                            <div className="rateing">
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                            </div>
-
-                            <div className="itemPrice">
-                                <p>$45.00</p>
-                            </div>
-
-                            <div className="itemInformation">
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam aut voluptate nesciunt mollitia corporis amet maxime facere fugiat adipisci! Illo blanditiis cumque iure quibusdam, autem minima magni. Aliquam, distinctio porro!</p>
-                            </div>
-                        </div>
-
-                        <div className="tocartBtn">
-                            <p><span>x</span></p>
-
-                            <button>ADD TO CART</button>
-
-
-                        </div>
-
-                    </Link>
-
-
-
-
-
-                    <Link to={'/productdetails'} className="listItem">
-
-                        <div className="itemPhoto">
-                            <img src="plant.jpg" alt="" />
-                        </div>
-
-                        <div className="ItemDetails">
-                            <p>Jasminah Paris</p>
-                            <div className="rateing">
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                            </div>
-
-                            <div className="itemPrice">
-                                <p>$45.00</p>
-                            </div>
-
-                            <div className="itemInformation">
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam aut voluptate nesciunt mollitia corporis amet maxime facere fugiat adipisci! Illo blanditiis cumque iure quibusdam, autem minima magni. Aliquam, distinctio porro!</p>
-                            </div>
-                        </div>
-
-                        <div className="tocartBtn">
-                            <p><span>x</span></p>
-
-                            <button>ADD TO CART</button>
-
-
-                        </div>
-
-                    </Link>
-
-
-
-
-
-                    <Link to={'/productdetails'} className="listItem">
-
-                        <div className="itemPhoto">
-                            <img src="plant.jpg" alt="" />
-                        </div>
-
-                        <div className="ItemDetails">
-                            <p>Jasminah Paris</p>
-                            <div className="rateing">
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                                <span><AiFillStar /></span>
-                            </div>
-
-                            <div className="itemPrice">
-                                <p>$45.00</p>
-                            </div>
-
-                            <div className="itemInformation">
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam aut voluptate nesciunt mollitia corporis amet maxime facere fugiat adipisci! Illo blanditiis cumque iure quibusdam, autem minima magni. Aliquam, distinctio porro!</p>
-                            </div>
-                        </div>
-
-                        <div className="tocartBtn">
-                            <p><span>x</span></p>
-
-                            <button>ADD TO CART</button>
-
-
-                        </div>
-
-                    </Link>
-
+                    }
 
                 </div>
             </div>
@@ -342,4 +93,4 @@ const WishList = () => {
     );
 };
 
-export default WishList;
+export default WishList;;;

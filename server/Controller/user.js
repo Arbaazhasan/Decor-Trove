@@ -2,7 +2,7 @@ import { user } from "../model/user.js";
 import jwt from "jsonwebtoken";
 import bcypt from "bcrypt";
 import { product } from "../model/product.js";
-
+import nodemailer from "nodemailer";
 
 // Register
 export const register = async (req, res) => {
@@ -342,7 +342,7 @@ export const getUserCart = async (req, res) => {
 
         await Promise.all(
             userData.map(async (i) => {
-                console.log(i.id);
+                // console.log(i.id);
 
                 const Proudct = await product.findById({ _id: i.id });
 
@@ -382,4 +382,49 @@ export const getUserCart = async (req, res) => {
     }
 
 
+};
+
+
+
+export const contactUsData = async (req, res) => {
+
+    try {
+
+        const transporter = nodemailer.createTransport({
+            host: 'smtp.ethereal.email',
+            port: 587,
+            auth: {
+                user: 'abdiel.ruecker@ethereal.email',
+                pass: 'HwPj2YrsGeccWUcxmv'
+            }
+        });
+
+        const info = await transporter.sendMail({
+            from: 'arbaazhasan.ah@gmail.com',
+            to: 'arbaazhasan.azh@gmail.com',
+            subject: 'Test',
+            text: "Text Email "
+        });
+
+
+        console.log(info.messageId);
+
+
+        res.status(200).json({
+            success: true,
+            message: info.messageId
+        });
+
+
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: "Internal Server Error !!!",
+            error
+        });
+
+
+    }
 };

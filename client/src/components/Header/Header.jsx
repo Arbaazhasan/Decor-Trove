@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUserProfileWindow } from '../../redux/Reducer/userReducer.js';
 import { isCartMainWindow } from '../../redux/action/userLogin.js';
 import { useEffect } from 'react';
+import { addProductWishlist, getUserWishlistArray } from '../../redux/action/product.js';
 
 const Header = () => {
 
@@ -28,7 +29,12 @@ const Header = () => {
 
     };
 
-    
+    const wishListDataHandler = () => {
+        getUserWishlistArray(dispatch);
+
+    };
+
+
 
     useEffect(() => {
 
@@ -63,7 +69,7 @@ const Header = () => {
 
                 <div className="cart">
                     <Link to={'/wishlist'}>
-                        <span><AiOutlineHeart /></span>
+                        <span onClick={wishListDataHandler}><AiOutlineHeart /></span>
                     </Link>
 
                     <Link  >

@@ -213,7 +213,6 @@ export const getUserWishlistArray = async (dispatch) => {
             withCredentials: true
         });
 
-        // console.log(data);
         dispatch(getWishlistArraySuccess(data.wishlistArray));
 
 
@@ -242,6 +241,7 @@ export const addProductWishlist = async (dispatch, id, pageRefresh) => {
         dispatch(addProductWishlistSucces(pageRefresh));
 
         toast.success(data.message);
+
 
         getCartArray(dispatch);
 

@@ -1,5 +1,5 @@
 import express from "express";
-import { AddProductinWishlist, addCart, getUser, getUserCart, getWishlistProduct, isProductinWishlist, login, logout, register, removeCart, removeProductWishlist } from "../Controller/user.js";
+import { AddProductinWishlist, addCart, contactUsData, getUser, getUserCart, getWishlistProduct, isProductinWishlist, login, logout, register, removeCart, removeProductWishlist } from "../Controller/user.js";
 import { isAuthonticated } from "../middleware/auth.js";
 
 const router = express.Router();
@@ -15,6 +15,7 @@ router.post('/isproductwishlist/:id', isAuthonticated, isProductinWishlist);
 router.post('/addproductcart/:id', isAuthonticated, addCart);
 router.post('/removeproductcart/:id', isAuthonticated, removeCart);
 router.post('/getusercart', isAuthonticated, getUserCart);
+router.post('/contactusdata', contactUsData);
 
 
 export default router;
