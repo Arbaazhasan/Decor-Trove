@@ -14,7 +14,8 @@ const SearchProduct = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        getSearchProduct(dispatch, searchItem);
+        const pNo = searchItem;
+        getSearchProduct(dispatch,pNo);
 
     };
 
@@ -24,6 +25,8 @@ const SearchProduct = () => {
 
 
     useEffect(() => {
+
+        console.log(product);
 
     }, [product, imageViewerWindow]);
 

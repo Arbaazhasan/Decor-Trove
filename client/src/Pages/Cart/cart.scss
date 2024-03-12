@@ -147,7 +147,7 @@
                     width: 60%;
                     display: grid;
                     gap: 1rem;
-
+                    cursor: pointer;
 
                     >.descPrice {
                         // border: 2px solid green;
@@ -157,6 +157,9 @@
                         flex-direction: column;
                         align-items: flex-start;
                         gap: 10px;
+                        text-decoration: none;
+                        color: black;
+
 
                         >span {
                             color: orangered;

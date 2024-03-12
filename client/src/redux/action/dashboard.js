@@ -24,14 +24,14 @@ export const imageViewerLoader = (dispatch, imageArray) => {
 
 
 
-export const getSearchProduct = async (dispatch, searchItem) => {
+export const getSearchProduct = async (dispatch, pNo) => {
 
 
     try {
 
         dispatch(getSearchProductRequest());
 
-        const { data } = await axios.get(`${server}/product/getproduct/${searchItem}`, {
+        const { data } = await axios.get(`${server}/product/getproduct/?pNo=${pNo}`, {
             headers: {
                 "Content-Type": "application/json",
             },

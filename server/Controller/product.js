@@ -262,13 +262,15 @@ export const getProduct = async (req, res) => {
 
     try {
 
-        // const find = req.params.pno;
-        const find = req.params.id;
+        const find = req.query;
 
-        console.log(find);
+        // console.log(find);
 
-        // const Product = await product.findOne({ pNo: find });
-        const Product = await product.findById({ _id: find });
+
+        const Product = find.pNo ?
+            await product.findOne({ pNo: find.pNo })
+            :
+            await product.findById({ _id: find.pId });
 
         if (!Product) return res.status(404).json({
             success: false,
@@ -287,6 +289,7 @@ export const getProduct = async (req, res) => {
         });
     }
 };
+
 
 
 // ********* Page Content *********

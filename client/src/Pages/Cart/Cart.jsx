@@ -22,7 +22,7 @@ const Cart = () => {
 
     useEffect(() => {
 
-        console.log(cartArray);
+        // console.log(cartArray);
 
     }, [isCartWindow, cartArray]);
 
@@ -42,307 +42,38 @@ const Cart = () => {
                 <div className="cartList">
 
 
+                    {
 
-                    <div className="cartItem">
+                        cartArray && cartArray.map((i, index) => (
+                            <div className="cartItem" key={index}>
 
-                        <Link to={'/productdetails'} className="photo">
-                            <img src="plant.jpg" alt="" />
-                        </Link>
+                                <Link to={`/productdetails/${i._id}`} className="photo">
+                                    <img src={i.img[0].url} alt="" />
+                                </Link>
 
-                        <div className="itemDetails">
-                            <div className='descPrice'>
-                                <p>Jasminah Paris</p>
-                                <span>$45.00</span>
+                                <div className="itemDetails">
+                                    <Link to={`/productdetails/${i._id}`} className='descPrice'>
+                                        <p>{i.name}</p>
+                                        <span>₹{i.price}</span>
 
+                                    </Link>
+
+                                    <div className='Btns'>
+                                        <span>Add to Wishlist</span>
+                                        <span>Remove</span>
+                                    </div>
+                                </div>
+
+
+                                <div className="isOrder">
+                                    <input type="checkbox" />
+                                </div>
                             </div>
 
-                            <div className='Btns'>
-                                <span>Add to Wishlist</span>
-                                <span>Remove</span>
-                            </div>
-                        </div>
 
 
-                        <div className="isOrder">
-                            <input type="checkbox" />
-                        </div>
-                    </div>
-
-
-
-                    <div className="cartItem">
-
-                        <Link to={'/productdetails'} className="photo">
-                            <img src="plant.jpg" alt="" />
-                        </Link>
-
-                        <div className="itemDetails">
-                            <div className='descPrice'>
-                                <p>Jasminah Paris</p>
-                                <span>$45.00</span>
-
-                            </div>
-
-                            <div className='Btns'>
-                                <span>Add to Wishlist</span>
-                                <span>Remove</span>
-                            </div>
-                        </div>
-
-
-                        <div className="isOrder">
-                            <input type="checkbox" />
-                        </div>
-                    </div>
-
-
-
-                    <div className="cartItem">
-
-                        <Link to={'/productdetails'} className="photo">
-                            <img src="plant.jpg" alt="" />
-                        </Link>
-
-                        <div className="itemDetails">
-                            <div className='descPrice'>
-                                <p>Jasminah Paris</p>
-                                <span>$45.00</span>
-
-                            </div>
-
-                            <div className='Btns'>
-                                <span>Add to Wishlist</span>
-                                <span>Remove</span>
-                            </div>
-                        </div>
-
-
-                        <div className="isOrder">
-                            <input type="checkbox" />
-                        </div>
-                    </div>
-
-
-
-                    <div className="cartItem">
-
-                        <Link to={'/productdetails'} className="photo">
-                            <img src="plant.jpg" alt="" />
-                        </Link>
-
-                        <div className="itemDetails">
-                            <div className='descPrice'>
-                                <p>Jasminah Paris</p>
-                                <span>$45.00</span>
-
-                            </div>
-
-                            <div className='Btns'>
-                                <span>Add to Wishlist</span>
-                                <span>Remove</span>
-                            </div>
-                        </div>
-
-
-                        <div className="isOrder">
-                            <input type="checkbox" />
-                        </div>
-                    </div>
-
-
-
-                    <div className="cartItem">
-
-                        <Link to={'/productdetails'} className="photo">
-                            <img src="plant.jpg" alt="" />
-                        </Link>
-
-                        <div className="itemDetails">
-                            <div className='descPrice'>
-                                <p>Jasminah Paris</p>
-                                <span>$45.00</span>
-
-                            </div>
-
-                            <div className='Btns'>
-                                <span>Add to Wishlist</span>
-                                <span>Remove</span>
-                            </div>
-                        </div>
-
-
-                        <div className="isOrder">
-                            <input type="checkbox" />
-                        </div>
-                    </div>
-
-
-
-                    <div className="cartItem">
-
-                        <Link to={'/productdetails'} className="photo">
-                            <img src="plant.jpg" alt="" />
-                        </Link>
-
-                        <div className="itemDetails">
-                            <div className='descPrice'>
-                                <p>Jasminah Paris</p>
-                                <span>$45.00</span>
-
-                            </div>
-
-                            <div className='Btns'>
-                                <span>Add to Wishlist</span>
-                                <span>Remove</span>
-                            </div>
-                        </div>
-
-
-                        <div className="isOrder">
-                            <input type="checkbox" />
-                        </div>
-                    </div>
-
-
-
-                    <div className="cartItem">
-
-                        <Link to={'/productdetails'} className="photo">
-                            <img src="plant.jpg" alt="" />
-                        </Link>
-
-                        <div className="itemDetails">
-                            <div className='descPrice'>
-                                <p>Jasminah Paris</p>
-                                <span>$45.00</span>
-
-                            </div>
-
-                            <div className='Btns'>
-                                <span>Add to Wishlist</span>
-                                <span>Remove</span>
-                            </div>
-                        </div>
-
-
-                        <div className="isOrder">
-                            <input type="checkbox" />
-                        </div>
-                    </div>
-
-
-
-                    <div className="cartItem">
-
-                        <Link to={'/productdetails'} className="photo">
-                            <img src="plant.jpg" alt="" />
-                        </Link>
-
-                        <div className="itemDetails">
-                            <div className='descPrice'>
-                                <p>Jasminah Paris</p>
-                                <span>$45.00</span>
-
-                            </div>
-
-                            <div className='Btns'>
-                                <span>Add to Wishlist</span>
-                                <span>Remove</span>
-                            </div>
-                        </div>
-
-
-                        <div className="isOrder">
-                            <input type="checkbox" />
-                        </div>
-                    </div>
-
-
-
-                    <div className="cartItem">
-
-                        <Link to={'/productdetails'} className="photo">
-                            <img src="plant.jpg" alt="" />
-                        </Link>
-
-                        <div className="itemDetails">
-                            <div className='descPrice'>
-                                <p>Jasminah Paris</p>
-                                <span>$45.00</span>
-
-                            </div>
-
-                            <div className='Btns'>
-                                <span>Add to Wishlist</span>
-                                <span>Remove</span>
-                            </div>
-                        </div>
-
-
-                        <div className="isOrder">
-                            <input type="checkbox" />
-                        </div>
-                    </div>
-
-
-
-                    <div className="cartItem">
-
-                        <Link to={'/productdetails'} className="photo">
-                            <img src="plant.jpg" alt="" />
-                        </Link>
-
-                        <div className="itemDetails">
-                            <div className='descPrice'>
-                                <p>Jasminah Paris</p>
-                                <span>$45.00</span>
-
-                            </div>
-
-                            <div className='Btns'>
-                                <span>Add to Wishlist</span>
-                                <span>Remove</span>
-                            </div>
-                        </div>
-
-
-                        <div className="isOrder">
-                            <input type="checkbox" />
-                        </div>
-                    </div>
-
-
-
-                    <div className="cartItem">
-
-                        <Link to={'/productdetails'} className="photo">
-                            <img src="plant.jpg" alt="" />
-                        </Link>
-
-                        <div className="itemDetails">
-                            <Link to={'/productdetails'} className='descPrice'>
-                                <p>Jasminah Paris</p>
-                                <span>$45.00</span>
-
-                            </Link>
-
-                            <div className='Btns'>
-                                <span>Add to Wishlist</span>
-                                <span>Remove</span>
-                            </div>
-                        </div>
-
-
-                        <div className="isOrder">
-                            <input type="checkbox" />
-                        </div>
-                    </div>
-
-
-
-
-
-
+                        ))
+                    }
 
                 </div>
 

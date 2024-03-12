@@ -14,7 +14,7 @@ router.post('/new', adminIsAuthonticated, fileUpload, newProduct);
 router.post('/update/:pno', adminIsAuthonticated, fileUpload, updateProduct);
 router.get('/delete/:pno', adminIsAuthonticated, deleteProduct);
 router.get('/getallproducts', getAllProducts);
-router.get('/getproduct/:id', getProduct);
+router.get('/getproduct', getProduct);
 
 router.get('/getallcategoryproducts', getAllCategoryProducts);
 

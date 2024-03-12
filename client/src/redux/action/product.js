@@ -130,7 +130,7 @@ export const getProudct = async (dispatch, _id) => {
 
         dispatch(getProudctRequest());
 
-        const { data } = await axios.get(`${server}/product/getproduct/${_id}`, {}, {
+        const { data } = await axios.get(`${server}/product/getproduct?pId=${_id}`, {}, {
             headers: {
                 "Content-Type": "application/json",
             },
@@ -138,7 +138,7 @@ export const getProudct = async (dispatch, _id) => {
         });
 
         dispatch(getProudctSuccess(data.Product));
-        // console.log(data);
+        console.log(data);
 
     } catch (error) {
 

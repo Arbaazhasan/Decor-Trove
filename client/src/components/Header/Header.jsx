@@ -44,7 +44,7 @@ const Header = () => {
 
     return (
         <div>
-            <div className='headerClassComponent' onClick={cartHandler} style={{ display: `${isCartWindow ? "flex" : "none"}` }}>
+            <div className='headerClassComponent' style={{ display: `${isCartWindow ? "flex" : "none"}` }}>
                 <Cart />
             </div>
 
