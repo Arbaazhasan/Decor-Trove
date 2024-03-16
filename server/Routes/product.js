@@ -1,5 +1,5 @@
 import express from "express";
-import { addPopularProduct, addBanner, deleteProduct, deleteSlider, getAllProducts, getArrivalProductCategory, getArrivalProducts, getProduct, getSliderSlide, newArrivals, newProduct, slider, updateArrivalCategory, updateProduct, getBanners, getPopularProudct, getAllCategoryProducts } from "../Controller/product.js";
+import { addPopularProduct, addBanner, deleteProduct, deleteSlider, getAllProducts, getArrivalProductCategory, getArrivalProducts, getProduct, getSliderSlide, newArrivals, newProduct, slider, updateArrivalCategory, updateProduct, getBanners, getPopularProudct, getAllCategoryProducts, getProudctByName } from "../Controller/product.js";
 import { adminIsAuthonticated, isAuthonticated } from "../middleware/auth.js";
 import fileUpload from "../middleware/multer.js";
 
@@ -17,6 +17,7 @@ router.get('/getallproducts', getAllProducts);
 router.get('/getproduct', getProduct);
 
 router.get('/getallcategoryproducts', getAllCategoryProducts);
+router.get('/getproductbyname/:name', getProudctByName);
 
 
 router.post('/addpopularproduct', adminIsAuthonticated, addPopularProduct);

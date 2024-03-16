@@ -130,6 +130,31 @@ export const getUser = (req, res) => {
     }
 };
 
+
+export const updateUserData = async (req, res) => {
+
+    try {
+        const { name, phoneNo, alternatePNo, address, secondAddress, landMark, city, state, country } = req.body;
+
+        const userId = req.userData._id;
+
+        await user.findByIdAndUpdate({ _id: userId }, { $set: { name, phoneNo, alternatePNo, address, secondAddress, landMark, city, state, country } });
+
+        res.status(200).json({
+            success: true,
+            message: 'Update'
+        });
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
+
+};
+
 export const AddProductinWishlist = async (req, res) => {
     try {
 

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { AiFillStar } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { addProductWishlist, getCartArray, removeProductCart } from '../../redux/action/product';
+import { addCardProduct, addProductWishlist, getCartArray, removeProductCart } from '../../redux/action/product';
 import { useState } from 'react';
 
 
@@ -47,14 +47,17 @@ const ProfileCart = () => {
     };
 
 
+    const addProductCartHandler = (i) => {
+        addCardProduct(dispatch, i);
+    };
+
     useEffect(() => {
-        console.log(cartArray);
+        // console.log(cartArray);
     }, [cartArray]);
 
     return (
         <div className="profileCart" >
             <div className="cartList">
-
 
                 {
 
@@ -106,7 +109,7 @@ const ProfileCart = () => {
                             </div>
 
                             <div className="isOrder">
-                                <input type="checkbox" />
+                                <input type="checkbox" onClick={() => addProductCartHandler(i)} />
                             </div>
                         </div>
 

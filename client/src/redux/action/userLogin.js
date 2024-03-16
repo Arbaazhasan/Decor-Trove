@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getUserProfileFail, getUserProfileRequest, getUserProfileSuccess, isCartWindowClose, isCartWindowOpen, userLoginFail, userLoginRequest, userLoginSuccess, userLogoutFail, userLogoutRequest, userLogoutSuccess } from "../Reducer/userReducer";
+import { getUserProfileDataFail, getUserProfileDataRequest, getUserProfileDataSuccess, getUserProfileFail, getUserProfileRequest, getUserProfileSuccess, isCartWindowClose, isCartWindowOpen, updateUserDataFail, updateUserDataRequest, updateUserDataSuccess, userLoginFail, userLoginRequest, userLoginSuccess, userLogoutFail, userLogoutRequest, userLogoutSuccess } from "../Reducer/userReducer";
 import { server } from "../store";
 import toast from "react-hot-toast";
 import { getCartArray } from "./product";
@@ -76,9 +76,6 @@ export const getUserProfile = async (dispatch) => {
 
         dispatch(getUserProfileSuccess(data.data));
 
-        // console.log(data);
-
-
     } catch (error) {
 
         dispatch(getUserProfileFail(error.message));
@@ -86,6 +83,90 @@ export const getUserProfile = async (dispatch) => {
 
     }
 };
+
+
+
+export const getUserData = async (dispatch) => {
+
+    try {
+        dispatch(getUserProfileDataRequest());
+
+        const { data } = await axios.post(`${server}/user/getuser`, {
+
+        }, {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            withCredentials: true
+        });
+
+        dispatch(getUserProfileDataSuccess(data.data));
+        // console.log(data);
+
+    } catch (error) {
+
+        dispatch(getUserProfileDataFail(error.message));
+        console.log(error);
+
+    }
+};
+
+
+export const updateUserData = async (dispatch,
+    name,
+    email,
+    phoneNo1,
+    phoneNo2,
+    address,
+    address2,
+    landMark,
+    city,
+    state,
+    country,
+) => {
+
+    try {
+        dispatch(updateUserDataRequest());
+
+        const { data } = await axios.post(`${server}/user/updateuserdata`, {
+            name,
+            email,
+            phoneNo1,
+            phoneNo2,
+            address,
+            address2,
+            landMark,
+            city,
+            state,
+            country,
+
+        }, {
+            headers: {
+                "Content_type": "application/json"
+            },
+            withCredentials: true
+        });
+
+        dispatch(updateUserDataSuccess());
+
+        getUserData(dispatch);
+
+        toast.success(data.message);
+
+
+
+    } catch (error) {
+
+        dispatch(updateUserDataFail(error));
+        console.log(error);
+
+    }
+
+
+
+};
+
+
 
 export const isCartMainWindow = (dispatch, val) => {
 

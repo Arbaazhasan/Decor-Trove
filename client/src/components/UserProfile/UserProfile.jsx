@@ -2,22 +2,27 @@ import React from 'react';
 import './userProfile.scss';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { updateUserData } from '../../redux/action/userLogin';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const UserProfile = () => {
 
+    const dispatch = useDispatch();
+    const { user } = useSelector(state => state.user);
+
     const [isUpdate, setIsUpdate] = useState(false);
 
-    const [name, setName] = useState('Arbaz');
-    const [email, setEmail] = useState('arbaz@mgail.com');
-    const [phoneNo1, setPhoneNo1] = useState('9058714187');
-    const [phoneNo2, setPhoneNo2] = useState('7906427187');
-    const [address, setAddress] = useState('bazar Mufti Nawabpura');
-    const [address2, setAddress2] = useState('Near Super Medical');
-    const [landMark, setLandMark] = useState('Roshal Ali Masjid');
-    const [city, setCity] = useState('Moradabad');
-    const [state, setState] = useState('Utter Pradesh');
-    const [country, setCountry] = useState('India');
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [phoneNo1, setPhoneNo1] = useState("");
+    const [phoneNo2, setPhoneNo2] = useState("");
+    const [address, setAddress] = useState("");
+    const [address2, setAddress2] = useState("");
+    const [landMark, setLandMark] = useState("");
+    const [city, setCity] = useState("");
+    const [state, setState] = useState("");
+    const [country, setCountry] = useState("");
 
     const onChangeHandler = (e, field) => {
         const value = e.target.value;
@@ -68,19 +73,65 @@ const UserProfile = () => {
         }
     };
 
+    const submitHandler = () => {
+        updateUserData(dispatch,
+            name
+            , email
+            , phoneNo1
+            , phoneNo2
+            , address
+            , address2
+            , landMark
+            , city
+            , state
+            , country
+        );
+
+        // console.log("Submit");
+
+
+    };
+
     useEffect(() => {
-    }, [isUpdate]);
+
+
+        // console.log("name" + " : " + name);
+        // console.log("email" + " : " + email);
+        // console.log("phoneNo1" + " : " + phoneNo1);
+        // console.log("phoneNo2" + " : " + phoneNo2);
+        // console.log("address" + " : " + address);
+        // console.log("address2" + " : " + address2);
+        // console.log("landMark" + " : " + landMark);
+        // console.log("city" + " : " + city);
+        // console.log("state" + " : " + state);
+        // console.log("country" + " : " + country);
+
+
+
+        // console.log(user);
+
+
+        user && setName(user.name);
+        user && setEmail(user.username);
+        user && setPhoneNo1(user.phoneNo);
+        user && setPhoneNo2(user.alternatePNo);
+        user && setAddress(user.address);
+        user && setAddress2(user.secondAddress);
+        user && setLandMark(user.landMark);
+        user && setCity(user.city);
+        user && setState(user.state);
+        user && setCountry(user.country);
+
+
+    }, [isUpdate, user]);
 
     return (
         <div>
             <div className="userInfo">
 
 
-                <div className="userPhoto">
-                    <img src="userIcon.png" alt="photo" />
-                </div>
 
-                <div className='userDetails'>
+                <div className='userDetails' >
                     <div>
                         <p>Name</p>
                         <input type="text" value={name} onChange={(e) => onChangeHandler(e, 'name')} style={{ pointerEvents: isUpdate ? "fill" : "none" }} />
@@ -124,7 +175,7 @@ const UserProfile = () => {
                     </div>
 
 
-                    <button onClick={() => setIsUpdate((pre) => !pre)}>{isUpdate ? "Submit" : "Edit"}</button>
+                    <button onClick={() => { setIsUpdate((pre) => !pre); isUpdate && submitHandler(); }}> {isUpdate ? "Submit" : "Edit"}</button>
 
                 </div>
 

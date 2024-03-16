@@ -1,5 +1,5 @@
 import axios from "axios";
-import { addProducCarttFail, addProductCartRequest, addProductCartSuccess, addProductWishlistFail, addProductWishlistRequest, addProductWishlistSucces, bannerFail, bannersRequest, bannersSuccess, getAllProductRequest, getAllProductSuccess, getAllProudctFail, getArrivalCategoryFail, getArrivalCategoryRequest, getArrivalCategorySuccess, getArrivalProductFail, getArrivalProudctRequest, getArrivalProudctSuccess, getCartArrayFail, getCartArrayRequest, getCartArraySuccess, getPopularProductSuccess, getProductCategoryFail, getProductCategoryRequest, getProductCategorySuccess, getProudctFail, getProudctRequest, getProudctSuccess, getWishlistArrayFail, getWishlistArrayRequest, getWishlistArraySuccess, isProudctinWishlist, removeProductCartFail, removeProductCartRequest, removeProductCartSuccess, removeWishlistProductFail, removeWishlistProductRequest, removeWishlistProductSuccess, sliderSlidesFail, sliderSlidesRequest, sliderSlidesSuccess } from "../Reducer/productReducer";
+import { addCartProductSuccess, addProducCarttFail, addProductCartRequest, addProductCartSuccess, addProductWishlistFail, addProductWishlistRequest, addProductWishlistSucces, bannerFail, bannersRequest, bannersSuccess, getAllProductRequest, getAllProductSuccess, getAllProudctFail, getArrivalCategoryFail, getArrivalCategoryRequest, getArrivalCategorySuccess, getArrivalProductFail, getArrivalProudctRequest, getArrivalProudctSuccess, getCartArrayFail, getCartArrayRequest, getCartArraySuccess, getPopularProductSuccess, getProductCategoryFail, getProductCategoryRequest, getProductCategorySuccess, getProudctFail, getProudctRequest, getProudctSuccess, getWishlistArrayFail, getWishlistArrayRequest, getWishlistArraySuccess, isProudctinWishlist, removeProductCartFail, removeProductCartRequest, removeProductCartSuccess, removeWishlistProductFail, removeWishlistProductRequest, removeWishlistProductSuccess, searchProductFail, searchProductRequest, searchProductSuccess, sliderSlidesFail, sliderSlidesRequest, sliderSlidesSuccess } from "../Reducer/productReducer";
 import { server } from "../store";
 import toast from "react-hot-toast";
 
@@ -329,7 +329,7 @@ export const getCartArray = async (dispatch) => {
         });
 
         dispatch(getCartArraySuccess(data.cartArray));
-        console.log(data.cartArray);
+        // console.log(data.cartArray);
 
 
     } catch (error) {
@@ -401,4 +401,38 @@ export const removeProductCart = async (dispatch, id) => {
         dispatch(removeProductCartFail());
         console.log(error);
     }
+};
+
+export const getSearchProduct = async (dispatch, pName) => {
+
+    try {
+        dispatch(searchProductRequest());
+
+        const { data } = await axios.get(`${server}/product/getproductbyname/${pName}`, {}, {
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+            withCredentials: true
+        });
+
+        // console.log(data);
+
+        dispatch(searchProductSuccess(data.message));
+
+    } catch (error) {
+
+        dispatch(searchProductFail(error));
+        console.log(error);
+
+    }
+};
+
+
+export const addCardProduct = (dispatch, product) => {
+
+    const cartProductArray = [];
+
+    cartProductArray.push(product);
+
 };

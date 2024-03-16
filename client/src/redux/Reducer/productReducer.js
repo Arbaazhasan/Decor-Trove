@@ -13,6 +13,8 @@ const initialState = {
     productCategory: [],
     wishlistArray: [],
     cartArray: [],
+    cartData: [],
+    searchProductArray: [],
     pageRefresh: false,
     inWishlist: false,
     error: 'ideal'
@@ -200,6 +202,24 @@ export const productReducer = createSlice({
             state.loading = false;
         },
 
+        searchProductRequest: (state, action) => {
+            state.loading = true;
+        },
+        searchProductSuccess: (state, action) => {
+            state.loading = false;
+            state.searchProductArray = action.payload;
+        },
+        searchProductFail: (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        },
+
+
+        addCartProductSuccess : (state, action) => {
+            state.cartData = action.payload;
+        }
+
+
 
     }
 });
@@ -221,7 +241,11 @@ export const { sliderSlidesRequest, sliderSlidesSuccess, sliderSlidesFail,
     getCartArrayRequest, getCartArraySuccess, getCartArrayFail,
 
     addProductCartRequest, addProductCartSuccess, addProducCarttFail,
-    removeProductCartRequest, removeProductCartSuccess, removeProductCartFail
+    removeProductCartRequest, removeProductCartSuccess, removeProductCartFail,
+
+    searchProductRequest, searchProductSuccess, searchProductFail,
+
+    addCartProductSuccess
 
 } = productReducer.actions;
 

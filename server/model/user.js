@@ -11,6 +11,30 @@ const userSchema = mongoose.Schema({
         require: true,
         unique: true
     },
+    phoneNo: {
+        type: Number
+    },
+    alternatePNo: {
+        type: Number
+    },
+    address: {
+        type: String
+    },
+    secondAddress: {
+        type: String
+    },
+    landMark: {
+        String
+    },
+    city: {
+        type: String
+    },
+    state: {
+        type: String
+    },
+    country: {
+        type: String
+    },
     password: {
         type: String,
         require: true,

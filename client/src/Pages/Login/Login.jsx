@@ -6,6 +6,7 @@ import { getUserProfile, userLogin } from '../../redux/action/userLogin';
 import toast from 'react-hot-toast';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { RiHomeLine } from "react-icons/ri";
 
 const Login = () => {
 
@@ -40,7 +41,7 @@ const Login = () => {
 
         getAdminProfile(dispatch);
         getUserProfile(dispatch);
-        console.log(userAuthenticated);
+        // console.log(userAuthenticated);
 
     }, [adminAuthenticated, userAuthenticated]);
 
@@ -48,6 +49,7 @@ const Login = () => {
     return (
         <div>
             <div className="loginPage">
+
                 <div className="heading">
                     <h1></h1>
                     <h1>{isAdminLogin ? "Admin Login" : isSignIn ? "Sign In Now" : "Log In Now"}</h1>

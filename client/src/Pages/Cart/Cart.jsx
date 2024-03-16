@@ -6,10 +6,12 @@ import { useState } from 'react';
 import { isCartMainWindow, isCartMainWindowClose } from '../../redux/action/userLogin';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { addCardProduct } from '../../redux/action/product';
 
 const Cart = () => {
 
     const dispatch = useDispatch();
+
     const { isCartWindow } = useSelector(state => state.user);
     const { cartArray } = useSelector(state => state.product);
 

@@ -7,25 +7,41 @@ import { Link } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { getProudct } from '../../redux/action/product';
+import { getProudct, getSearchProduct } from '../../redux/action/product';
+import { useState } from 'react';
+import { IoCloseCircleOutline } from "react-icons/io5";
 
 
 const Products = () => {
 
-    const { allProducts, productCategory } = useSelector(state => state.product);
+    const { allProducts, productCategory, searchProductArray } = useSelector(state => state.product);
+    const [searchString, setSearchString] = useState();
+    const [isSearch, setIsSearch] = useState(false);
+
     const disptach = useDispatch();
 
     const clickHandler = (id) => {
         getProudct(disptach, id);
     };
 
+    const searchHandler = (e) => {
+
+        e.preventDefault();
+
+        getSearchProduct(disptach, searchString);
+        setIsSearch(true);
+    };
+
+
 
     useEffect(() => {
         // console.log(allProducts);
 
         // console.log(productCategory[0].Category)g;
+        // console.log(searchProductArray);
 
-    }, [allProducts, productCategory]);
+
+    }, [allProducts, productCategory, searchProductArray]);
 
 
     return (
@@ -80,11 +96,22 @@ const Products = () => {
 
                     <div className="right">
                         <div className="header">
-                            <p>Plants</p>
+                            {
+                                isSearch ?
+                                    <p>Search </p>
+                                    :
+                                    <p>Plants</p>
+                            }
 
-                            <form action="">
-                                <input type="text" placeholder='what are you looking for ?' />
-                                <button><BsSearch /></button>
+
+                            <form action="" >
+                                <input type="text" placeholder='what are you looking for ?' onChange={(e) => setSearchString(e.target.value)} onClick={() => setIsSearch(true)} />
+
+
+                                {
+                                    isSearch === true ? <span onClick={() => { setIsSearch(false), console.log(isSearch); }}><IoCloseCircleOutline /></span> : ""
+                                }
+                                <button onClick={(e) => searchHandler(e)}><BsSearch /></button>
                             </form>
                         </div>
 
@@ -93,26 +120,59 @@ const Products = () => {
 
                             {
 
-                                allProducts && allProducts.map((i, index) => (
+                                isSearch ?
+                                    searchProductArray && searchProductArray.length === 0 ?
 
-                                    <Link className="productWindow" to={`/productdetails/${i._id}`} key={index} onClick={() => clickHandler(i._id)}>
-                                        <div className="productPhoto">
-                                            <img src={i.images[0] && i.images[0].url} alt="error" />
+                                        <div className='pNotFound'>
+                                            <h1>Proudct not Found !!!</h1>
                                         </div>
-                                        <div className="nameAndPrice">
-                                            <p>{i.name}</p>
-                                            <span>₹{i.price}</span>
-                                        </div>
-                                        <div className="productingRateing">
-                                            <span><AiFillStar /></span>
-                                            <span><AiFillStar /></span>
-                                            <span><AiFillStar /></span>
-                                            <span><AiFillStar /></span>
-                                            <span><AiFillStar /></span>
-                                        </div>
-                                    </Link>
 
-                                ))
+                                        :
+
+                                        searchProductArray && searchProductArray.map((i, index) => (
+
+                                            <Link className="productWindow" to={`/productdetails/${i._id}`} key={index} onClick={() => clickHandler(i._id)}>
+                                                <div className="productPhoto">
+                                                    <img src={i.images[0] && i.images[0].url} alt="error" />
+                                                </div>
+                                                <div className="nameAndPrice">
+                                                    <p>{i.name}</p>
+                                                    <span>₹{i.price}</span>
+                                                </div>
+                                                <div className="productingRateing">
+                                                    <span><AiFillStar /></span>
+                                                    <span><AiFillStar /></span>
+                                                    <span><AiFillStar /></span>
+                                                    <span><AiFillStar /></span>
+                                                    <span><AiFillStar /></span>
+                                                </div>
+                                            </Link>
+
+                                        ))
+
+                                    :
+
+
+                                    allProducts && allProducts.map((i, index) => (
+
+                                        <Link className="productWindow" to={`/productdetails/${i._id}`} key={index} onClick={() => clickHandler(i._id)}>
+                                            <div className="productPhoto">
+                                                <img src={i.images[0] && i.images[0].url} alt="error" />
+                                            </div>
+                                            <div className="nameAndPrice">
+                                                <p>{i.name}</p>
+                                                <span>₹{i.price}</span>
+                                            </div>
+                                            <div className="productingRateing">
+                                                <span><AiFillStar /></span>
+                                                <span><AiFillStar /></span>
+                                                <span><AiFillStar /></span>
+                                                <span><AiFillStar /></span>
+                                                <span><AiFillStar /></span>
+                                            </div>
+                                        </Link>
+
+                                    ))
 
                             }
 

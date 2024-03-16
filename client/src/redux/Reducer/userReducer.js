@@ -52,6 +52,23 @@ export const userReducer = createSlice({
             state.error = action.payload;
         },
 
+
+        getUserProfileDataRequest: (state, action) => {
+            state.loading = true;
+        },
+
+        getUserProfileDataSuccess: (state, action) => {
+            state.loading = false;
+            state.user = action.payload;
+        },
+
+        getUserProfileDataFail: (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        },
+
+
+
         getUserProfileRequest: (state, action) => {
             state.loading = true;
             state.userAuthenticated = false;
@@ -62,6 +79,7 @@ export const userReducer = createSlice({
             state.userAuthenticated = true;
             state.user = action.payload;
         },
+
         getUserProfileFail: (state, action) => {
             state.loading = false;
             state.userAuthenticated = false;
@@ -80,6 +98,17 @@ export const userReducer = createSlice({
             state.isCartWindow = action.payload;
         },
 
+        updateUserDataRequest: (state, action) => {
+            state.loading = true;
+        },
+        updateUserDataSuccess: (state, action) => {
+            state.loading = false;
+        },
+        updateUserDataFail: (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        }
+
 
     }
 });
@@ -89,7 +118,10 @@ export const { userLoginRequest, userLoginSuccess, userLoginFail,
     getUserProfileRequest, getUserProfileSuccess, getUserProfileFail,
     setUserProfileWindow,
     isCartWindowOpen,
-    isCartWindowClose
+    isCartWindowClose,
+    updateUserDataRequest, updateUserDataSuccess, updateUserDataFail,
+    getUserProfileDataRequest, getUserProfileDataSuccess, getUserProfileDataFail
+
 
 } = userReducer.actions;
 

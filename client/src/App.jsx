@@ -44,17 +44,18 @@ function App() {
 
 
 
-  getSliderSlides(dispatch);
-  getBanners(dispatch);
-  getArrivalProudctCategory(dispatch);
-  getPopularProduct(dispatch);
-  getAllProudcts(dispatch);
-  getAllProudctCategory(dispatch);
 
 
 
 
   useEffect(() => {
+
+    getSliderSlides(dispatch);
+    getBanners(dispatch);
+    getArrivalProudctCategory(dispatch);
+    getPopularProduct(dispatch);
+    getAllProudcts(dispatch);
+    getAllProudctCategory(dispatch);
 
   }, [user, userAuthenticated, adminAuthenticated,
     adminLoading,

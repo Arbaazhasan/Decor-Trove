@@ -4,7 +4,7 @@ import UserProfile from '../../components/UserProfile/UserProfile';
 import ProfileWishlist from '../../components/ProfileWishlist/ProfileWishlist';
 import ProfileCart from '../../components/ProfileCart/ProfileCart';
 import ContactUs from '../ContactUs/ContactUs';
-import { userLogout } from '../../redux/action/userLogin';
+import { getUserProfile, userLogout } from '../../redux/action/userLogin';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCartArray, getUserWishlistArray } from '../../redux/action/product';
 
@@ -26,6 +26,12 @@ const Profile = () => {
         userLogout(dispatch);
     };
 
+    const getUserProfileHandler = () => {
+
+        getUserProfile(dispatch);
+
+
+    };
 
     const wishlistHandler = () => {
         getUserWishlistArray(dispatch);

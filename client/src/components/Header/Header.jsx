@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserProfileWindow } from '../../redux/Reducer/userReducer.js';
-import { isCartMainWindow } from '../../redux/action/userLogin.js';
+import { getUserData, isCartMainWindow } from '../../redux/action/userLogin.js';
 import { useEffect } from 'react';
 import { addProductWishlist, getUserWishlistArray } from '../../redux/action/product.js';
 
@@ -31,6 +31,11 @@ const Header = () => {
 
     const wishListDataHandler = () => {
         getUserWishlistArray(dispatch);
+
+    };
+
+    const userProfileDataHandler = () => {
+        getUserData(dispatch);
 
     };
 
@@ -86,7 +91,7 @@ const Header = () => {
                         userAuthenticated ?
                             <Link to={'/profile'}>
 
-                                <span onClick={() => clickHanlder(true)}><BiUserCircle /></span>
+                                <span onClick={() => { clickHanlder(true); userProfileDataHandler(); }}><BiUserCircle /></span>
 
                             </Link>
 

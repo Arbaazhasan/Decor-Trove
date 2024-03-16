@@ -710,3 +710,33 @@ export const getAllCategoryProducts = async (req, res) => {
 
 
 };
+
+export const getProudctByName = async (req, res) => {
+
+    try {
+        const find = req.params.name;
+
+        const getProduct = await product.find({
+            $or: [
+                { name: { $regex: find, $options: 'i' } },
+                { category: { $regex: find, $options: 'i' } }
+            ]
+        });
+
+
+        res.status(200).json({
+            success: true,
+            find,
+            message: getProduct
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: "Internal Server Error !!!" + error
+
+        });
+
+    }
+};
