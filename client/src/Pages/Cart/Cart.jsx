@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { isCartMainWindow, isCartMainWindowClose } from '../../redux/action/userLogin';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { addCardProduct } from '../../redux/action/product';
+import { addProductCart } from '../../redux/action/cart';
 
 const Cart = () => {
 
@@ -14,12 +14,23 @@ const Cart = () => {
 
     const { isCartWindow } = useSelector(state => state.user);
     const { cartArray } = useSelector(state => state.product);
+    const { cart, cartTotal } = useSelector(state => state.cart);
+
+
 
     const clickHandler = () => {
 
         isCartMainWindowClose(dispatch, !isCartWindow);
 
     };
+
+
+    const addProductCartHandler = (product) => {
+
+        addProductCart(dispatch, product, cart);
+
+    };
+
 
 
     useEffect(() => {
@@ -68,7 +79,7 @@ const Cart = () => {
 
 
                                 <div className="isOrder">
-                                    <input type="checkbox" />
+                                    <input type="checkbox" onClick={() => addProductCartHandler(i)} />
                                 </div>
                             </div>
 
@@ -81,13 +92,13 @@ const Cart = () => {
 
                 <div className="orderNow">
                     <div className="totalAmmount">
-                        <p>$100.00</p>
+                        <p>₹{cartTotal}</p>
                         <span>Total</span>
                     </div>
 
-                    <div className="orderBtn">
+                    <Link to='/order' className="orderBtn">
                         <button>Buy</button>
-                    </div>
+                    </Link>
                 </div>
 
             </div>

@@ -3,6 +3,7 @@ import adminReducer from "./Reducer/adminReducer";
 import userReducer from "./Reducer/userReducer";
 import dashboard from "./Reducer/dashboard";
 import productReducer from "./Reducer/productReducer";
+import cartReducer from "./Reducer/cartReducer";
 
 
 const store = configureStore({
@@ -11,7 +12,8 @@ const store = configureStore({
         admin: adminReducer,
         user: userReducer,
         dashboard: dashboard,
-        product: productReducer
+        product: productReducer,
+        cart: cartReducer,
 
     }
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { addCartProductSuccess, addProducCarttFail, addProductCartRequest, addProductCartSuccess, addProductWishlistFail, addProductWishlistRequest, addProductWishlistSucces, bannerFail, bannersRequest, bannersSuccess, getAllProductRequest, getAllProductSuccess, getAllProudctFail, getArrivalCategoryFail, getArrivalCategoryRequest, getArrivalCategorySuccess, getArrivalProductFail, getArrivalProudctRequest, getArrivalProudctSuccess, getCartArrayFail, getCartArrayRequest, getCartArraySuccess, getPopularProductSuccess, getProductCategoryFail, getProductCategoryRequest, getProductCategorySuccess, getProudctFail, getProudctRequest, getProudctSuccess, getWishlistArrayFail, getWishlistArrayRequest, getWishlistArraySuccess, isProudctinWishlist, removeProductCartFail, removeProductCartRequest, removeProductCartSuccess, removeWishlistProductFail, removeWishlistProductRequest, removeWishlistProductSuccess, searchProductFail, searchProductRequest, searchProductSuccess, sliderSlidesFail, sliderSlidesRequest, sliderSlidesSuccess } from "../Reducer/productReducer";
+import { addProducCarttFail, addProductCartRequest, addProductCartSuccess, addProductWishlistFail, addProductWishlistRequest, addProductWishlistSucces, bannerFail, bannersRequest, bannersSuccess, getAllProductRequest, getAllProductSuccess, getAllProudctFail, getArrivalCategoryFail, getArrivalCategoryRequest, getArrivalCategorySuccess, getArrivalProductFail, getArrivalProudctRequest, getArrivalProudctSuccess, getCartArrayFail, getCartArrayRequest, getCartArraySuccess, getPopularProductSuccess, getProductCategoryFail, getProductCategoryRequest, getProductCategorySuccess, getProudctFail, getProudctRequest, getProudctSuccess, getWishlistArrayFail, getWishlistArrayRequest, getWishlistArraySuccess, isProudctinWishlist, removeProductCartFail, removeProductCartRequest, removeProductCartSuccess, removeWishlistProductFail, removeWishlistProductRequest, removeWishlistProductSuccess, searchProductFail, searchProductRequest, searchProductSuccess, sliderSlidesFail, sliderSlidesRequest, sliderSlidesSuccess } from "../Reducer/productReducer";
 import { server } from "../store";
 import toast from "react-hot-toast";
 
@@ -138,7 +138,7 @@ export const getProudct = async (dispatch, _id) => {
         });
 
         dispatch(getProudctSuccess(data.Product));
-        console.log(data);
+        // console.log(data);
 
     } catch (error) {
 
@@ -296,7 +296,7 @@ export const removeProductWishlist = async (dispatch, id, refresh) => {
             withCredentials: true
         });
 
-        console.log(data);
+        // console.log(data);
         dispatch(removeWishlistProductSuccess(refresh));
         toast.success(data.message);
 
@@ -428,11 +428,3 @@ export const getSearchProduct = async (dispatch, pName) => {
     }
 };
 
-
-export const addCardProduct = (dispatch, product) => {
-
-    const cartProductArray = [];
-
-    cartProductArray.push(product);
-
-};

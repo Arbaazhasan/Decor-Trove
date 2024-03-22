@@ -39,6 +39,7 @@
             display: inline;
             margin-right: 5rem;
             padding: 0rem .5rem;
+            cursor: pointer;
 
             &:hover {
                 color: red;
@@ -52,6 +53,7 @@
             padding: .5rem 1.1rem;
             background-color: transparent;
             border: 1px solid red;
+            cursor: pointer;
 
             &:hover {
                 color: white;

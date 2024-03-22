@@ -26,7 +26,7 @@ export const userLogin = async (dispatch, username, password) => {
     } catch (error) {
         dispatch(userLoginFail(error.message));
         toast.error(error.response.data.message);
-        console.log(error.response.data.message);
+        // console.log(error.response.data.message);
 
 
     }
@@ -173,7 +173,7 @@ export const isCartMainWindow = (dispatch, val) => {
     dispatch(isCartWindowOpen(val));
     getCartArray(dispatch);
 
-    console.log(val);
+    // console.log(val);
 
 };
 

@@ -2,38 +2,25 @@ import React from 'react';
 import "./profileCart.scss";
 
 import { Link } from 'react-router-dom';
-import { AiFillStar } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { addCardProduct, addProductWishlist, getCartArray, removeProductCart } from '../../redux/action/product';
+import { addProductWishlist, getCartArray, removeProductCart } from '../../redux/action/product';
 import { useState } from 'react';
+import { addProductCart, cartProductTotal, updateCartProductQty } from '../../redux/action/cart';
 
 
 const ProfileCart = () => {
 
-
-    const [orderQty, setOrderQty] = useState(1);
-    const { pageRefresh } = useSelector(state => state.product);
-
-    const countPlus = () => {
-        setOrderQty(orderQty + 1);
-    };
-
-
-    const countMinus = (qty) => {
-        if (orderQty === 1) {
-            return setOrderQty(1);
-
-        }
-        setOrderQty(orderQty - 1);
-    };
-
-
-    const { cartArray } = useSelector(state => state.product);
     const dispatch = useDispatch();
+
+    const { cart, cartTotal } = useSelector(state => state.cart);
+    const { cartArray, pageRefresh } = useSelector(state => state.product);
+
+    let [productArray, setProductArray] = useState([]);
 
 
     const wishListHandler = (id) => {
+
         addProductWishlist(dispatch, id, !pageRefresh);
         getCartArray(dispatch);
 
@@ -46,14 +33,34 @@ const ProfileCart = () => {
 
     };
 
+    const addProductCartHandler = (product) => {
 
-    const addProductCartHandler = (i) => {
-        addCardProduct(dispatch, i);
+        addProductCart(dispatch, product, cart);
+
     };
 
+
+    const qtyUpdateHandler = (product, operation) => {
+
+        updateCartProductQty(dispatch, productArray, product, operation, cart);
+
+    };
+
+
+
+    const checkBoxIsCheckedHandler = (id) => {
+        return cart.some(item => item._id === id);
+    };
+
+
     useEffect(() => {
-        // console.log(cartArray);
-    }, [cartArray]);
+
+        setProductArray(Array.from(cartArray));
+
+        cartProductTotal(dispatch, cart);
+
+
+    }, [cartArray, cart]);
 
     return (
         <div className="profileCart" >
@@ -74,7 +81,7 @@ const ProfileCart = () => {
                                     <div>
                                         <p>{i.name}</p>
                                         <span>${i.price}</span>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta corporis repellendus doloremque doloribus sequi earum vel ex sunt quidem accusantium, quae in quis qui totam excepturi ullam, neque similique adipisci dignissimos! Inventore?</p>
+                                        <p>{i.desc}</p>
                                     </div>
 
                                 </Link>
@@ -94,22 +101,16 @@ const ProfileCart = () => {
                             <div className="cartItemQty">
                                 <div className="productQty">
 
-                                    <button onClick={() => countMinus(i.qty)}>&lt;</button>
-                                    {
-                                        // setOrderQty(i.qty)
-                                    }
-                                    {/* <span>{orderQty}</span> */}
+                                    <button onClick={() => qtyUpdateHandler(i, "minus")}>&lt;</button>
 
                                     <span>{i.qty}</span>
 
-
-
-                                    <button onClick={countPlus}>&gt;</button>
+                                    <button onClick={() => qtyUpdateHandler(i, "plus")}>&gt;</button>
                                 </div>
                             </div>
 
                             <div className="isOrder">
-                                <input type="checkbox" onClick={() => addProductCartHandler(i)} />
+                                <input type="checkbox" onClick={() => addProductCartHandler(i)} defaultChecked={checkBoxIsCheckedHandler(i._id)} />
                             </div>
                         </div>
 
@@ -121,18 +122,18 @@ const ProfileCart = () => {
 
             <div className="orderNow">
                 <div className="totalAmmount">
-                    <p>$100.00</p>
+                    <p>₹{cartTotal}</p>
                     <span>Total</span>
                 </div>
 
-                <div className="orderBtn">
+                <Link to='/order' className="orderBtn">
                     <button>Buy</button>
-                </div>
+                </Link>
             </div>
 
 
 
-        </div>
+        </div >
     );
 };
 

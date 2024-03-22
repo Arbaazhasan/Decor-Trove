@@ -40,14 +40,6 @@ function App() {
   const { loading: dashboardLoading, imageViewerWindow } = useSelector(state => state.dashboard);
 
 
-  const [productDetailsUrl, setProductDetailsUrl] = useState('adads');
-
-
-
-
-
-
-
   useEffect(() => {
 
     getSliderSlides(dispatch);

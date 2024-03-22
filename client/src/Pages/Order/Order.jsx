@@ -2,14 +2,42 @@ import React from 'react';
 import './order.scss';
 import { MdDeleteForever } from "react-icons/md";
 import { FaRegCreditCard } from "react-icons/fa6";
-import { GiCardboardBoxClosed } from "react-icons/gi";
 import { TfiDropboxAlt } from "react-icons/tfi";
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { getGrandTotal, removeProductOrderList, updateProductQty } from '../../redux/action/cart';
 
 
 const Order = () => {
 
+    const dispatch = useDispatch();
+    const { cart, orderGrandTotal } = useSelector(state => state.cart);
+    let [productArray, setProductArray] = useState([]);
+
+    const [isCard, setIsCard] = useState(true);
 
 
+    const updateQty = (product, operation) => {
+
+        updateProductQty(dispatch, productArray, operation, product);
+
+    };
+
+    const removeProduct = (product) => {
+
+        removeProductOrderList(dispatch, product, productArray);
+
+    };
+
+
+    useEffect(() => {
+
+        setProductArray(Array.from(cart));
+
+        getGrandTotal(dispatch, cart);
+
+    }, [cart]);
 
     return (
         <div>
@@ -131,6 +159,10 @@ const Order = () => {
                                     <p>Product</p>
                                 </div>
 
+                                <div>
+                                    Price
+                                </div>
+
 
                                 <div>
                                     <p>Quantity</p>
@@ -150,196 +182,56 @@ const Order = () => {
                             </div>
 
                             <div className="cartList">
+                                {
+                                    productArray && productArray.map((i) => (
+                                        <div className="productDetails" key={i._id}>
 
+                                            <div className="product">
 
+                                                <div className="img">
+                                                    <img src={i.img[0].url} alt="" />
+                                                </div>
 
+                                                <div className="details">
+                                                    <div>
+                                                        <p>{i.name}</p>
+                                                    </div>
 
+                                                    <div>
+                                                        <p>{i.desc}</p>
+                                                    </div>
+                                                </div>
 
-                                <div className="productDetails">
-
-                                    <div className="product">
-
-                                        <div className="img">
-                                            <img src="add1.jpg" alt="" />
-                                        </div>
-
-                                        <div className="details">
-                                            <div>
-                                                <p>Blue Berry </p>
                                             </div>
 
-                                            <div>
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia eveniet, voluptates odit autem ullam quisquam praesentium vitae ex pariatur adipisci.</p>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-
-                                    <div className='productQty'>
-
-                                        <button>-</button>
-                                        <span>1</span>
-                                        <button>+</button>
-
-                                    </div>
-
-
-                                    <div className='productTotalPrice'>
-                                        <p>₹1000</p>
-                                    </div>
-
-
-                                    <div className='removeBtn'>
-                                        <button><MdDeleteForever /></button>
-                                    </div>
-
-
-                                </div>
-
-
-
-
-
-
-                                <div className="productDetails">
-
-                                    <div className="product">
-
-                                        <div className="img">
-                                            <img src="add1.jpg" alt="" />
-                                        </div>
-
-                                        <div className="details">
-                                            <div>
-                                                <p>Blue Berry </p>
+                                            <div className='productPrice'>
+                                                <p> ₹{i.price}</p>
                                             </div>
 
-                                            <div>
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia eveniet, voluptates odit autem ullam quisquam praesentium vitae ex pariatur adipisci.</p>
-                                            </div>
-                                        </div>
 
-                                    </div>
+                                            <div className='productQty'>
 
+                                                <button type='button' onClick={() => updateQty(i, "minus")}>-</button>
+                                                <span>{i.qty}</span>
+                                                <button type='button' onClick={() => updateQty(i, "plus")}>+</button>
 
-                                    <div className='productQty'>
-
-                                        <button>-</button>
-                                        <span>1</span>
-                                        <button>+</button>
-
-                                    </div>
-
-
-                                    <div className='productTotalPrice'>
-                                        <p>₹1000</p>
-                                    </div>
-
-
-                                    <div className='removeBtn'>
-                                        <button><MdDeleteForever /></button>
-                                    </div>
-
-
-                                </div>
-
-
-
-
-
-
-                                <div className="productDetails">
-
-                                    <div className="product">
-
-                                        <div className="img">
-                                            <img src="add1.jpg" alt="" />
-                                        </div>
-
-                                        <div className="details">
-                                            <div>
-                                                <p>Blue Berry </p>
                                             </div>
 
-                                            <div>
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia eveniet, voluptates odit autem ullam quisquam praesentium vitae ex pariatur adipisci.</p>
-                                            </div>
-                                        </div>
 
-                                    </div>
-
-
-                                    <div className='productQty'>
-
-                                        <button>-</button>
-                                        <span>1</span>
-                                        <button>+</button>
-
-                                    </div>
-
-
-                                    <div className='productTotalPrice'>
-                                        <p>₹1000</p>
-                                    </div>
-
-
-                                    <div className='removeBtn'>
-                                        <button><MdDeleteForever /></button>
-                                    </div>
-
-
-                                </div>
-
-
-
-
-
-
-                                <div className="productDetails">
-
-                                    <div className="product">
-
-                                        <div className="img">
-                                            <img src="add1.jpg" alt="" />
-                                        </div>
-
-                                        <div className="details">
-                                            <div>
-                                                <p>Blue Berry </p>
+                                            <div className='productTotalPrice'>
+                                                <p>₹{i.qty * i.price}</p>
                                             </div>
 
-                                            <div>
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia eveniet, voluptates odit autem ullam quisquam praesentium vitae ex pariatur adipisci.</p>
+
+                                            <div className='removeBtn'>
+                                                <button type='button' onClick={() => removeProduct(i)}><MdDeleteForever /></button>
                                             </div>
+
+
                                         </div>
 
-                                    </div>
-
-
-                                    <div className='productQty'>
-
-                                        <button>-</button>
-                                        <span>1</span>
-                                        <button>+</button>
-
-                                    </div>
-
-
-                                    <div className='productTotalPrice'>
-                                        <p>₹1000</p>
-                                    </div>
-
-
-                                    <div className='removeBtn'>
-                                        <button><MdDeleteForever /></button>
-                                    </div>
-
-
-                                </div>
-
-
-
+                                    ))
+                                }
 
                             </div>
 
@@ -362,7 +254,7 @@ const Order = () => {
 
                                         <tr>
                                             <td>Total : </td>
-                                            <td>₹1000 </td>
+                                            <td>₹{orderGrandTotal} </td>
                                         </tr>
                                     </tbody>
 
@@ -388,48 +280,58 @@ const Order = () => {
 
                                     <div className="selectMethod">
                                         <div>
-                                            <input type="radio" name='paymetMethod' />
+                                            <input type="radio" name='paymetMethod' onClick={() => setIsCard(true)} defaultChecked={isCard} />
                                             <p>Credit Card/Debit Card  </p>
                                             <span><FaRegCreditCard /></span>
                                         </div>
                                         <div>
-                                            <input type="radio" name='paymetMethod' />
+                                            <input type="radio" name='paymetMethod' onClick={() => setIsCard(false)} />
                                             <p>Cash on Delivery</p>
                                             <span><TfiDropboxAlt /></span>
                                         </div>
                                     </div>
 
-                                    <div className="cardDetails">
-                                        <div>
-                                            <label htmlFor="">Name on Card <span>*</span></label>
-                                            <input type="text" required />
-                                        </div>
+                                    {
+                                        isCard ?
+                                            <div className="cardDetails">
+                                                <div>
+                                                    <label htmlFor="">Name on Card <span>*</span></label>
+                                                    <input type="text" required />
+                                                </div>
 
-                                        <div>
-                                            <label htmlFor="">Card Number <span>*</span></label>
-                                            <div>
-                                                <input type="text" maxLength="4" required />
-                                                <input type="text" maxLength="4" required />
-                                                <input type="text" maxLength="4" required />
-                                                <input type="text" maxLength="4" required />
+                                                <div>
+                                                    <label htmlFor="">Card Number <span>*</span></label>
+                                                    <div>
+                                                        <input type="text" maxLength="4" required />
+                                                        <input type="text" maxLength="4" required />
+                                                        <input type="text" maxLength="4" required />
+                                                        <input type="text" maxLength="4" required />
+
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <label htmlFor="">Expiration Date <span>*</span></label>
+                                                    <input type="date" required />
+                                                </div>
+
+                                                <div>
+                                                    <label htmlFor="">CVV <span>*</span></label>
+                                                    <input type="text" required />
+                                                </div>
 
                                             </div>
-                                        </div>
 
-                                        <div>
-                                            <label htmlFor="">Expiration Date <span>*</span></label>
-                                            <input type="date" required />
-                                        </div>
+                                            :
 
-                                        <div>
-                                            <label htmlFor="">CVV <span>*</span></label>
-                                            <input type="text" required />
-                                        </div>
+                                            " "
 
-                                    </div>
+                                    }
+
+
 
                                     <div className='checkoutBtn'>
-                                        <button>Check Out</button>
+                                        <button>Order Now</button>
 
                                     </div>
 

@@ -13,7 +13,6 @@ const initialState = {
     productCategory: [],
     wishlistArray: [],
     cartArray: [],
-    cartData: [],
     searchProductArray: [],
     pageRefresh: false,
     inWishlist: false,
@@ -215,12 +214,6 @@ export const productReducer = createSlice({
         },
 
 
-        addCartProductSuccess : (state, action) => {
-            state.cartData = action.payload;
-        }
-
-
-
     }
 });
 
@@ -245,7 +238,6 @@ export const { sliderSlidesRequest, sliderSlidesSuccess, sliderSlidesFail,
 
     searchProductRequest, searchProductSuccess, searchProductFail,
 
-    addCartProductSuccess
 
 } = productReducer.actions;
 
