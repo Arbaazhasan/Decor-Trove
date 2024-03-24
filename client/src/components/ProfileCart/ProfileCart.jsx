@@ -17,6 +17,7 @@ const ProfileCart = () => {
     const { cartArray, pageRefresh } = useSelector(state => state.product);
 
     let [productArray, setProductArray] = useState([]);
+    const [localCartArray, setLocalCartArray] = useState([]);
 
 
     const wishListHandler = (id) => {
@@ -35,29 +36,31 @@ const ProfileCart = () => {
 
     const addProductCartHandler = (product) => {
 
-        addProductCart(dispatch, product, cart);
+        addProductCart(dispatch, product, localCartArray);
 
     };
 
 
     const qtyUpdateHandler = (product, operation) => {
 
-        updateCartProductQty(dispatch, productArray, product, operation, cart);
+        updateCartProductQty(dispatch, productArray, product, operation, localCartArray);
 
-    };
-
-
-
-    const checkBoxIsCheckedHandler = (id) => {
-        return cart.some(item => item._id === id);
     };
 
 
     useEffect(() => {
 
+        const storageData = localStorage.getItem('localStorageCartArray');
+        const retrivedData = JSON.parse(storageData);
+        // console.log(retrivedData);
+
+        setLocalCartArray(retrivedData);
+
         setProductArray(Array.from(cartArray));
 
-        cartProductTotal(dispatch, cart);
+        cartProductTotal(dispatch, localCartArray);
+
+        // console.log(cart);
 
 
     }, [cartArray, cart]);
@@ -110,7 +113,7 @@ const ProfileCart = () => {
                             </div>
 
                             <div className="isOrder">
-                                <input type="checkbox" onClick={() => addProductCartHandler(i)} defaultChecked={checkBoxIsCheckedHandler(i._id)} />
+                                <input type="checkbox" onClick={() => addProductCartHandler(i)} />
                             </div>
                         </div>
 

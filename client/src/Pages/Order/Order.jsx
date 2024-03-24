@@ -33,9 +33,18 @@ const Order = () => {
 
     useEffect(() => {
 
-        setProductArray(Array.from(cart));
+        const storedData = localStorage.getItem('localStorageCartArray');
 
-        getGrandTotal(dispatch, cart);
+        const retrievedData = JSON.parse(storedData);
+
+        setProductArray(retrievedData);
+
+        getGrandTotal(dispatch, retrievedData);
+
+        // setProductArray(Array.from(cart));
+
+        // getGrandTotal(dispatch, cart);
+
 
     }, [cart]);
 
@@ -331,7 +340,7 @@ const Order = () => {
 
 
                                     <div className='checkoutBtn'>
-                                        <button>Order Now</button>
+                                        <button>{isCard ? "Pay Now " : "Order Now"}</button>
 
                                     </div>
 

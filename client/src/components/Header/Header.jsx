@@ -12,6 +12,8 @@ import { setUserProfileWindow } from '../../redux/Reducer/userReducer.js';
 import { getUserData, isCartMainWindow } from '../../redux/action/userLogin.js';
 import { useEffect } from 'react';
 import { addProductWishlist, getUserWishlistArray } from '../../redux/action/product.js';
+import { emptyReducerCartArray } from '../../redux/Reducer/cartReducer.js';
+import toast from 'react-hot-toast';
 
 const Header = () => {
 
@@ -25,7 +27,13 @@ const Header = () => {
 
     const cartHandler = () => {
 
+        if (!userAuthenticated) return toast.error("Login First !!!");
+
+
         isCartMainWindow(dispatch, !isCartWindow);
+
+        dispatch(emptyReducerCartArray());
+
 
     };
 
@@ -73,19 +81,26 @@ const Header = () => {
 
 
                 <div className="cart">
-                    <Link to={'/wishlist'}>
-                        <span onClick={wishListDataHandler}><AiOutlineHeart /></span>
-                    </Link>
 
-                    <Link  >
+                    {
+                        userAuthenticated &&
+                        <Link to={'/wishlist'}>
+                            <span onClick={wishListDataHandler}><AiOutlineHeart /></span>
+                        </Link>
 
-                        <span onClick={cartHandler}> <HiOutlineShoppingBag /></span>
+                    }
 
-                    </Link>
+                    {
+                        userAuthenticated &&
+                        <Link >
 
-                    <div>
+                            <span onClick={cartHandler}> <HiOutlineShoppingBag /></span>
 
-                    </div>
+                        </Link>
+                    }
+
+
+
 
                     {
                         userAuthenticated ?

@@ -5,7 +5,7 @@ export const addProductCart = (dispatch, product, cart) => {
 
     let isProduct = false;
 
-    cart.map((i) => {
+    cart && cart.map((i) => {
         if (i._id === product._id) {
             isProduct = true;
             return;
@@ -35,7 +35,7 @@ export const updateCartProductQty = (dispatch, productArray, product, operation,
 
     dispatch(getCartArraySuccess(productArray));
 
-    cart = cart.map((item) => {
+    cart = cart && cart.map((item) => {
 
         if (item._id === product._id) {
             return {
@@ -55,7 +55,9 @@ export const updateCartProductQty = (dispatch, productArray, product, operation,
 export const cartProductTotal = (dispatch, cart) => {
     let x = 0;
 
-    cart.map((i) => {
+    const localStorageData = JSON.parse(localStorage.getItem('localStorageCartArray'));
+
+    localStorageData && localStorageData.map((i) => {
         x += i.qty * i.price;
     });
 
@@ -94,7 +96,7 @@ export const getGrandTotal = (dispatch, cart) => {
 
     let x = 0;
 
-    cart.map((i) => {
+    cart && cart.map((i) => {
         x += i.qty * i.price;
     });
 

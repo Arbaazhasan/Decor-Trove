@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { isCartMainWindow, isCartMainWindowClose } from '../../redux/action/userLogin';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { addProductCart } from '../../redux/action/cart';
+import { addProductCart, cartProductTotal } from '../../redux/action/cart';
 
 const Cart = () => {
 
@@ -15,12 +15,16 @@ const Cart = () => {
     const { isCartWindow } = useSelector(state => state.user);
     const { cartArray } = useSelector(state => state.product);
     const { cart, cartTotal } = useSelector(state => state.cart);
+    const [localCartArray, setLocalCartArray] = useState([]);
+    let [productArray, setProductArray] = useState([]);
 
 
 
     const clickHandler = () => {
 
         isCartMainWindowClose(dispatch, !isCartWindow);
+
+
 
     };
 
@@ -36,8 +40,17 @@ const Cart = () => {
     useEffect(() => {
 
         // console.log(cartArray);
+        const storageData = localStorage.getItem('localStorageCartArray');
+        const retrivedData = JSON.parse(storageData);
+        // console.log(retrivedData);
 
-    }, [isCartWindow, cartArray]);
+        setLocalCartArray(retrivedData);
+
+        setProductArray(Array.from(cartArray));
+
+        cartProductTotal(dispatch, localCartArray);
+
+    }, [isCartWindow, cartArray, cart]);
 
     return (
         <div className="cartWindow">
@@ -97,7 +110,7 @@ const Cart = () => {
                     </div>
 
                     <Link to='/order' className="orderBtn">
-                        <button>Buy</button>
+                        <button onClick={clickHandler}>Buy</button>
                     </Link>
                 </div>
 

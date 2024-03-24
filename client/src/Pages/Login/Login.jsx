@@ -6,7 +6,7 @@ import { getUserProfile, userLogin } from '../../redux/action/userLogin';
 import toast from 'react-hot-toast';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { RiHomeLine } from "react-icons/ri";
+import { FaArrowLeft } from "react-icons/fa";
 
 const Login = () => {
 
@@ -50,8 +50,11 @@ const Login = () => {
         <div>
             <div className="loginPage">
 
+                <Link to={'/'} className="goToHome">
+                    <span><FaArrowLeft /></span>
+                </Link>
+
                 <div className="heading">
-                    <h1></h1>
                     <h1>{isAdminLogin ? "Admin Login" : isSignIn ? "Sign In Now" : "Log In Now"}</h1>
                 </div>
 

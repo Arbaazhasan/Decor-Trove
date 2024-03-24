@@ -25,7 +25,6 @@ import { Toaster } from 'react-hot-toast';
 import Loading from './components/Loading/Loading';
 import ImageViewer from './components/ImageViewer/ImageViewer';
 import Profile from './Pages/Profile/Profile';
-import Sidebar from './components/chat/chat';
 import { getAllProudctCategory, getAllProudcts, getArrivalProudctCategory, getBanners, getPopularProduct, getSliderSlides } from './redux/action/product';
 import Order from './Pages/Order/Order';
 
@@ -116,8 +115,7 @@ function App() {
               <Route path='/me' element={<Home />} />;
               <Route path='/profile' element={<Profile />} />
               <Route path='/wishlist' element={<WishList />} />;
-
-
+              <Route path='/order' element={<Order />} />;
 
             </Route>
 
@@ -134,9 +132,7 @@ function App() {
             <Route path='/contactus' element={<ContactUs />} />;
             <Route path='/productdetails/:id' element={<ProductDetails />} />;
 
-            <Route path='/side' element={<Sidebar />} />;
 
-            <Route path='/order' element={<Order />} />;
 
 
             <Route path='*' element={<Home />} />

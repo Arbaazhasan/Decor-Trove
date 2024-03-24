@@ -1,9 +1,12 @@
 import React from 'react';
 import "./contactUs.scss";
+import Header from '../../components/Header/Header';
 
 const ContactUs = () => {
     return (
         <div>
+
+            <Header />
             <div className="contactUsWindow">
 
                 <div className="left">

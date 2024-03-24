@@ -172,6 +172,8 @@ export const productReducer = createSlice({
         getCartArraySuccess: (state, action) => {
             state.loading = false;
             state.cartArray = action.payload;
+
+
         },
         getCartArrayFail: (state, action) => {
             state.loading = false;

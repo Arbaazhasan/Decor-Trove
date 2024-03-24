@@ -100,7 +100,7 @@ const Products = () => {
                                 isSearch ?
                                     <p>Search </p>
                                     :
-                                    <p>Plants</p>
+                                    <p>All Products</p>
                             }
 
 

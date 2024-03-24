@@ -7,6 +7,7 @@ import ContactUs from '../ContactUs/ContactUs';
 import { getUserProfile, userLogout } from '../../redux/action/userLogin';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCartArray, getUserWishlistArray } from '../../redux/action/product';
+import { emptyReducerCartArray } from '../../redux/Reducer/cartReducer';
 
 const Profile = () => {
 
@@ -26,12 +27,6 @@ const Profile = () => {
         userLogout(dispatch);
     };
 
-    const getUserProfileHandler = () => {
-
-        getUserProfile(dispatch);
-
-
-    };
 
     const wishlistHandler = () => {
         getUserWishlistArray(dispatch);
@@ -41,6 +36,14 @@ const Profile = () => {
         getCartArray(dispatch);
     };
 
+    const localCartHandler = () => {
+
+        // localStorage.setItem('localStorageCartArray',);
+        localStorage.clear();
+
+        dispatch(emptyReducerCartArray());
+
+    };
 
     useEffect(() => {
 
@@ -54,7 +57,7 @@ const Profile = () => {
 
                 <div className="top">
                     <h2 onClick={() => setTrue(0)}>Profile</h2>
-                    <h2 onClick={() => { cartHandler(); setTrue(1); }}>Cart</h2>
+                    <h2 onClick={() => { cartHandler(); setTrue(1); localCartHandler(); }}>Cart</h2>
                     {/* <h2 onClick={() => setTrue(2)}>Orders</h2> */}
                     <h2 onClick={() => { setTrue(3); wishlistHandler(); }}>Wishlist</h2>
                     <h2 onClick={() => { setTrue(4); }}>Contact Us</h2>

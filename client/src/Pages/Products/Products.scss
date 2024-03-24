@@ -246,8 +246,16 @@
             }
 
             &::-webkit-scrollbar {
-                display: none;
+                // display: none;
+                width: 10px;
+                overflow-y: hidden;
+
             }
+
+            &::-webkit-scrollbar-thumb {
+                background-color: rgba(159, 159, 159, 0.546);
+            }
+
         }
 
 

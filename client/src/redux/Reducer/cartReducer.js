@@ -8,6 +8,17 @@ const initialState = {
 
 };
 
+const localStorageHandler = (cart) => {
+
+    localStorage.setItem('localStorageCartArray', JSON.stringify(cart));
+
+    const storedData = localStorage.getItem('localStorageCartArray');
+
+    const retrievedData = JSON.parse(storedData);
+
+    console.log(retrievedData);
+};
+
 export const cartReducer = createSlice({
     name: "CartReducer",
     initialState,
@@ -15,22 +26,28 @@ export const cartReducer = createSlice({
     reducers: {
 
         addProduct: (state, action) => {
-
             state.cart.push(action.payload);
 
-            // state.cartTotal = state.cartTotal + action.payload.price * action.payload.qty;
+            localStorageHandler(state.cart);
 
         },
 
         removeProduct: (state, action) => {
+
             state.cart = state.cart.filter(product => product._id !== action.payload._id);
 
-            // state.cartTotal = state.cartTotal - action.payload.price * action.payload.qty;
+            localStorageHandler(state.cart);
+        },
 
+        emptyReducerCartArray: (state, action) => {
+            state.cart.splice(0, state.cart.length);
+            localStorage.clear();
         },
 
         updateCartProudctQty: (state, action) => {
             state.cart = action.payload;
+
+            localStorage.setItem('localStorageCartArray', JSON.stringify(state.cart));
 
         },
 
@@ -48,7 +65,7 @@ export const cartReducer = createSlice({
     }
 });
 
-export const { addProduct, removeProduct, updateCartProudctQty, getCartProductTotal, getOrderGrandTotal } = cartReducer.actions;
+export const { addProduct, removeProduct, emptyReducerCartArray, updateCartProudctQty, getCartProductTotal, getOrderGrandTotal } = cartReducer.actions;
 
 
 export default cartReducer.reducer;
