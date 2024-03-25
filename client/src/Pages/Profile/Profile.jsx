@@ -47,6 +47,7 @@ const Profile = () => {
 
     useEffect(() => {
 
+
     }, [userAuthenticated]);
 
 

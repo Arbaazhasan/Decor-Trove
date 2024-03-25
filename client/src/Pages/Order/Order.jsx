@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { getGrandTotal, removeProductOrderList, updateProductQty } from '../../redux/action/cart';
+import axios from 'axios';
 
 
 const Order = () => {
@@ -47,6 +48,44 @@ const Order = () => {
 
 
     }, [cart]);
+
+    
+
+    const checkoutHandler = async (amount) => {
+        const imgeUrl = "https://instagram.fdel18-1.fna.fbcdn.net/v/t51.2885-19/365937399_204651238970650_5070733229755961349_n.jpg?stp=dst-jpg_s320x320&_nc_ht=instagram.fdel18-1.fna.fbcdn.net&_nc_cat=110&_nc_ohc=GrTGo3w4hMIAX__-aod&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfCeA7O5pDEefonB0O58Z_9u2-qDCRmp5DBu-0m75iUHAA&oe=6606472F&_nc_sid=8b3546";
+
+        const { data: { key } } = await axios.get('http://localhost:5000/api/v1/paymets/getkey');
+
+        const { data: { order } } = await axios.post('http://localhost:5000/api/v1/paymets/checkout', {
+            amount
+        });
+
+        const options = {
+            key, // Enter the Key ID generated from the Dashboard
+            "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "currency": "INR",
+            "name": "DecorTrove",
+            "description": "Order Paymetgeteay ",
+            "image": imgeUrl,
+            "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "callback_url": "http://localhost:5000/api/v1/paymets/paymentverification",
+            "prefill": {
+                "name": "Gaurav Kumar",
+                "email": "gaurav.kumar@example.com",
+                "contact": "9000090000"
+            },
+            "notes": {
+                "address": "Razorpay Corporate Office"
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+
+        const razor = new window.Razorpay(options);
+        razor.open();
+
+    };
 
     return (
         <div>
@@ -340,7 +379,7 @@ const Order = () => {
 
 
                                     <div className='checkoutBtn'>
-                                        <button>{isCard ? "Pay Now " : "Order Now"}</button>
+                                        <button type="button" onClick={() => checkoutHandler(200)}>{isCard ? "Pay Now " : "Order Now"}</button>
 
                                     </div>
 
@@ -367,4 +406,4 @@ const Order = () => {
     );
 };
 
-export default Order;;;
+export default Order;

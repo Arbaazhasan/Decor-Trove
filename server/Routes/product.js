@@ -39,10 +39,4 @@ router.get('/getbanners', getBanners);
 
 
 
-
-
-
-
-
-
 export default router;

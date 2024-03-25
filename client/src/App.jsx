@@ -27,6 +27,7 @@ import ImageViewer from './components/ImageViewer/ImageViewer';
 import Profile from './Pages/Profile/Profile';
 import { getAllProudctCategory, getAllProudcts, getArrivalProudctCategory, getBanners, getPopularProduct, getSliderSlides } from './redux/action/product';
 import Order from './Pages/Order/Order';
+import ConfirmOrder from './Pages/ConfirmOrder/ConfirmOrder';
 
 
 
@@ -131,6 +132,8 @@ function App() {
             <Route path='/service' element={<ServicePage />} />;
             <Route path='/contactus' element={<ContactUs />} />;
             <Route path='/productdetails/:id' element={<ProductDetails />} />;
+
+            <Route path='/paymentsuccess' element={<ConfirmOrder />} />
 
 
 

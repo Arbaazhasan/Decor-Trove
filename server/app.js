@@ -4,11 +4,14 @@ import dbConnection from "./data/databaseConnection.js";
 import userRouter from "./Routes/user.js";
 import productRouter from "./Routes/product.js";
 import adminRouter from './Routes/admin.js';
+import paymentRouter from './Routes/paymentsRoutes.js';
+
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import bodyParser from "body-parser";
 
 import { v2 as cloudinary } from 'cloudinary';
+import Razorpay from "razorpay";
 
 
 
@@ -33,7 +36,7 @@ app.use(express.static('public'));
 
 // Configure for cros Origin 
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: process.env.CORS_ORIGIN_URL,
     credentials: true,
     methods: ["GET", "POST", "DELETE", "PUT"]
 }));
@@ -43,6 +46,7 @@ app.use(cors({
 app.use('/api/v1/user/', userRouter);
 app.use('/api/v1/product/', productRouter);
 app.use('/api/v1/admin/', adminRouter);
+app.use('/api/v1/paymets/', paymentRouter);
 
 
 app.get('/', (req, res) => {
@@ -50,11 +54,19 @@ app.get('/', (req, res) => {
 });
 
 
+// Cloudinary Configrination
 
 cloudinary.config({
-    cloud_name: 'ddixq9qyw',
-    api_key: '457974513769685',
-    api_secret: 'vtXUFQ4XPDtF7xYlCASYgIolvtE'
+    cloud_name: process.env.Cloudinary_cloud_name,
+    api_key: process.env.Cloudinary_api_key,
+    api_secret: process.env.Cloudinary_api_secret
+});
+
+// Razorpay Instance
+
+export const instance = new Razorpay({
+    key_id: process.env.Razorpay_key_id,
+    key_secret: process.env.Razorpay_key_secret,
 });
 
 
