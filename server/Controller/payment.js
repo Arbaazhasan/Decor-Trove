@@ -59,3 +59,37 @@ export const razorpay_API_Key = (req, res) => {
         key: process.env.Razorpay_Key_Id
     });
 };
+
+
+export const getOrderDetails = (req, res) => {
+
+    const { userName,
+        email,
+        phoneNo1,
+        phoneNo2,
+        userAddress,
+        landMark,
+        city,
+        state,
+        country,
+        productArray
+    } = req.body;
+
+
+
+
+    res.status(200).json({
+        success: true,
+        userName,
+        email,
+        phoneNo1,
+        phoneNo2,
+        userAddress,
+        landMark,
+        city,
+        state,
+        country,
+        productArray
+
+    });
+};
