@@ -116,7 +116,6 @@ function App() {
               <Route path='/me' element={<Home />} />;
               <Route path='/profile' element={<Profile />} />
               <Route path='/wishlist' element={<WishList />} />;
-              <Route path='/order' element={<Order />} />;
 
             </Route>
 
@@ -133,6 +132,7 @@ function App() {
             <Route path='/contactus' element={<ContactUs />} />;
             <Route path='/productdetails/:id' element={<ProductDetails />} />;
 
+            <Route path='/order' element={<Order />} />;
             <Route path='/paymentsuccess' element={<ConfirmOrder />} />
 
 

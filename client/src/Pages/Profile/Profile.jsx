@@ -8,6 +8,7 @@ import { getUserProfile, userLogout } from '../../redux/action/userLogin';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCartArray, getUserWishlistArray } from '../../redux/action/product';
 import { emptyReducerCartArray } from '../../redux/Reducer/cartReducer';
+import UserOrders from '../userOrders/UserOrders';
 
 const Profile = () => {
 
@@ -61,7 +62,7 @@ const Profile = () => {
                     <h2 onClick={() => { cartHandler(); setTrue(1); localCartHandler(); }}>Cart</h2>
                     {/* <h2 onClick={() => setTrue(2)}>Orders</h2> */}
                     <h2 onClick={() => { setTrue(3); wishlistHandler(); }}>Wishlist</h2>
-                    <h2 onClick={() => { setTrue(4); }}>Contact Us</h2>
+                    <h2 onClick={() => { setTrue(4); }}>Orders</h2>
 
                     <button onClick={onCLickHandler}>Logout</button>
                 </div>
@@ -74,7 +75,7 @@ const Profile = () => {
 
                     {tabs[3] && <ProfileWishlist />}
 
-                    {tabs[4] && <ContactUs />}
+                    {tabs[4] && <UserOrders />}
 
 
                 </div>

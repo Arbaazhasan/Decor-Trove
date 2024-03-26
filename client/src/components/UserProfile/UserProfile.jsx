@@ -74,6 +74,7 @@ const UserProfile = () => {
     };
 
     const submitHandler = () => {
+
         updateUserData(dispatch,
             name
             , email

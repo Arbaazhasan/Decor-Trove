@@ -356,69 +356,35 @@
                             }
                         }
 
-                        >.cardDetails {
-                            // border: 2px solid blue;
-
-                            >div {
-                                // border: 2px solid red;
-                                display: flex;
-                                flex-direction: column;
-                                padding: 1rem;
-                                gap: 10px;
-                                font-size: small;
-
-                                >label {
-                                    >span {
-                                        color: orangered;
-                                        font-size: large;
-                                    }
-
-                                }
-
-                                >input {
-                                    padding: .6rem;
-                                }
-
-                                >div {
-                                    display: flex;
-                                    justify-content: space-between;
-
-                                    >input {
-                                        padding: .6rem;
-                                        width: 23%;
-                                        text-align: center;
-
-                                    }
-                                }
-                            }
-                        }
-
                         >.checkoutBtn {
                             padding: 1rem;
 
-                            >button {
-                                padding: .8rem;
-                                width: 100%;
-                                background-color: rgb(68, 68, 226);
-                                color: white;
-                                font-family: 'Reem Kufi', sans-serif;
-                                border: 2px solid transparent;
-                                cursor: pointer;
-                                transition: .4s all;
+                            >a {
 
-
-                                &:hover {
-                                    border: 2px solid rgb(68, 68, 226);
-                                    background-color: white;
-                                    color: rgb(68, 68, 226);
+                                >button {
+                                    padding: .8rem;
+                                    width: 100%;
+                                    background-color: rgb(68, 68, 226);
+                                    color: white;
+                                    font-family: 'Reem Kufi', sans-serif;
+                                    border: 2px solid transparent;
+                                    cursor: pointer;
                                     transition: .4s all;
-                                    transform: scale(1.1);
+
+
+                                    &:hover {
+                                        border: 2px solid rgb(68, 68, 226);
+                                        background-color: white;
+                                        color: rgb(68, 68, 226);
+                                        transition: .4s all;
+                                        transform: scale(1.1);
+
+                                    }
+
 
                                 }
 
-
                             }
-
                         }
 
 

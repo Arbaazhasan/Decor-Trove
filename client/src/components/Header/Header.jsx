@@ -29,6 +29,7 @@ const Header = () => {
 
         if (!userAuthenticated) return toast.error("Login First !!!");
 
+        userProfileDataHandler();
 
         isCartMainWindow(dispatch, !isCartWindow);
 

@@ -8,15 +8,31 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { getGrandTotal, removeProductOrderList, updateProductQty } from '../../redux/action/cart';
 import axios from 'axios';
+import { orderhandler, userOrderDetails } from '../../redux/action/order';
+import { Link } from 'react-router-dom';
 
 
 const Order = () => {
 
     const dispatch = useDispatch();
     const { cart, orderGrandTotal } = useSelector(state => state.cart);
+    const { user: { name, phoneNo, username, address } } = useSelector(state => state.user);
+
+
     let [productArray, setProductArray] = useState([]);
 
     const [isCard, setIsCard] = useState(true);
+
+    const [userName, setUserName] = useState("");
+    const [email, setEmail] = useState("");
+    const [phoneNo1, setPhoneNo1] = useState("");
+    const [phoneNo2, setPhoneNo2] = useState("");
+    const [userAddress, setUserAddress] = useState("");
+    const [landMark, setLandMark] = useState("");
+    const [city, setCity] = useState("");
+    const [state, setState] = useState("");
+    const [country, setCountry] = useState("");
+
 
 
     const updateQty = (product, operation) => {
@@ -28,6 +44,30 @@ const Order = () => {
     const removeProduct = (product) => {
 
         removeProductOrderList(dispatch, product, productArray);
+
+    };
+
+    const checkoutHandler = async (amount) => {
+
+        orderDetailsHandler();
+
+        orderhandler(amount, name, phoneNo, username, address);
+
+    };
+
+    const orderDetailsHandler = () => {
+
+        userOrderDetails(
+            userName,
+            email,
+            phoneNo1,
+            phoneNo2,
+            userAddress,
+            landMark,
+            city,
+            state,
+            country,
+            productArray);
 
     };
 
@@ -47,45 +87,10 @@ const Order = () => {
         // getGrandTotal(dispatch, cart);
 
 
-    }, [cart]);
 
-    
+    }, [cart,
+    ]);
 
-    const checkoutHandler = async (amount) => {
-        const imgeUrl = "https://instagram.fdel18-1.fna.fbcdn.net/v/t51.2885-19/365937399_204651238970650_5070733229755961349_n.jpg?stp=dst-jpg_s320x320&_nc_ht=instagram.fdel18-1.fna.fbcdn.net&_nc_cat=110&_nc_ohc=GrTGo3w4hMIAX__-aod&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfCeA7O5pDEefonB0O58Z_9u2-qDCRmp5DBu-0m75iUHAA&oe=6606472F&_nc_sid=8b3546";
-
-        const { data: { key } } = await axios.get('http://localhost:5000/api/v1/paymets/getkey');
-
-        const { data: { order } } = await axios.post('http://localhost:5000/api/v1/paymets/checkout', {
-            amount
-        });
-
-        const options = {
-            key, // Enter the Key ID generated from the Dashboard
-            "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-            "currency": "INR",
-            "name": "DecorTrove",
-            "description": "Order Paymetgeteay ",
-            "image": imgeUrl,
-            "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-            "callback_url": "http://localhost:5000/api/v1/paymets/paymentverification",
-            "prefill": {
-                "name": "Gaurav Kumar",
-                "email": "gaurav.kumar@example.com",
-                "contact": "9000090000"
-            },
-            "notes": {
-                "address": "Razorpay Corporate Office"
-            },
-            "theme": {
-                "color": "#3399cc"
-            }
-        };
-
-        const razor = new window.Razorpay(options);
-        razor.open();
-
-    };
 
     return (
         <div>
@@ -108,7 +113,7 @@ const Order = () => {
 
                                     <td>
                                         <p>Name <span>*</span></p>
-                                        <input type="text" required />
+                                        <input type="text" required onChange={(e) => setUserName(e.target.value)} />
                                     </td>
 
                                 </tr>
@@ -117,7 +122,7 @@ const Order = () => {
 
                                     <td>
                                         <p>Phone No. <span>*</span></p>
-                                        <input type="text" pattern="[0-9]{10}" title="Enter 10 digits (0-9) only" />
+                                        <input type="text" pattern="[0-9]{10}" title="Enter 10 digits (0-9) only" onChange={(e) => setPhoneNo1(e.target.value)} />
 
                                     </td>
 
@@ -127,7 +132,7 @@ const Order = () => {
 
                                     <td>
                                         <p>Alternate Phone No.</p>
-                                        <input type="text" />
+                                        <input type="text" onChange={(e) => setPhoneNo2(e.target.value)} />
                                     </td>
 
                                 </tr>
@@ -136,7 +141,7 @@ const Order = () => {
 
                                     <td>
                                         <p>Address <span>*</span></p>
-                                        <input type="text" />
+                                        <input type="text" onChange={(e) => setUserAddress(e.target.value)} />
                                     </td>
 
                                 </tr>
@@ -145,7 +150,7 @@ const Order = () => {
 
                                     <td>
                                         <p>Land Mark</p>
-                                        <input type="text" />
+                                        <input type="text" onChange={(e) => setLandMark(e.target.value)} />
                                     </td>
 
                                 </tr>
@@ -154,7 +159,7 @@ const Order = () => {
 
                                     <td>
                                         <p>City <span>*</span></p>
-                                        <input type="text" />
+                                        <input type="text" onChange={(e) => setCity(e.target.value)} />
 
                                     </td>
 
@@ -165,7 +170,8 @@ const Order = () => {
 
                                     <td>
                                         <p>State <span>*</span></p>
-                                        <input type="text" />
+                                        <input type="text" onChange={(e) => setState(e.target.value)} />
+
 
                                     </td>
 
@@ -176,7 +182,8 @@ const Order = () => {
 
                                     <td>
                                         <p>Country <span>*</span></p>
-                                        <input type="text" />
+                                        <input type="text" onChange={(e) => setCountry(e.target.value)} />
+
                                     </td>
 
                                 </tr>
@@ -339,47 +346,22 @@ const Order = () => {
                                         </div>
                                     </div>
 
-                                    {
-                                        isCard ?
-                                            <div className="cardDetails">
-                                                <div>
-                                                    <label htmlFor="">Name on Card <span>*</span></label>
-                                                    <input type="text" required />
-                                                </div>
-
-                                                <div>
-                                                    <label htmlFor="">Card Number <span>*</span></label>
-                                                    <div>
-                                                        <input type="text" maxLength="4" required />
-                                                        <input type="text" maxLength="4" required />
-                                                        <input type="text" maxLength="4" required />
-                                                        <input type="text" maxLength="4" required />
-
-                                                    </div>
-                                                </div>
-
-                                                <div>
-                                                    <label htmlFor="">Expiration Date <span>*</span></label>
-                                                    <input type="date" required />
-                                                </div>
-
-                                                <div>
-                                                    <label htmlFor="">CVV <span>*</span></label>
-                                                    <input type="text" required />
-                                                </div>
-
-                                            </div>
-
-                                            :
-
-                                            " "
-
-                                    }
-
-
 
                                     <div className='checkoutBtn'>
-                                        <button type="button" onClick={() => checkoutHandler(200)}>{isCard ? "Pay Now " : "Order Now"}</button>
+
+                                        {
+                                            isCard ?
+
+                                                <Link to="">
+                                                    <button type="button" onClick={() => isCard && checkoutHandler(orderGrandTotal)}>Pay Now</button>
+                                                </Link>
+
+                                                :
+
+                                                <Link to={'/paymentsuccess?32423'}>
+                                                    <button type="button" >Order Now</button>
+                                                </Link>
+                                        }
 
                                     </div>
 
@@ -399,10 +381,10 @@ const Order = () => {
 
 
 
-            </form>
+            </form >
 
 
-        </div>
+        </div >
     );
 };
 
