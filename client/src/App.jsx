@@ -36,7 +36,7 @@ function App() {
   const dispatch = useDispatch();
 
   const { loading: adminLoading, user, adminAuthenticated } = useSelector(state => state.admin);
-  const { loading: userLoading, userAuthenticated, isProfilWindow } = useSelector(state => state.user);
+  const { loading: userLoading, userAuthenticated } = useSelector(state => state.user);
   const { loading: dashboardLoading, imageViewerWindow } = useSelector(state => state.dashboard);
 
 

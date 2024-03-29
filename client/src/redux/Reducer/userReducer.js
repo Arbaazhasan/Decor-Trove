@@ -12,7 +12,6 @@ const initialState = {
     isProfilWindow: false,
 };
 
-
 export const userReducer = createSlice({
     name: "User Login",
     initialState,
@@ -60,6 +59,7 @@ export const userReducer = createSlice({
         getUserProfileDataSuccess: (state, action) => {
             state.loading = false;
             state.user = action.payload;
+
         },
 
         getUserProfileDataFail: (state, action) => {
@@ -78,6 +78,7 @@ export const userReducer = createSlice({
             state.loading = false;
             state.userAuthenticated = true;
             state.user = action.payload;
+
         },
 
         getUserProfileFail: (state, action) => {

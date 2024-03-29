@@ -5,6 +5,7 @@ export const addProductCart = (dispatch, product, cart) => {
 
     let isProduct = false;
 
+
     cart && cart.map((i) => {
         if (i._id === product._id) {
             isProduct = true;

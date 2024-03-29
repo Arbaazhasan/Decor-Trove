@@ -14,9 +14,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 
 import { userLogout } from '../../redux/action/userLogin';
-import { adminLogout, getAdminProfile } from '../../redux/action/adminLogin';
+import { adminLogout } from '../../redux/action/adminLogin';
 import { useEffect } from 'react';
 import { getAllProduct } from '../../redux/action/dashboard';
+import OrderDashBoard from '../../components/OrdersDashBoard/OrderDashBoard';
+import { allDeliveredOrders, getAllNewUserOrders } from '../../redux/action/order';
 
 
 const DashBoard = () => {
@@ -24,6 +26,8 @@ const DashBoard = () => {
     // API Calling Function 
 
     const dispatch = useDispatch();
+    const { allOrders, deliveredOrders } = useSelector(state => state.orders);
+
 
 
     const submitHandler = () => {
@@ -32,8 +36,7 @@ const DashBoard = () => {
     };
 
 
-
-    const [tabs, setTabs] = useState([false, false, false, false, true, false, false, false, false]);
+    const [tabs, setTabs] = useState([false, false, false, false, true, false, false, false, false, false, false]);
 
     const { adminAuthenticated } = useSelector(state => state.admin);
 
@@ -48,9 +51,13 @@ const DashBoard = () => {
         // userLogout(dispatch);
     };
 
+    const newOrdersHandler = () => {
+        getAllNewUserOrders(dispatch);
+    };
 
-
-    // let dashBoardTab = { "Slider": true, "Banner": false, "NewArrivals": false, "PopularProducts": false, "SearchProduct": false, "AddProduct": false, "UpdateProduct": false, "DeleteProduct": false, "AllProduct": false };
+    const deliveredOrderHandler = () => {
+        allDeliveredOrders(dispatch);
+    };
 
 
     useEffect(() => {
@@ -82,6 +89,8 @@ const DashBoard = () => {
                             <p onClick={() => { setTrue(6); }}>Update Product</p>
                             <p onClick={() => { setTrue(7); }}>Delete Product</p>
                             <p onClick={() => { setTrue(8); submitHandler(); }}>All Products</p>
+                            <p onClick={() => { setTrue(9); newOrdersHandler(); }}>Pending Orders</p>
+                            <p onClick={() => { setTrue(10); deliveredOrderHandler(); }}>Deliverd Orders</p>
                         </div>
                     </div>
 
@@ -157,6 +166,21 @@ const DashBoard = () => {
                         }
 
 
+                        {
+
+                            tabs[9] && <h1>Orders</h1>
+
+                        }
+
+
+                        {
+
+                            tabs[10] && <h1>Complete Order</h1>
+
+                        }
+
+
+
                         <button onClick={handler}>Logout</button>
 
 
@@ -221,6 +245,16 @@ const DashBoard = () => {
 
                         {
                             tabs[8] && <AllProducts />
+
+                        }
+
+                        {
+                            tabs[9] && <OrderDashBoard isDeliver={false} allOrders={allOrders} />
+
+                        }
+
+                        {
+                            tabs[10] && <OrderDashBoard isDeliver={true} allOrders={deliveredOrders} />
 
                         }
 

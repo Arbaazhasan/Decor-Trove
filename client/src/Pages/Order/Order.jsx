@@ -7,16 +7,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { getGrandTotal, removeProductOrderList, updateProductQty } from '../../redux/action/cart';
-import axios from 'axios';
-import { orderhandler, userOrderDetails } from '../../redux/action/order';
+import { CodOrder, orderhandler, userOrderDetails } from '../../redux/action/order';
 import { Link } from 'react-router-dom';
+import { getUserData } from '../../redux/action/userLogin';
 
 
 const Order = () => {
 
     const dispatch = useDispatch();
     const { cart, orderGrandTotal } = useSelector(state => state.cart);
-    const { user: { name, phoneNo, username, address } } = useSelector(state => state.user);
+    const { user: { _id, name, phoneNo, username, address } } = useSelector(state => state.user);
 
 
     let [productArray, setProductArray] = useState([]);
@@ -24,7 +24,6 @@ const Order = () => {
     const [isCard, setIsCard] = useState(true);
 
     const [userName, setUserName] = useState("");
-    const [email, setEmail] = useState("");
     const [phoneNo1, setPhoneNo1] = useState("");
     const [phoneNo2, setPhoneNo2] = useState("");
     const [userAddress, setUserAddress] = useState("");
@@ -49,17 +48,16 @@ const Order = () => {
 
     const checkoutHandler = async (amount) => {
 
-        orderDetailsHandler();
 
-        orderhandler(amount, name, phoneNo, username, address);
+        orderhandler(dispatch, amount, name, phoneNo, username, address);
 
     };
 
     const orderDetailsHandler = () => {
 
         userOrderDetails(
+            _id,
             userName,
-            email,
             phoneNo1,
             phoneNo2,
             userAddress,
@@ -68,6 +66,33 @@ const Order = () => {
             state,
             country,
             productArray);
+
+    };
+
+
+    const userProfileDataHandler = () => {
+        getUserData(dispatch);
+
+    };
+
+    const CODOrderHandler = () => {
+
+
+        userOrderDetails(
+            _id,
+            userName,
+            phoneNo1,
+            phoneNo2,
+            userAddress,
+            landMark,
+            city,
+            state,
+            country,
+            productArray);
+
+        CodOrder(dispatch);
+
+
 
     };
 
@@ -86,10 +111,16 @@ const Order = () => {
 
         // getGrandTotal(dispatch, cart);
 
+        userProfileDataHandler();
+        // console.log(_id, name, phoneNo, username, address);
 
 
-    }, [cart,
+
+    }, [cart, _id, name, phoneNo, username, address
     ]);
+
+
+
 
 
     return (
@@ -359,7 +390,7 @@ const Order = () => {
                                                 :
 
                                                 <Link to={'/paymentsuccess?32423'}>
-                                                    <button type="button" >Order Now</button>
+                                                    <button type="button" onClick={() => CODOrderHandler()}>Order Now</button>
                                                 </Link>
                                         }
 

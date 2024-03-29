@@ -1,46 +1,62 @@
 import axios from "axios";
 import { server } from "../store";
+import { getAllUserOrdersSuccess, getAllUserOrdersRequest, getAllUserOrdersFail, userCODOrderRequest, useCODORderSuccess, userCODORderFail, userPaidOrderRequest, usePaidOrderSuccess, userPaidOrderFail, getAllNewOrdersRequest, getAllNewOrdersSuccess, getAllNewOrdersFail, orderStatusUpdateRequest, orderStatusUpdateSuccess, orderStatusUpdateFail, getDeliveredOrderSuccess, getDeliveredOrdersRequest, getDeliveredOrdersFail, removeDeliveredOrderRequest, removeDeliveredOrderSuccess, removeDeliveredOrderFail } from "../Reducer/orderReducer";
+import toast from "react-hot-toast";
 
-export const orderhandler = async (amount, name, phoneNo, username, address) => {
+export const orderhandler = async (dispatch, amount, name, phoneNo, username, address) => {
+    try {
 
-    const logoImageUrl = "https://res-console.cloudinary.com/ddixq9qyw/media_explorer_thumbnails/291a5e1dbabe3dea1bdfccd85be4d430/detailed";
+        dispatch(userPaidOrderRequest());
 
-    const { data: { key } } = await axios.get(`${server}/paymets/getkey`);
+        const logoImageUrl = "https://res-console.cloudinary.com/ddixq9qyw/media_explorer_thumbnails/291a5e1dbabe3dea1bdfccd85be4d430/detailed";
 
-    const { data: { order } } = await axios.post(`${server}/paymets/checkout`, {
-        amount
-    });
+        const { data: { key } } = await axios.get(`${server}/paymets/getkey`);
 
-    const options = {
-        key, // Enter the Key ID generated from the Dashboard
-        "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-        "currency": "INR",
-        "name": "Decor Trove",
-        "description": "Order Payment Geteway",
-        "image": logoImageUrl,
-        "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-        "callback_url": `${server}/paymets/paymentverification`,
-        "prefill": {
-            "name": name,
-            "email": username,
-            "contact": phoneNo
-        },
-        "notes": {
-            "address": address
-        },
-        "theme": {
-            "color": "#3399cc"
-        }
-    };
+        const { data: { order } } = await axios.post(`${server}/paymets/checkout`, {
+            amount
+        });
 
-    const razor = new window.Razorpay(options);
-    razor.open();
+        const options = {
+            key, // Enter the Key ID generated from the Dashboard
+            "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "currency": "INR",
+            "name": "Decor Trove",
+            "description": "Order Payment Geteway",
+            "image": logoImageUrl,
+            "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "callback_url": `${server}/paymets/paymentverification`,
+            "prefill": {
+                "name": name,
+                "email": username,
+                "contact": phoneNo
+            },
+            "notes": {
+                "address": address
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+
+        const razor = new window.Razorpay(options);
+        dispatch(usePaidOrderSuccess());
+
+        razor.open();
+
+
+
+    } catch (error) {
+
+        console.log(error);
+        dispatch(userPaidOrderFail(error));
+
+    }
 
 };
 
 export const userOrderDetails = async (
+    _id,
     userName,
-    email,
     phoneNo1,
     phoneNo2,
     userAddress,
@@ -51,8 +67,8 @@ export const userOrderDetails = async (
     productArray) => {
 
     const { data } = await axios.post(`${server}/order/userorderdetails`, {
+        _id,
         userName,
-        email,
         phoneNo1,
         phoneNo2,
         userAddress,
@@ -70,5 +86,208 @@ export const userOrderDetails = async (
     });
 
     console.log(data);
+
+};
+
+
+export const getAllUserOrders = async (dispatch) => {
+
+    try {
+        dispatch(getAllUserOrdersRequest());
+
+        const { data } = await axios.post(`${server}/order/getallorders`, {}, {
+            headers: {
+                "Contetnt-Type": "application/json"
+            },
+            withCredentials: true
+        });
+
+        dispatch(getAllUserOrdersSuccess(data.orderProducts));
+        // console.log(data.orderProducts);
+
+    } catch (error) {
+
+        dispatch(getAllUserOrdersFail(error));
+        console.log(error);
+
+
+    }
+
+};
+
+
+export const CodOrder = async (dispatch) => {
+
+
+    try {
+        dispatch(userCODOrderRequest());
+
+        const { data } = await axios.post(`${server}/paymets/codorder`, {}, {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            withCredentials: true
+        });
+
+        dispatch(useCODORderSuccess());
+        console.log(data);
+
+    } catch (error) {
+
+        dispatch(userCODORderFail(error));
+        console.log(error);
+
+
+    }
+
+};
+
+
+
+// Admin Dashboard APIs
+
+export const getAllNewUserOrders = async (dispatch) => {
+
+    try {
+        dispatch(getAllNewOrdersRequest());
+
+        const { data } = await axios.post(`${server}/order/getallneworders`, {}, {
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+            withCredentials: true
+        });
+
+        dispatch(getAllNewOrdersSuccess(data.orders));
+        // console.log(data.orders);
+
+    } catch (error) {
+
+        dispatch(getAllNewOrdersFail(error));
+        console.log(error);
+
+    }
+
+};
+
+export const orderStatusUpdate = async (dispatch, _id, orderStatus) => {
+
+    try {
+        dispatch(orderStatusUpdateRequest());
+
+        const { data } = await axios.post(`${server}/order/updateorderstatus`, {
+            _id,
+            status: orderStatus
+
+        }, {
+            headers: {
+                "Content-Type": "application/json",
+
+            },
+            withCredentials: true
+        });
+
+        dispatch(orderStatusUpdateSuccess());
+        getAllNewUserOrders(dispatch);
+
+        toast.success(data.message);
+
+    } catch (error) {
+
+        dispatch(orderStatusUpdateFail(error.messsage));
+        console.log(error);
+
+    }
+
+};
+
+
+
+export const orderTrackingIdUpdate = async (dispatch, _id, trackingId) => {
+
+    try {
+        dispatch(orderStatusUpdateRequest());
+
+        const { data } = await axios.post(`${server}/order/updateordertrackingid`, {
+            _id,
+            trackingId
+
+        }, {
+            headers: {
+                "Content-Type": "application/json",
+
+            },
+            withCredentials: true
+        });
+
+        dispatch(orderStatusUpdateSuccess());
+        getAllNewUserOrders(dispatch);
+
+        toast.success(data.message);
+
+    } catch (error) {
+
+        dispatch(orderStatusUpdateFail(error.messsage));
+        console.log(error);
+
+    }
+
+};
+
+
+export const allDeliveredOrders = async (dispatch) => {
+
+    try {
+
+        dispatch(getDeliveredOrdersRequest());
+
+        const { data } = await axios.post(`${server}/order/getdeleiveredorders`, {}, {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            withCredentials: true
+        });
+        // console.log(data);
+        dispatch(getDeliveredOrderSuccess(data.deliveredOrders));
+
+    } catch (error) {
+
+        dispatch(getDeliveredOrdersFail(error.message));
+        console.log(error);
+
+    }
+
+};
+
+
+export const removeDeliveredOrder = async (dispatch, _id) => {
+
+
+    try {
+
+        dispatch(removeDeliveredOrderRequest());
+
+        const { data } = await axios.post(`${server}/order/removedeleveredorder`, {
+            _id
+        }, {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            withCredentials: true
+        });
+
+        dispatch(removeDeliveredOrderSuccess());
+
+        // console.log(data);
+        allDeliveredOrders(dispatch);
+        toast.success(data.message);
+
+    } catch (error) {
+
+        dispatch(removeDeliveredOrderFail(error.message));
+        console.log(error);
+
+    }
 
 };

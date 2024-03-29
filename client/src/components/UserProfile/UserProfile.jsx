@@ -109,8 +109,6 @@ const UserProfile = () => {
 
 
 
-        // console.log(user);
-
 
         user && setName(user.name);
         user && setEmail(user.username);
