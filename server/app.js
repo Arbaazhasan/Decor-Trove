@@ -5,7 +5,7 @@ import userRouter from "./Routes/user.js";
 import productRouter from "./Routes/product.js";
 import adminRouter from './Routes/admin.js';
 import paymentRouter from './Routes/paymentsRoutes.js';
-import userOrderDetailsRouter from './Routes/userOrder.js';
+import orderDetailsRouter from './Routes/order.js';
 
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -47,7 +47,7 @@ app.use(cors({
 app.use('/api/v1/user/', userRouter);
 app.use('/api/v1/product/', productRouter);
 app.use('/api/v1/admin/', adminRouter);
-app.use('/api/v1/order/', userOrderDetailsRouter);
+app.use('/api/v1/order/', orderDetailsRouter);
 app.use('/api/v1/paymets/', paymentRouter);
 
 

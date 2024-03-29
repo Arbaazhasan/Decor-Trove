@@ -376,6 +376,7 @@ export const getUserCart = async (req, res) => {
 
                 const productDetails = {
                     _id: Proudct._id,
+                    pNo: Proudct.pNo,
                     name: Proudct.name,
                     desc: Proudct.desc,
                     price: Proudct.price,
