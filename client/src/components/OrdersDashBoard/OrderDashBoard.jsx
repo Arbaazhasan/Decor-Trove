@@ -122,8 +122,7 @@ const OrderDashBoard = ({ isDeliver, allOrders }) => {
 
                         <form className='orderStatus' onSubmit={(e) => { isDeliver ? deliveredOrderHandler(e, order._id) : orderStatusHandler(e, order._id); }}>
 
-                            {/* <p>{!isDeliver ? order.status : 'Complete'}</p> */}
-                            <p>{order.status}</p>
+                            <p style={{ color: order.status === "Delivered" ? "green" : "red" }}>{order.status}</p>
 
                             {
 
@@ -149,7 +148,22 @@ const OrderDashBoard = ({ isDeliver, allOrders }) => {
 
                             }
 
-                            <button onClick={() => toggleStatusMenu(index)} type={orderStatusMenu[index] ? "button" : "submit"}>
+                            <button
+                                onClick={() => toggleStatusMenu(index)}
+                                type={orderStatusMenu[index] ? "button" : "submit"}
+                                style={{
+                                    color: order.status === "Delivered" ? "green" : "red",
+                                    border: `2px solid ${order.status === "Delivered" ? "green" : "red"}`,
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.target.style.backgroundColor = order.status === "Delivered" ? "green" : "red";
+                                    e.target.style.color = "white";
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.target.style.backgroundColor = "transparent";
+                                    e.target.style.color = order.status === "Delivered" ? "green" : "red";
+                                }}
+                            >
                                 {orderStatusMenu[index] ? "Submit" : "Edit"}
                             </button>
                         </form>

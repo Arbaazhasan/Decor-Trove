@@ -40,7 +40,7 @@ const UserOrders = () => {
 
         switch (status) {
 
-            case "Order Confirm": {
+            case "order Confirmed": {
                 statusArray.map((i, index) => {
 
                     statusArray[index] = index >= 1;

@@ -1,6 +1,6 @@
 import React from 'react';
 import './bannerController.scss';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addBanner } from '../../redux/action/dashboard';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -8,10 +8,13 @@ import { useEffect } from 'react';
 const BannerController = () => {
 
     const dispatch = useDispatch();
+    const { banners } = useSelector(state => state.product);
 
     const [bNo, setBNo] = useState();
     const [bannerText, setBannerText] = useState();
     const [image, setImage] = useState([]);
+
+    const [bannerArray, setBannerArray] = useState([]);
 
     const sumitHandler = (e) => {
         e.preventDefault();
@@ -22,6 +25,10 @@ const BannerController = () => {
 
     };
 
+    useEffect(() => {
+        setBannerArray(banners.data);
+        console.log(bannerArray);
+    }, [banners]);
 
     return (
         <div className='BannerController'>
@@ -30,11 +37,15 @@ const BannerController = () => {
             <div className="sliderBox">
 
                 <div className="heading">
-                    <h3>1 Banner Front Image</h3>
+                    <h3>1 Banner Popup Image</h3>
                 </div>
                 <div className="sliderImg">
                     <label htmlFor="uploadBtn">
-                        <img htmlFor="uploadBtn" src="slide1.jpg" alt="" />
+                        {
+                            bannerArray[0] &&
+                            <img htmlFor="uploadBtn" src={bannerArray[0].image.url} alt="" />
+                        }
+
                     </label>
                 </div>
 
@@ -55,7 +66,10 @@ const BannerController = () => {
                 </div>
                 <div className="sliderImg">
                     <label htmlFor="uploadBtn">
-                        <img htmlFor="uploadBtn" src="slide1.jpg" alt="" />
+                        {
+                            bannerArray[1] &&
+                            <img htmlFor="uploadBtn" src={bannerArray[1].image.url} alt="" />
+                        }
                     </label>
                 </div>
 
@@ -71,11 +85,14 @@ const BannerController = () => {
             <div className="sliderBox">
 
                 <div className="heading">
-                    <h3>2 Banner Front Image</h3>
+                    <h3>2 Banner Popup Image</h3>
                 </div>
                 <div className="sliderImg">
                     <label htmlFor="uploadBtn">
-                        <img htmlFor="uploadBtn" src="slide1.jpg" alt="" />
+                        {
+                            bannerArray[2] &&
+                            <img htmlFor="uploadBtn" src={bannerArray[2].image.url} alt="" />
+                        }
                     </label>
                 </div>
 
@@ -95,7 +112,10 @@ const BannerController = () => {
                 </div>
                 <div className="sliderImg">
                     <label htmlFor="uploadBtn">
-                        <img htmlFor="uploadBtn" src="slide1.jpg" alt="" />
+                        {
+                            bannerArray[3] &&
+                            <img htmlFor="uploadBtn" src={bannerArray[3].image.url} alt="" />
+                        }
                     </label>
                 </div>
 

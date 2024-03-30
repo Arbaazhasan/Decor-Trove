@@ -8,10 +8,12 @@ import { useState } from 'react';
 const SliderController = () => {
 
     const dispatch = useDispatch();
+    const { sliderSlides } = useSelector(state => state.product);
 
     const [slideNo, setSlideNo] = useState();
     const [slideText, setSlideText] = useState();
     const [slideImage, setSlideImage] = useState([]);
+    const [sliderSlideArray, setSliderSlideArray] = useState([]);
 
 
     const submitHandler = (e) => {
@@ -31,17 +33,31 @@ const SliderController = () => {
     };
 
 
+    useEffect(() => {
+        setSliderSlideArray(sliderSlides.message);
+        console.log(sliderSlideArray);
+
+    }, [sliderSlides]);
+
+
+
     return (
         <div>
 
             <div className="sliderWindow">
 
-
                 <div className="sliderBox">
 
                     <div className="sliderImg">
                         <label htmlFor="uploadBtn">
-                            <img htmlFor="uploadBtn" src="slide1.jpg" alt="" />
+                            {
+                                sliderSlideArray[0] ?
+                                    <img htmlFor="uploadBtn" src={sliderSlideArray[0].slideImage[0].url} alt="" />
+                                    :
+                                    <img htmlFor="uploadBtn" src="noImage.jpg" alt="" />
+                            }
+
+
                         </label>
                     </div>
 
@@ -63,7 +79,15 @@ const SliderController = () => {
 
                     <div className="sliderImg">
                         <label htmlFor="uploadBtn">
-                            <img htmlFor="uploadBtn" src="slide1.jpg" alt="" />
+                            {
+                                sliderSlideArray[1] ?
+                                    <img htmlFor="uploadBtn" src={sliderSlideArray[1].slideImage[0].url} alt="" />
+                                    :
+                                    <img htmlFor="uploadBtn" src="noImage.jpg" alt="" />
+                            }
+
+
+
                         </label>
                     </div>
 
@@ -83,7 +107,12 @@ const SliderController = () => {
 
                     <div className="sliderImg">
                         <label htmlFor="uploadBtn">
-                            <img htmlFor="uploadBtn" src="slide1.jpg" alt="" />
+                            {
+                                sliderSlideArray[2] ?
+                                    <img htmlFor="uploadBtn" src={sliderSlideArray[2].slideImage[0].url} alt="" />
+                                    :
+                                    <img htmlFor="uploadBtn" src="noImage.jpg" alt="" />
+                            }
                         </label>
                     </div>
 
@@ -106,7 +135,12 @@ const SliderController = () => {
 
                     <div className="sliderImg">
                         <label htmlFor="uploadBtn">
-                            <img htmlFor="uploadBtn" src="slide1.jpg" alt="" />
+                            {
+                                sliderSlideArray[3] ?
+                                    <img htmlFor="uploadBtn" src={sliderSlideArray[3].slideImage[0].url} alt="" />
+                                    :
+                                    <img htmlFor="uploadBtn" src="noImage.jpg" alt="" />
+                            }
                         </label>
                     </div>
 
@@ -129,7 +163,12 @@ const SliderController = () => {
 
                     <div className="sliderImg">
                         <label htmlFor="uploadBtn">
-                            <img htmlFor="uploadBtn" src="slide1.jpg" alt="" />
+                            {
+                                sliderSlideArray[4] ?
+                                    <img htmlFor="uploadBtn" src={sliderSlideArray[4].slideImage[0].url} alt="" />
+                                    :
+                                    <img htmlFor="uploadBtn" src="noImage.jpg" alt="" />
+                            }
                         </label>
                     </div>
 
@@ -153,7 +192,12 @@ const SliderController = () => {
 
                     <div className="sliderImg">
                         <label htmlFor="uploadBtn">
-                            <img htmlFor="uploadBtn" src="slide1.jpg" alt="" />
+                            {
+                                sliderSlideArray[5] ?
+                                    <img htmlFor="uploadBtn" src={sliderSlideArray[5].slideImage[0].url} alt="" />
+                                    :
+                                    <img htmlFor="uploadBtn" src="noImage.jpg" alt="" />
+                            }
                         </label>
                     </div>
 

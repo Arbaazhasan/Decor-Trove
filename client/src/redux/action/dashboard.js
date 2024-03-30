@@ -381,7 +381,6 @@ export const addSlider = async (dispatch, slideNo, slideText, slideImage) => {
 
         dispatch(addSlideRequest());
 
-        console.log(slideImage[0]);
 
         const formData = new FormData();
 

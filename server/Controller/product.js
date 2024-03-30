@@ -235,6 +235,7 @@ export const deleteProduct = async (req, res) => {
             success: false,
             message: error.message
         });
+        console.log(error.message);
     }
 };
 
@@ -299,20 +300,22 @@ export const getProduct = async (req, res) => {
 
 export const slider = async (req, res) => {
 
-    const { slideNo, slideText } = req.body;
-
-    const file = req.files;
-
-    const getUri = uploadOncloudinary(file[0]);
-
-    const response = await cloudinary.uploader.upload(getUri.content);
-
-    const imageObj = {
-        url: response.url,
-        public_id: response.public_id
-    };
 
     try {
+
+        const { slideNo, slideText } = req.body;
+
+        const file = req.files;
+
+        const getUri = uploadOncloudinary(file[0]);
+
+        const response = await cloudinary.uploader.upload(getUri.content);
+
+        const imageObj = {
+            url: response.url,
+            public_id: response.public_id
+        };
+
 
         const isSlider = await sliderModel.findOne({ slideNo: slideNo });
 
@@ -348,6 +351,8 @@ export const slider = async (req, res) => {
             success: false,
             message: error.message
         });
+
+        console.log(error.message);
 
     }
 
@@ -405,46 +410,60 @@ export const getSliderSlide = async (req, res) => {
 // Banner 
 export const addBanner = async (req, res) => {
 
-    const { bNo, bannerText } = req.body;
+    try {
 
-    const file = await req.files;
+        const { bNo, bannerText } = req.body;
 
-    const getUri = uploadOncloudinary(file[0]);
+        const file = await req.files;
 
-    const response = await cloudinary.uploader.upload(getUri.content);
+        const getUri = uploadOncloudinary(file[0]);
 
-    const imageObj = {
-        url: response.url,
-        public_id: response.public_id
-    };
+        const response = await cloudinary.uploader.upload(getUri.content);
+
+        const imageObj = {
+            url: response.url,
+            public_id: response.public_id
+        };
 
 
-    const isBanner = await bannerModel.findOne({ bNo });
+        const isBanner = await bannerModel.findOne({ bNo });
 
-    if (!isBanner) {
-        await bannerModel.create({
-            bNo, bannerText, image: imageObj
+        if (!isBanner) {
+            await bannerModel.create({
+                bNo, bannerText, image: imageObj
+            });
+
+            return res.status(200).json({
+                success: true,
+                message: "Successfully Upload"
+            });
+        }
+
+
+        const public_id = await isBanner.image.public_id;
+
+        cloudinary.uploader.destroy(public_id, (error, result) => {
+            if (error) return console.error('Error deleting file:', error);
         });
 
-        return res.status(200).json({
+        await bannerModel.findOneAndUpdate({ bNo }, { $set: { bannerText, image: imageObj } });
+
+        res.status(200).json({
             success: true,
-            message: "Successfully Upload"
+            message: "Upload"
         });
+
+    } catch (error) {
+
+        res.status(200).json({
+            success: true,
+            message: "Internal Server Error !!!",
+            error: error.message
+        });
+
+        console.log(error.message);
+
     }
-
-
-    const public_id = await isBanner.image.public_id;
-
-    cloudinary.uploader.destroy(public_id, (error, result) => {
-        if (error) return console.error('Error deleting file:', error);
-    });
-
-    await bannerModel.findOneAndUpdate({ bNo }, { $set: { bannerText, image: imageObj } });
-
-    res.status(200).json({
-        success: true,
-        message: "Upload"
-    });
 
 };
 

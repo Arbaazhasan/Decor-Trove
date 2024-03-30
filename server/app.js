@@ -64,6 +64,13 @@ cloudinary.config({
     api_secret: process.env.Cloudinary_api_secret
 });
 
+
+// cloudinary.config({
+//     cloud_name: "ddixq9qyw",
+//     api_key: "457974513769685",
+//     api_secret: "vtXUFQ4XPDtF7xYlCASYgIolvtE"
+// });
+
 // Razorpay Instance
 
 export const instance = new Razorpay({
