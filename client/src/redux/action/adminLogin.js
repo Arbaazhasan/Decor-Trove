@@ -1,6 +1,6 @@
 import axios from "axios";
 import { server } from "../store";
-import { adminLoadinSuccess, adminLoginFail, adminLoginRequest, adminLogoutFail, adminLogoutRequest, adminLogoutSuccess, getAdminProfileFail, getAdminProfileRequest, getAdminProfileSuccess,refreshPage } from "../Reducer/adminReducer";
+import { adminLoadinSuccess, adminLoginFail, adminLoginRequest, adminLogoutFail, adminLogoutRequest, adminLogoutSuccess, getAdminProfileFail, getAdminProfileRequest, getAdminProfileSuccess, refreshPage } from "../Reducer/adminReducer";
 import toast from "react-hot-toast";
 
 
@@ -81,7 +81,7 @@ export const getAdminProfile = async (dispatch) => {
     } catch (error) {
 
         dispatch(getAdminProfileFail(error.message));
-        console.log(error.message);
+        // console.log(error.message);
 
     }
 };

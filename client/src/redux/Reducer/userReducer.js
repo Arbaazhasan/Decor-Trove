@@ -6,7 +6,7 @@ const initialState = {
     userAuthenticated: false,
     loading: false,
     user: {},
-    error: "idel",
+    error: {},
     refresh: false,
     isCartWindow: false,
     isProfilWindow: false,

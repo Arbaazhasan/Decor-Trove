@@ -1,3 +1,6 @@
+@import '../../style/template';
+
+
 .OrderDashBoard {
     font-family: 'Reem Kufi', sans-serif;
 
@@ -172,13 +175,13 @@
                 >button {
                     font-family: 'Reem Kufi', sans-serif;
                     background-color: white;
-                    border: 2px solid blueviolet;
-                    color: blueviolet;
+                    border: 2px solid $btnColor;
+                    color: $btnColor;
                     transition: .4s all;
                     cursor: pointer;
 
                     &:hover {
-                        background-color: blueviolet;
+                        background-color: $btnColor;
                         color: white;
                         transition: .4s all;
                     }

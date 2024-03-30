@@ -1,6 +1,6 @@
 import axios from "axios";
 import { server } from "../store";
-import { getAllUserOrdersSuccess, getAllUserOrdersRequest, getAllUserOrdersFail, userCODOrderRequest, useCODORderSuccess, userCODORderFail, userPaidOrderRequest, usePaidOrderSuccess, userPaidOrderFail, getAllNewOrdersRequest, getAllNewOrdersSuccess, getAllNewOrdersFail, orderStatusUpdateRequest, orderStatusUpdateSuccess, orderStatusUpdateFail, getDeliveredOrderSuccess, getDeliveredOrdersRequest, getDeliveredOrdersFail, removeDeliveredOrderRequest, removeDeliveredOrderSuccess, removeDeliveredOrderFail } from "../Reducer/orderReducer";
+import { getAllUserOrdersSuccess, getAllUserOrdersRequest, getAllUserOrdersFail, userCODOrderRequest, useCODORderSuccess, userCODORderFail, userPaidOrderRequest, usePaidOrderSuccess, userPaidOrderFail, getAllNewOrdersRequest, getAllNewOrdersSuccess, getAllNewOrdersFail, orderStatusUpdateRequest, orderStatusUpdateSuccess, orderStatusUpdateFail, getDeliveredOrderSuccess, getDeliveredOrdersRequest, getDeliveredOrdersFail, removeDeliveredOrderRequest, removeDeliveredOrderSuccess, removeDeliveredOrderFail, cancelOrderRequest, cancelOrderSuccess, cancelOrderFail } from "../Reducer/orderReducer";
 import toast from "react-hot-toast";
 
 export const orderhandler = async (dispatch, amount, name, phoneNo, username, address) => {
@@ -137,6 +137,36 @@ export const CodOrder = async (dispatch) => {
         dispatch(userCODORderFail(error));
         console.log(error);
 
+
+    }
+
+};
+
+
+
+export const cancelOrder = async (dispatch, _id) => {
+
+
+    try {
+        dispatch(cancelOrderRequest());
+
+        const { data } = await axios.post(`${server}/order/cancelorder`, {
+            _id
+        }, {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            withCredentials: true
+        });
+
+        dispatch(cancelOrderSuccess());
+        getAllUserOrders(dispatch);
+        toast.success(data.message);
+
+    } catch (error) {
+
+        dispatch(cancelOrderFail(error.message));
+        console.log(error);
 
     }
 

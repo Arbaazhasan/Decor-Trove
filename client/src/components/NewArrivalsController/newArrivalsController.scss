@@ -1,3 +1,5 @@
+@import '../../style/template';
+
 .ArrivalController {
     // border: 2px solid green;
     height: 41rem;
@@ -44,7 +46,7 @@
             >button {
                 border: none;
                 padding: .5rem 1rem;
-                background-color: blueviolet;
+                background-color:$btnColor;
                 color: white;
                 margin-left: 1rem;
                 cursor: pointer;
@@ -55,8 +57,8 @@
 
                 &:hover {
                     background-color: transparent;
-                    border: 2px solid blueviolet;
-                    color: blueviolet;
+                    border: 2px solid$btnColor;
+                    color:$btnColor;
                     transition: .5s all;
                 }
             }
@@ -96,7 +98,7 @@
                 >button {
                     border: none;
                     padding: .5rem 1rem;
-                    background-color: blueviolet;
+                    background-color:$btnColor;
                     color: white;
                     margin-left: 1rem;
                     cursor: pointer;
@@ -107,8 +109,8 @@
 
                     &:hover {
                         background-color: transparent;
-                        border: 2px solid blueviolet;
-                        color: blueviolet;
+                        border: 2px solid$btnColor;
+                        color:$btnColor;
                         transition: .5s all;
 
                     }

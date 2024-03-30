@@ -1,3 +1,5 @@
+@import '../../style/template';
+
 .BannerController {
     // border: 2px solid green;
     height: 90vh;
@@ -67,7 +69,7 @@
                 height: 2rem;
                 font-family: 'roboto';
                 font-weight: bold;
-                background-color: blueviolet;
+                background-color:$btnColor;
                 color: white;
                 cursor: pointer;
                 border: 2px solid transparent;
@@ -75,8 +77,8 @@
 
 
                 &:hover {
-                    border: 2px solid blueviolet;
-                    color: blueviolet;
+                    border: 2px solid$btnColor;
+                    color:$btnColor;
                     background-color: transparent;
                     transition: .4s all;
                 }

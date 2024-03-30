@@ -1,6 +1,6 @@
 import express from "express";
 import { getOrderDetails } from "../Controller/payment.js";
-import { getAllNewOrders, getDeliveredOrders, getUserAllOrders, orderStatusUpdate, orderTrackingIdUpdate, removeDeliveredOrder } from "../Controller/Orders.js";
+import { cancerOrder, getAllNewOrders, getDeliveredOrders, getUserAllOrders, orderStatusUpdate, orderTrackingIdUpdate, removeDeliveredOrder } from "../Controller/Orders.js";
 import { adminIsAuthonticated, isAuthonticated } from "../middleware/auth.js";
 
 const router = express.Router();
@@ -9,6 +9,7 @@ const router = express.Router();
 // User Side API
 router.post("/userorderdetails", getOrderDetails);
 router.post("/getallorders", isAuthonticated, getUserAllOrders);
+router.post("/cancelorder", isAuthonticated, cancerOrder);
 
 
 // Admin Side API

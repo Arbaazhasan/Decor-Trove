@@ -248,3 +248,57 @@ export const getUserAllOrders = async (req, res) => {
 
     });
 };
+
+
+
+export const cancerOrder = async (req, res) => {
+    try {
+        const { _id } = req.body;
+
+        let getOrder = await Order.findById({ _id });
+
+        if (!getOrder) return res.status(200).json({
+            success: false,
+            message: "Order not Found !!!",
+        });
+
+        await Order.findByIdAndUpdate({ _id }, { status: "Canceled" });
+
+        getOrder = await Order.findById({ _id });
+
+
+        const isOrder = await CompleteOrder.create({
+            orderId: getOrder.orderId,
+            userId: getOrder.userId,
+            pId: getOrder.pId,
+            pNo: getOrder.pNo,
+            pName: getOrder.pName,
+            price: getOrder.price,
+            status: getOrder.status,
+            shippingDetails: getOrder.shippingDetails,
+            trackingId: getOrder.trackingId,
+            orderType: getOrder.orderType,
+        });
+
+        if (isOrder)
+            await Order.findByIdAndDelete({ _id });
+
+
+
+        res.status(200).json({
+            success: true,
+            message: "Order Canceled",
+
+        });
+
+    } catch (error) {
+
+        res.status(200).json({
+            success: true,
+            message: "Internal Server Error !!!",
+            error: error.message
+        });
+
+    }
+
+};

@@ -159,10 +159,14 @@ const OrderDashBoard = ({ isDeliver, allOrders }) => {
                             {orderTrackId[index] &&
                                 <input type="text" onChange={(e) => setOrderTrackingId(e.target.value)} />
                             }
-                            <button onClick={() => toggleTrackId(index)} type={orderTrackId[index] ? "button" : "submit"}>
-                                {orderTrackId[index] ? "Update" : "Edit"}
-                            </button>
-                            <button >Shippign Slip</button>
+
+                            {
+                                !isDeliver && <button onClick={() => toggleTrackId(index)} type={orderTrackId[index] ? "button" : "submit"}>
+                                    {orderTrackId[index] ? "Update" : "Edit"}
+                                </button>
+                            }
+
+                            <button type='button'>Shippign Slip</button>
                         </form>
                     </div>
                 ))}

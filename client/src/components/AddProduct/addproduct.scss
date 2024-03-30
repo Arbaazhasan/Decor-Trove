@@ -1,3 +1,5 @@
+@import '../../style/template';
+
 .addProduct {
     // border: 2px solid green;
     min-height: 41rem;
@@ -67,7 +69,7 @@
                     position: relative;
                     cursor: pointer;
 
-                  
+
 
 
                     >div {
@@ -95,7 +97,7 @@
 
         >button {
             padding: .5rem 2rem;
-            background-color: blueviolet;
+            background-color: $btnColor;
             color: white;
             border: 2px solid transparent;
             font-weight: bold;
@@ -104,9 +106,9 @@
             border-radius: .3rem;
 
             &:hover {
-                border: 2px solid blueviolet;
+                border: 2px solid $btnColor;
                 background-color: white;
-                color: blueviolet;
+                color: $btnColor;
                 cursor: pointer;
                 transition: .5s all;
             }

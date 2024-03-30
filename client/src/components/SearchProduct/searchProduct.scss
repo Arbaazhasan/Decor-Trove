@@ -1,3 +1,6 @@
+@import '../../style/template';
+
+
 .searchProductWindow {
     >form {
         // border: 2px solid blueviolet;
@@ -13,7 +16,7 @@
         >button {
             padding: .5rem 1.5rem;
             margin-left: 1rem;
-            background-color: blueviolet;
+            background-color: $theme;
             color: white;
             border: 2px solid transparent;
             font-weight: bold;
@@ -21,9 +24,9 @@
             cursor: pointer;
 
             &:hover {
-                // border: 2px solid blueviolet;
+                border: 2px solid $theme;
                 background-color: white;
-                color: blueviolet;
+                color: $theme;
                 transition: .4s all;
 
 

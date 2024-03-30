@@ -1,3 +1,5 @@
+@import '../../style/template';
+
 .sliderWindow {
     // border: 2px solid green;
     min-height: 41rem;
@@ -57,7 +59,7 @@
                     height: 2rem;
                     font-family: 'roboto';
                     font-weight: bold;
-                    background-color: blueviolet;
+                    background-color:$btnColor;
                     color: white;
                     cursor: pointer;
                     border: none;
@@ -67,8 +69,8 @@
 
 
                     &:hover {
-                        border: 2px solid blueviolet;
-                        color: blueviolet;
+                        border: 2px solid$btnColor;
+                        color:$btnColor;
                         background-color: transparent;
                         transition: .4s all;
                     }
@@ -76,7 +78,7 @@
                 }
 
                 >button:nth-child(2) {
-                    background-color: red;
+                    background-color: rgb(161, 0, 0);
 
                     &:hover {
                         background-color: white;

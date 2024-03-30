@@ -1,14 +1,17 @@
 import React from 'react';
 import './userOrder.scss';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import { cancelOrder } from '../../redux/action/order';
 
 const UserOrders = () => {
 
     const { userAllOrders } = useSelector(state => state.orders);
+
+    const dispatch = useDispatch();
 
 
     const paragraphHandler = () => {
@@ -33,10 +36,11 @@ const UserOrders = () => {
     const orderStatusHandler = (status) => {
 
         // const status = "Package Dispatch";
-        let statusArray = [true, false, false, false];
+        let statusArray = [true, false, false, false, false];
 
         switch (status) {
-            case "Order Confirmed": {
+
+            case "Order Confirm": {
                 statusArray.map((i, index) => {
 
                     statusArray[index] = index >= 1;
@@ -83,6 +87,19 @@ const UserOrders = () => {
 
             }
 
+
+            case "Canceled": {
+                statusArray.map((i, index) => {
+
+                    statusArray[index] = index !== 4;
+
+
+                });
+
+                break;
+
+            }
+
             default: {
                 toast.error("Server Error");
                 break;
@@ -92,6 +109,10 @@ const UserOrders = () => {
 
         return statusArray;
 
+    };
+
+    const orderCancerlHanlder = (_id) => {
+        cancelOrder(dispatch, _id);
     };
 
 
@@ -364,18 +385,33 @@ const UserOrders = () => {
                                         <td>
                                             <ul>
                                                 <li style={{ color: orderStatusHandler(order.status)[3] !== true ? "orangered" : "gray" }}>Deliverd</li>
-                                                {
-                                                    console.log(order.status)
-
-                                                }
                                             </ul>
                                         </td>
                                     </tr>
 
+
+
+                                    {
+                                        order.status === "Canceled" && <tr>
+                                            <td>
+                                                <ul>
+                                                    <li style={{ color: orderStatusHandler(order.status)[4] !== true ? "orangered" : "gray" }}>Canceled</li>
+
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    }
+
+
                                 </tbody>
                             </table>
 
-                            <button>Cancel Order</button>
+                            {
+                                order.status === "Canceled" || order.status === "Delivered" ? " "
+                                    :
+                                    <button onClick={() => orderCancerlHanlder(order._id)}>Cancel Order</button>
+                            }
+
                         </div>
                     </div>
 

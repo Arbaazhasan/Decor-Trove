@@ -20,6 +20,19 @@ import { getAllProduct } from '../../redux/action/dashboard';
 import OrderDashBoard from '../../components/OrdersDashBoard/OrderDashBoard';
 import { allDeliveredOrders, getAllNewUserOrders } from '../../redux/action/order';
 
+import { TfiLayoutSlider } from "react-icons/tfi";
+import { TfiLayoutSliderAlt } from "react-icons/tfi";
+import { MdOutlineAddToQueue } from "react-icons/md";
+import { FaRankingStar } from "react-icons/fa6";
+import { FaSearch } from "react-icons/fa";
+import { IoMdAdd } from "react-icons/io";
+import { RxUpdate } from "react-icons/rx";
+import { MdOutlineDelete } from "react-icons/md";
+import { LuGalleryHorizontalEnd } from "react-icons/lu";
+import { MdOutlineWatchLater } from "react-icons/md";
+import { MdLibraryAddCheck } from "react-icons/md";
+import { FaGreaterThan } from "react-icons/fa6";
+
 
 const DashBoard = () => {
 
@@ -76,25 +89,25 @@ const DashBoard = () => {
 
                         <div>
                             <h2>Page Content </h2>
-                            <p><span onClick={() => setTrue(0)}>Slider</span></p>
-                            <p><span onClick={() => setTrue(1)}>Banner</span></p>
-                            <p><span onClick={() => setTrue(2)}>New Arrivals</span></p>
-                            <p><span onClick={() => setTrue(3)}>Pupular Product</span></p>
+                            <p onClick={() => setTrue(0)}><span><TfiLayoutSlider /></span> Slider <span><FaGreaterThan /></span> </p>
+                            <p onClick={() => setTrue(1)}><span><TfiLayoutSliderAlt /></span> Banner <span><FaGreaterThan /></span> </p>
+                            <p onClick={() => setTrue(2)}><span><MdOutlineAddToQueue /></span> New Arrivals <span><FaGreaterThan /></span> </p>
+                            <p onClick={() => setTrue(3)}><span><FaRankingStar /></span> Pupular Product <span><FaGreaterThan /></span> </p>
                         </div>
 
                         <div>
                             <h2>Product Content</h2>
-                            <p onClick={() => { setTrue(4); }}>Search Product</p>
-                            <p onClick={() => { setTrue(5); }}>Add Product</p>
-                            <p onClick={() => { setTrue(6); }}>Update Product</p>
-                            <p onClick={() => { setTrue(7); }}>Delete Product</p>
-                            <p onClick={() => { setTrue(8); submitHandler(); }}>All Products</p>
-                            <p onClick={() => { setTrue(9); newOrdersHandler(); }}>Pending Orders</p>
-                            <p onClick={() => { setTrue(10); deliveredOrderHandler(); }}>Deliverd Orders</p>
+                            <p onClick={() => { setTrue(4); }}> <span><FaSearch /></span>Search Product <span><FaGreaterThan /></span></p>
+                            <p onClick={() => { setTrue(5); }}> <span><IoMdAdd /></span>Add Product <span><FaGreaterThan /></span> </p>
+                            <p onClick={() => { setTrue(6); }}> <span><RxUpdate /></span>Update Product <span><FaGreaterThan /></span> </p>
+                            <p onClick={() => { setTrue(7); }}> <span><MdOutlineDelete /></span>Delete Product <span><FaGreaterThan /></span> </p>
+                            <p onClick={() => { setTrue(8); submitHandler(); }}> <span><LuGalleryHorizontalEnd /> </span>All Products <span><FaGreaterThan /></span> </p>
+                            <p onClick={() => { setTrue(9); newOrdersHandler(); }}> <span><MdOutlineWatchLater /> </span>New Orders <span><FaGreaterThan /></span> </p>
+                            <p onClick={() => { setTrue(10); deliveredOrderHandler(); }}> <span>< MdLibraryAddCheck /> </span>Deliverd Orders <span><FaGreaterThan /></span> </p>
                         </div>
                     </div>
 
-                </div>
+                </div >
 
 
                 <div className="right">
@@ -168,14 +181,14 @@ const DashBoard = () => {
 
                         {
 
-                            tabs[9] && <h1>Orders</h1>
+                            tabs[9] && <h1>New Orders</h1>
 
                         }
 
 
                         {
 
-                            tabs[10] && <h1>Complete Order</h1>
+                            tabs[10] && <h1>Deliverd Orders</h1>
 
                         }
 
@@ -267,7 +280,7 @@ const DashBoard = () => {
 
 
 
-            </div>
+            </div >
         </div >
     );
 };

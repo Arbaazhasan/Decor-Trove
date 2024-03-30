@@ -116,6 +116,17 @@ export const orderReducer = createSlice({
             state.error = action.payload;
         },
 
+        cancelOrderRequest: (state, action) => {
+            state.loading = true;
+        },
+        cancelOrderSuccess: (state, action) => {
+            state.loading = false;
+        },
+        cancelOrderFail: (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        },
+
     }
 });
 
@@ -127,6 +138,7 @@ export const { getAllUserOrdersRequest, getAllUserOrdersSuccess, getAllUserOrder
     orderTrackingIdUpdateRequest, orderTrackingIdUpdateSuccess, orderTrackingIdUpdateFail,
     getDeliveredOrdersRequest, getDeliveredOrderSuccess, getDeliveredOrdersFail,
     removeDeliveredOrderRequest, removeDeliveredOrderSuccess, removeDeliveredOrderFail,
-} = orderReducer.actions;
+    cancelOrderRequest, cancelOrderSuccess, cancelOrderFail
+    , } = orderReducer.actions;
 
 export default orderReducer.reducer;

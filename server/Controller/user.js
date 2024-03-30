@@ -57,12 +57,13 @@ export const login = async (req, res) => {
     try {
         const User = await user.findOne({ username }).select('+password');
 
-        const hasedPass = await bcypt.compare(password, User.password);
-
         if (!User) return res.status(400).json({
             success: false,
             message: "Incorrect user or password !"
         });
+
+        const hasedPass = await bcypt.compare(password, User.password);
+
 
         if (!hasedPass) return res.status(400).json({
             success: false,

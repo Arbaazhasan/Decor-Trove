@@ -7,13 +7,14 @@ import { isCartMainWindow, isCartMainWindowClose } from '../../redux/action/user
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { addProductCart, cartProductTotal } from '../../redux/action/cart';
+import { addProductWishlist, getCartArray, removeProductCart } from '../../redux/action/product';
 
 const Cart = () => {
 
     const dispatch = useDispatch();
 
     const { isCartWindow } = useSelector(state => state.user);
-    const { cartArray } = useSelector(state => state.product);
+    const { cartArray, pageRefresh } = useSelector(state => state.product);
     const { cart, cartTotal } = useSelector(state => state.cart);
     const [localCartArray, setLocalCartArray] = useState([]);
     let [productArray, setProductArray] = useState([]);
@@ -35,6 +36,24 @@ const Cart = () => {
 
     };
 
+
+
+
+    const wishListHandler = (id) => {
+
+        addProductWishlist(dispatch, id, !pageRefresh);
+        getCartArray(dispatch);
+
+    };
+
+
+
+
+    const productRemoveHandler = (id) => {
+
+        removeProductCart(dispatch, id);
+
+    };
 
 
     useEffect(() => {
@@ -59,7 +78,7 @@ const Cart = () => {
             <div className="right" style={{ "right": `${isCartWindow ? '0' : '100%'} `, "transition": "2s all" }}>
 
                 <div className="header">
-                    <p>items</p>
+                    <p>Items</p>
                     <span onClick={clickHandler}>
                         X
                     </span>
@@ -85,8 +104,14 @@ const Cart = () => {
                                     </Link>
 
                                     <div className='Btns'>
-                                        <span>Add to Wishlist</span>
-                                        <span>Remove</span>
+
+
+                                        {
+                                            i.isInclude ? "" : <span onClick={() => { wishListHandler(i._id); }}>Add to Wishlist</span>
+                                        }
+
+
+                                        <span onClick={() => productRemoveHandler(i._id)}>Remove</span>
                                     </div>
                                 </div>
 
