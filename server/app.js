@@ -52,7 +52,7 @@ app.use('/api/v1/paymets/', paymentRouter);
 
 
 app.get('/', (req, res) => {
-    res.send("done");
+    res.send("Working fine sir");
 });
 
 
