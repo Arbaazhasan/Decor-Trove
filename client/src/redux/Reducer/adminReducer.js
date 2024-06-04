@@ -51,6 +51,21 @@ export const adminReducer = createSlice({
             state.error = action.payload;
         },
 
+        // Admin Sign In
+
+        adminSignInRequest: (state) => {
+            state.loading = true;
+        },
+        adminSignInSuccess: (state, action) => {
+            state.loading = false;
+            state.adminAuthenticated = true;
+        },
+        adminSignInFail: (state, action) => {
+            state.loading = false;
+            state.adminAuthenticated = false;
+            state.error = action.payload;
+        },
+
 
 
 
@@ -103,6 +118,10 @@ export const {
     adminLoginRequest,
     adminLoadinSuccess,
     adminLoginFail,
+
+    adminSignInRequest,
+    adminSignInSuccess,
+    adminSignInFail,
 
 
     adminLogoutRequest,

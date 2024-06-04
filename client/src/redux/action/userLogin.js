@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getUserProfileDataFail, getUserProfileDataRequest, getUserProfileDataSuccess, getUserProfileFail, getUserProfileRequest, getUserProfileSuccess, isCartWindowClose, isCartWindowOpen, updateUserDataFail, updateUserDataRequest, updateUserDataSuccess, userLoginFail, userLoginRequest, userLoginSuccess, userLogoutFail, userLogoutRequest, userLogoutSuccess } from "../Reducer/userReducer";
+import { getUserProfileDataFail, getUserProfileDataRequest, getUserProfileDataSuccess, getUserProfileFail, getUserProfileRequest, getUserProfileSuccess, isCartWindowClose, isCartWindowOpen, updateUserDataFail, updateUserDataRequest, updateUserDataSuccess, userLoginFail, userLoginRequest, userLoginSuccess, userLogoutFail, userLogoutRequest, userLogoutSuccess, userSignInFail, userSignInRequest, userSignInSuccess } from "../Reducer/userReducer";
 import { server } from "../store";
 import toast from "react-hot-toast";
 import { getCartArray } from "./product";
@@ -33,6 +33,37 @@ export const userLogin = async (dispatch, username, password) => {
 
 };
 
+
+export const userSignIn = async (dispatch, name, username, password) => {
+
+
+    try {
+
+        dispatch(userSignInRequest());
+
+        const { data } = await axios.post(`${server}/user/register`, {
+            name, username, password
+        }, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            withCredentials: true
+        });
+
+        dispatch(userSignInSuccess());
+
+        toast.success(data.message);
+
+    } catch (error) {
+        dispatch(userSignInFail(error.message));
+        toast.error(error.response.data.message);
+        // console.log(error.response.data.message);
+
+
+    }
+
+
+};
 
 export const userLogout = async (dispatch) => {
 

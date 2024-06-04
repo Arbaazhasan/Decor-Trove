@@ -37,6 +37,23 @@ export const userReducer = createSlice({
         },
 
 
+        // User Sign In
+
+        userSignInRequest: (state, action) => {
+            state.loading = true;
+        },
+        userSignInSuccess: (state, action) => {
+            state.loading = false;
+            state.userAuthenticated = true;
+            state.user = action.payload;
+        },
+        userSignInFail: (state, action) => {
+            state.status = false;
+            state.loading = false;
+            state.error = action.payload;
+        },
+
+
         // User Logout
 
         userLogoutRequest: (state, action) => {
@@ -115,6 +132,9 @@ export const userReducer = createSlice({
 });
 
 export const { userLoginRequest, userLoginSuccess, userLoginFail,
+    userSignInRequest,
+    userSignInSuccess,
+    userSignInFail,
     userLogoutRequest, userLogoutSuccess, userLogoutFail,
     getUserProfileRequest, getUserProfileSuccess, getUserProfileFail,
     setUserProfileWindow,

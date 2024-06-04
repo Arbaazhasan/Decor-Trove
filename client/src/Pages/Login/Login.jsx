@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './login.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { adminLogin, getAdminProfile } from '../../redux/action/adminLogin';
-import { getUserProfile, userLogin } from '../../redux/action/userLogin';
+import { adminLogin, adminSignIn, getAdminProfile } from '../../redux/action/adminLogin';
+import { getUserProfile, userLogin, userSignIn } from '../../redux/action/userLogin';
 import toast from 'react-hot-toast';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -25,7 +25,9 @@ const Login = () => {
 
     const handler = () => {
 
-        isAdminLogin ? adminLogin(dispatch, username, password) : userLogin(dispatch, username, password);
+        isAdminLogin ?
+            isSignIn ? adminSignIn(dispatch, name, username, password) : adminLogin(dispatch, username, password) :
+            isSignIn ? userSignIn(dispatch, name, username, password) : userLogin(dispatch, username, password);
 
     };
 
@@ -88,11 +90,18 @@ const Login = () => {
                     <button >{isSignIn ? "SIGN IN" : "LOGIN IN"}</button>
                 </form>
 
-                <div className="or">
-                    <p>or</p>
-                </div>
+                {
+                    isAdminLogin ? " " :
+                        <div className="or">
+                            <p>or</p>
+                        </div>
+                }
 
-                <button onClick={() => setIsSignIn((pre) => !pre)}>{isSignIn ? "HAVE AN ACCOUNT " : "CREATE AN ACCOUNT"}</button>
+                {
+                    isAdminLogin ? " " :
+                        <button onClick={() => setIsSignIn((pre) => !pre)}>{isSignIn ? "HAVE AN ACCOUNT " : "CREATE AN ACCOUNT"}</button>
+                }
+
 
 
 

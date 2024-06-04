@@ -49,7 +49,9 @@ const Order = () => {
     const checkoutHandler = async (amount) => {
 
 
+
         orderhandler(dispatch, amount, name, phoneNo, username, address);
+        orderDetailsHandler();
 
     };
 
