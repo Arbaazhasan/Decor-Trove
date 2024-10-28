@@ -94,3 +94,27 @@
         }
     }
 }
+
+
+@media (max-width : 786px) {
+    .popularProduct {
+
+        >.arrivalsProducts {
+            flex-direction: column;
+
+
+            >.arrivalProduct {
+                height: 50vh;
+                width: 100%;
+
+                >.productPhoto {
+                    height: 80%;
+                    background-size: contain;
+                    background-repeat: no-repeat;
+
+                }
+
+            }
+        }
+    }
+}

@@ -715,7 +715,7 @@ export const getAllCategoryProducts = async (req, res) => {
         const temp = [];
         data.map((j) => {
             if (i === j.category)
-                temp.push({ pNo: j.pNo, name: j.name });
+                temp.push({ pNo: j.pNo, name: j.name, _id: j._id });
         });
 
         ProudctArray.push({ Category: i, pNo: temp });

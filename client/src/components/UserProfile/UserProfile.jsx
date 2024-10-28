@@ -128,8 +128,6 @@ const UserProfile = () => {
         <div>
             <div className="userInfo">
 
-
-
                 <div className='userDetails' >
                     <div>
                         <p>Name</p>

@@ -14,6 +14,8 @@ import { useEffect } from 'react';
 import { addProductWishlist, getUserWishlistArray } from '../../redux/action/product.js';
 import { emptyReducerCartArray } from '../../redux/Reducer/cartReducer.js';
 import toast from 'react-hot-toast';
+import { TiShoppingCart } from "react-icons/ti";
+
 
 const Header = () => {
 
@@ -101,6 +103,10 @@ const Header = () => {
                     }
 
 
+                    <Link to={'/productes'} className="shoppingIcon">
+                        < TiShoppingCart size={30} />
+                    </Link>
+
 
 
                     {
@@ -121,6 +127,9 @@ const Header = () => {
                     }
 
 
+
+
+
                 </div>
             </div >
 
@@ -129,4 +138,4 @@ const Header = () => {
     );
 };
 
-export default Header;;;
+export default Header;

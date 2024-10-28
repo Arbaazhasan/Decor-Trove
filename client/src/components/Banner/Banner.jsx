@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './banner.scss';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const Banner = () => {
 
@@ -19,6 +20,7 @@ const Banner = () => {
     return (
         <div>
             <div className="bannerWindow">
+
                 <div className="bannerLine">
                     <div>
                         <img src="worldwide.png" alt="img" />
@@ -48,7 +50,9 @@ const Banner = () => {
                             <p>Sale of 50%</p>
                             {/* <p>{banners.data && banners.data[2].bannerText}</p> */}
 
-                            <span>Show Now</span>
+                            <Link to={'/productes'}>
+                                <span>Show Now</span>
+                            </Link>
                         </div>
                     </div>
 
@@ -66,7 +70,10 @@ const Banner = () => {
                             {/* <p>{banners.data && banners.data[2].bannerText}</p> */}
                             <p>Sale of 50%</p>
 
-                            <span>Show Now</span>
+
+                            <Link to={'/productes'}>
+                                <span>Show Now</span>
+                            </Link>
                         </div>
                     </div>
 

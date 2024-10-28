@@ -34,8 +34,14 @@
         background-color: white;
         z-index: 100;
         border-bottom: 1px solid rgba(128, 128, 128, 0.217);
+        display: block;
 
         >h2 {
+
+            &:nth-child(1) {
+                display: none;
+            }
+
             display: inline;
             margin-right: 5rem;
             padding: 0rem .5rem;
@@ -73,5 +79,51 @@
 
     }
 
+}
+
+
+@media (max-width : 786px) {
+
+    .userProfile {
+        >.top {
+            // border: 2px solid red;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 3rem;
+            // display: none;
+            overflow: hidden;
+            height: 70px;
+
+            >h2 {
+                &:nth-child(1) {
+                    display: flex;
+                }
+
+                margin: 0;
+
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+
+                >span {
+                    display: flex;
+                    font-size: xx-large;
+                    cursor: pointer;
+                    transition: .3s all;
+
+                    &:hover {
+                        transform: scale(1.2);
+                        transition: .3s all;
+                    }
+
+                }
+            }
+
+
+
+        }
+    }
 
 }

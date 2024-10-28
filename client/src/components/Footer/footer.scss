@@ -148,3 +148,28 @@
     }
 
 }
+
+
+@media (max-width:786px) {
+    .footer {
+        >.newsLetter {
+            display: none;
+
+        }
+
+
+        >.footerContent {
+            display: flex;
+            flex-direction: column;
+
+            >.left {
+                width: 100%;
+            }
+
+            >.right {
+                width: 100%;
+                padding-bottom: 2rem;
+            }
+        }
+    }
+}

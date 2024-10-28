@@ -398,3 +398,23 @@
     }
 
 }
+
+
+
+@media (max-width : 786px) {
+    .UserOrders {
+        // border: 2px solid red;
+
+        >.orderItems {
+            flex-direction: column;
+            gap: 2rem;
+
+            .shippingDetails {
+                border: none;
+            }
+
+        }
+
+
+    }
+}

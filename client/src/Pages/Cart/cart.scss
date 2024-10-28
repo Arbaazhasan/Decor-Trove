@@ -259,3 +259,15 @@
 
 
 }
+
+
+
+@media (max-width : 786px) {
+
+    .cartWindow {
+        >.right {
+            width: 100%;
+        }
+    }
+
+}

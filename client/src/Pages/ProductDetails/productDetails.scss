@@ -252,15 +252,12 @@
 
                 }
 
-                >p {
-                    // border: 3px solid green;
-                }
             }
 
             >.paymentMethods {
                 // border: 2px solid green;
-                width: 33rem;
-                margin: 0rem auto;
+                width: 30rem;
+                // margin: 0rem auto;
 
                 >img {
                     width: 100%;
@@ -493,4 +490,43 @@
         }
     }
 
+}
+
+
+
+@media (max-width : 786px) {
+    .ProductDetailsWindow {
+
+        >.ProductDetails {
+            height: fit-content;
+            flex-direction: column;
+
+            >.left {
+                width: 100%;
+                gap: 2rem;
+                margin: 2rem 0rem;
+            }
+
+            >.right {
+                width: 80%;
+                margin: auto;
+                height: 100vh;
+                // border: 2px solid red;
+                height: fit-content;
+                gap: 1rem;
+
+
+                >.paymentMethods {
+                    display: none;
+                }
+
+                >.AboutProduct {
+                    display: none;
+                }
+
+            }
+
+
+        }
+    }
 }

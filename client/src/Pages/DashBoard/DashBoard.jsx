@@ -81,6 +81,11 @@ const DashBoard = () => {
     return (
         <div>
 
+            <div className="notSupportDeviceAlert">
+                <h1>Please use Laptop/Desktop to access Dashboard</h1>
+                <p>The Admin Dashbaord should be use in Laptop/Desktop</p>
+            </div>
+
             <div className="deshBoard">
                 <div className="left">
                     <h1>Dash Board</h1>

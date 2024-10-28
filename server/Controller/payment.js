@@ -42,6 +42,7 @@ export const paymentVerification = async (req, res) => {
 
         });
 
+        //web hook
         res.redirect(
             `http://localhost:5173/paymentsuccess?reference=${razorpay_payment_id}`
         );

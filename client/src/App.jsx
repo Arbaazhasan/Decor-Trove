@@ -136,8 +136,6 @@ function App() {
             <Route path='/paymentsuccess' element={<ConfirmOrder />} />
 
 
-
-
             <Route path='*' element={<Home />} />
 
 

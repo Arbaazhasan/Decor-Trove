@@ -80,10 +80,11 @@ const ProductDetails = () => {
         params.id
     ]);
 
+
     return (
         <>
-
             <Header />
+
             <div className='ProductDetailsWindow'>
                 <div className="ProductDetails">
                     <div className="left">
@@ -183,7 +184,7 @@ const ProductDetails = () => {
 
 
                         <div className="paymentMethods">
-                            <img src="PM.png" alt="" />
+                            <img src="/PM.png" alt="" />
                         </div>
 
                         <div className="AboutProduct">
@@ -213,7 +214,7 @@ const ProductDetails = () => {
                     <div className="productInfoBar">
                         <p onClick={() => setTrue(0)}>Details</p>
                         <p onClick={() => setTrue(1)}>More Information</p>
-                        <p onClick={() => setTrue(2)}>Reviews</p>
+                        {/* <p onClick={() => setTrue(2)}>Reviews</p> */}
                     </div>
 
 

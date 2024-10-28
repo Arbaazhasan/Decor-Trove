@@ -10,7 +10,8 @@ import { useEffect } from 'react';
 import { getProudct, getSearchProduct } from '../../redux/action/product';
 import { useState } from 'react';
 import { IoCloseCircleOutline } from "react-icons/io5";
-
+import { RxHamburgerMenu } from "react-icons/rx";
+import { FaArrowLeft } from "react-icons/fa6";
 
 const Products = () => {
 
@@ -31,7 +32,7 @@ const Products = () => {
         getSearchProduct(disptach, searchString);
         setIsSearch(true);
     };
-
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 780);
 
 
     useEffect(() => {
@@ -39,19 +40,27 @@ const Products = () => {
 
         // console.log(productCategory[0].Category)g;
         // console.log(searchProductArray);
-
+        const handleResize = () => setIsMobile(window.innerWidth <= 780);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
 
     }, [allProducts, productCategory, searchProductArray]);
+
+
+    const [productCategoryList, setProductCategoryList] = useState(false);
 
 
     return (
         <>
             <Header />
+
             <div>
                 <div className="ProductPage">
-                    <div className="left">
+
+                    <div className="left" style={{ "display": isMobile ? productCategoryList ? "block" : "none" : "block" }}>
+
                         <div className="header">
-                            <p>Category</p>
+                            <p> Category <span onClick={() => setProductCategoryList((pre) => !pre)} ><FaArrowLeft /></span></p>
                         </div>
 
                         <div className="productList">
@@ -62,7 +71,7 @@ const Products = () => {
                                         <dt>+ {i.Category}</dt>
                                         {
                                             i.pNo.map((j, index) => (
-                                                <dd key={index}>{j.name}</dd>
+                                                <dd key={index}><Link to={`/productdetails/${j._id}`} key={index} onClick={() => clickHandler(j._id)}>{j.name}</Link></dd>
 
                                             ))
                                         }
@@ -98,9 +107,9 @@ const Products = () => {
                         <div className="header">
                             {
                                 isSearch ?
-                                    <p>Search </p>
+                                    <p><span onClick={() => setProductCategoryList((pre) => !pre)}><RxHamburgerMenu /></span>Search </p>
                                     :
-                                    <p>All Products</p>
+                                    <p><span onClick={() => setProductCategoryList((pre) => !pre)}><RxHamburgerMenu /></span> All Products</p>
                             }
 
 
@@ -163,13 +172,19 @@ const Products = () => {
                                                 <p>{i.name}</p>
                                                 <span>₹{i.price}</span>
                                             </div>
-                                            <div className="productingRateing">
+                                            {/* <div className="productingRateing">
                                                 <span><AiFillStar /></span>
                                                 <span><AiFillStar /></span>
                                                 <span><AiFillStar /></span>
                                                 <span><AiFillStar /></span>
                                                 <span><AiFillStar /></span>
+                                            </div> */}
+
+                                            <div className="productShortDescription">
+                                                <p max={20}>{i.desc.slice(0, 35)}...</p>
                                             </div>
+
+
                                         </Link>
 
                                     ))

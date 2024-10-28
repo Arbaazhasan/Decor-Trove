@@ -119,3 +119,13 @@
 
 
 }
+
+
+@media (max-width : 786px) {
+    .newArrivalsBar {
+        >.arrivalsProducts {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}

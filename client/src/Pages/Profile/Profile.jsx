@@ -10,6 +10,8 @@ import { getCartArray, getUserWishlistArray } from '../../redux/action/product';
 import { emptyReducerCartArray } from '../../redux/Reducer/cartReducer';
 import UserOrders from '../userOrders/UserOrders';
 import { getAllUserOrders } from '../../redux/action/order';
+import { RxHamburgerMenu } from "react-icons/rx";
+import { IoClose } from "react-icons/io5";
 
 const Profile = () => {
 
@@ -51,24 +53,37 @@ const Profile = () => {
         getAllUserOrders(dispatch);
     };
 
-    useEffect(() => {
 
 
-    }, [userAuthenticated]);
-
+    const [userProfileMenu, setUserProfileMenu] = useState(false);
 
     return (
         <div>
 
             <div className="userProfile">
 
-                <div className="top">
+                <div className="top" style={{ "height": userProfileMenu ? "fit-content" : "70px" }}>
 
-                    <h2 onClick={() => setTrue(0)}>Profile</h2>
-                    <h2 onClick={() => { cartHandler(); setTrue(1); localCartHandler(); }}>Cart</h2>
+                    <h2>
+
+                        {
+                            userProfileMenu ?
+                                <span onClick={() => setUserProfileMenu((pre) => !pre)}>
+                                    <IoClose /></span>
+                                :
+
+                                <span onClick={() => setUserProfileMenu((pre) => !pre)}>
+                                    <RxHamburgerMenu /></span>
+                        }
+
+                        User Profile
+                    </h2>
+
+                    <h2 onClick={() => { setTrue(0); setUserProfileMenu((pre) => !pre); }}>Profile</h2>
+                    <h2 onClick={() => { cartHandler(); setTrue(1); localCartHandler(); setUserProfileMenu((pre) => !pre); }}>Cart</h2>
                     {/* <h2 onClick={() => setTrue(2)}>Orders</h2> */}
-                    <h2 onClick={() => { setTrue(3); wishlistHandler(); }}>Wishlist</h2>
-                    <h2 onClick={() => { setTrue(4); userOrdersHandler(); }}>Orders</h2>
+                    <h2 onClick={() => { setTrue(3); wishlistHandler(); setUserProfileMenu((pre) => !pre); }}>Wishlist</h2>
+                    <h2 onClick={() => { setTrue(4); userOrdersHandler(); setUserProfileMenu((pre) => !pre); }}>Orders</h2>
 
                     <button onClick={onCLickHandler}>Logout</button>
 
