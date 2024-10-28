@@ -108,7 +108,7 @@ const DashBoard = () => {
                             <p onClick={() => { setTrue(7); }}> <span><MdOutlineDelete /></span>Delete Product <span><FaGreaterThan /></span> </p>
                             <p onClick={() => { setTrue(8); submitHandler(); }}> <span><LuGalleryHorizontalEnd /> </span>All Products <span><FaGreaterThan /></span> </p>
                             <p onClick={() => { setTrue(9); newOrdersHandler(); }}> <span><MdOutlineWatchLater /> </span>New Orders <span><FaGreaterThan /></span> </p>
-                            <p onClick={() => { setTrue(10); deliveredOrderHandler(); }}> <span>< MdLibraryAddCheck /> </span>Deliverd Orders <span><FaGreaterThan /></span> </p>
+                            <p onClick={() => { setTrue(10); deliveredOrderHandler(); }}> <span>< MdLibraryAddCheck /> </span>Complete Orders <span><FaGreaterThan /></span> </p>
                         </div>
                     </div>
 

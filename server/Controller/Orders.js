@@ -242,6 +242,9 @@ export const getUserAllOrders = async (req, res) => {
         })
     );
 
+    orderProducts.sort((a, b) => new Date(b.order_date) - new Date(a.order_date));
+
+
     res.status(200).json({
         success: true,
         orderProducts

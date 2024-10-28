@@ -299,9 +299,12 @@ export const addCart = async (req, res) => {
             message: "Proudct not found !!!"
         });
 
+
+
         const userData = req.userData._id;
 
-        const isExists = await user.findOne({ cart: { $elemMatch: { id } } });
+        const isExists = userData.wishlist;
+        // const isExists = await user.findOne({ cart: { $elemMatch: { id } } });
 
         if (isExists) return res.status(403).json({
             success: false,

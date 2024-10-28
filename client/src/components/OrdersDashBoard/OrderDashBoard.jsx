@@ -180,7 +180,7 @@ const OrderDashBoard = ({ isDeliver, allOrders }) => {
                                 </button>
                             }
 
-                            <button type='button'>Shippign Slip</button>
+                            {/* <button type='button'>Shippign Slip</button> */}
                         </form>
                     </div>
                 ))}
