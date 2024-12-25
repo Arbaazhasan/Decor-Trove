@@ -67,14 +67,20 @@ const Login = () => {
 
                     {isSignIn && <div>
                         <label htmlFor="">Name</label>
-                        <input type="text" required onChange={(e) => { setName(e.target.value); }} />
+                        <input
+                            type="text"
+                            required
+                            pattern="[A-Za-z]+"
+                            title="Please enter letters only"
+                            onChange={(e) => { setName(e.target.value); }}
+                        />
                     </div>
                     }
 
 
                     <div>
                         <label htmlFor="">Email</label>
-                        <input type="text" required onChange={(e) => { setUsername(e.target.value); }} />
+                        <input type="email" required onChange={(e) => { setUsername(e.target.value); }} />
                     </div>
 
                     <div>

@@ -123,6 +123,128 @@ const Order = () => {
 
 
 
+    const [errors, setErrors] = useState({
+        userName: "",
+        phoneNo1: "",
+        phoneNo2: "",
+        userAddress: "",
+        city: "",
+        state: "",
+        country: "",
+    });
+
+    // Handlers for real-time validation
+    const handleUserNameChange = (e) => {
+        const value = e.target.value;
+        setUserName(value);
+        if (!/^[A-Za-z\s]*$/.test(value)) {
+            setErrors((prev) => ({
+                ...prev,
+                userName: "Please enter letters only.",
+            }));
+        } else {
+            setErrors((prev) => ({
+                ...prev,
+                userName: "",
+            }));
+        }
+    };
+
+    const handlePhoneNo1Change = (e) => {
+        const value = e.target.value;
+        setPhoneNo1(value);
+        if (!/^\d{0,10}$/.test(value)) {
+            setErrors((prev) => ({
+                ...prev,
+                phoneNo1: "Please enter a valid 10-digit phone number.",
+            }));
+        } else {
+            setErrors((prev) => ({
+                ...prev,
+                phoneNo1: "",
+            }));
+        }
+    };
+
+    const handlePhoneNo2Change = (e) => {
+        const value = e.target.value;
+        setPhoneNo2(value);
+        if (value && !/^\d{0,10}$/.test(value)) {
+            setErrors((prev) => ({
+                ...prev,
+                phoneNo2: "Please enter a valid 10-digit phone number.",
+            }));
+        } else {
+            setErrors((prev) => ({
+                ...prev,
+                phoneNo2: "",
+            }));
+        }
+    };
+
+    const handleAddressChange = (e) => {
+        setUserAddress(e.target.value);
+        if (!e.target.value.trim()) {
+            setErrors((prev) => ({
+                ...prev,
+                userAddress: "Address is required.",
+            }));
+        } else {
+            setErrors((prev) => ({
+                ...prev,
+                userAddress: "",
+            }));
+        }
+    };
+
+    const handleCityChange = (e) => {
+        const value = e.target.value;
+        setCity(value);
+        if (!/^[A-Za-z\s]*$/.test(value)) {
+            setErrors((prev) => ({
+                ...prev,
+                city: "Please enter letters only.",
+            }));
+        } else {
+            setErrors((prev) => ({
+                ...prev,
+                city: "",
+            }));
+        }
+    };
+
+    const handleStateChange = (e) => {
+        const value = e.target.value;
+        setState(value);
+        if (!/^[A-Za-z\s]*$/.test(value)) {
+            setErrors((prev) => ({
+                ...prev,
+                state: "Please enter letters only.",
+            }));
+        } else {
+            setErrors((prev) => ({
+                ...prev,
+                state: "",
+            }));
+        }
+    };
+
+    const handleCountryChange = (e) => {
+        const value = e.target.value;
+        setCountry(value);
+        if (!/^[A-Za-z\s]*$/.test(value)) {
+            setErrors((prev) => ({
+                ...prev,
+                country: "Please enter letters only.",
+            }));
+        } else {
+            setErrors((prev) => ({
+                ...prev,
+                country: "",
+            }));
+        }
+    };
+
 
 
     return (
@@ -135,96 +257,104 @@ const Order = () => {
                         <h1>Shipping Details </h1>
                     </div>
 
-                    <div className='useDetails'>
-
+                    <div className="useDetails">
                         <table>
-
                             <tbody>
-
-
                                 <tr>
-
                                     <td>
                                         <p>Name <span>*</span></p>
-                                        <input type="text" required onChange={(e) => setUserName(e.target.value)} />
+                                        <input
+                                            type="text"
+                                            value={userName}
+                                            onChange={handleUserNameChange}
+                                            maxLength={40}
+                                        />
+                                        {errors.userName && <span className="error">{errors.userName}</span>}
                                     </td>
-
                                 </tr>
-
                                 <tr>
-
                                     <td>
                                         <p>Phone No. <span>*</span></p>
-                                        <input type="text" pattern="[0-9]{10}" title="Enter 10 digits (0-9) only" onChange={(e) => setPhoneNo1(e.target.value)} />
-
+                                        <input
+                                            type="text"
+                                            value={phoneNo1}
+                                            onChange={handlePhoneNo1Change}
+                                        />
+                                        {errors.phoneNo1 && <span className="error">{errors.phoneNo1}</span>}
                                     </td>
-
                                 </tr>
-
                                 <tr>
-
                                     <td>
                                         <p>Alternate Phone No.</p>
-                                        <input type="text" onChange={(e) => setPhoneNo2(e.target.value)} />
+                                        <input
+                                            type="text"
+                                            value={phoneNo2}
+                                            onChange={handlePhoneNo2Change}
+                                        />
+                                        {errors.phoneNo2 && <span className="error">{errors.phoneNo2}</span>}
                                     </td>
-
                                 </tr>
-
                                 <tr>
-
                                     <td>
                                         <p>Address <span>*</span></p>
-                                        <input type="text" onChange={(e) => setUserAddress(e.target.value)} />
+                                        <input
+                                            type="text"
+                                            value={userAddress}
+                                            onChange={handleAddressChange}
+                                            maxLength={60}
+                                        />
+                                        {errors.userAddress && <span className="error">{errors.userAddress}</span>}
                                     </td>
-
                                 </tr>
-
                                 <tr>
-
                                     <td>
                                         <p>Land Mark</p>
-                                        <input type="text" onChange={(e) => setLandMark(e.target.value)} />
+                                        <input
+                                            type="text"
+                                            value={landMark}
+                                            onChange={(e) => setLandMark(e.target.value)}
+                                            maxLength={60}
+                                        />
                                     </td>
-
                                 </tr>
-
                                 <tr>
-
                                     <td>
                                         <p>City <span>*</span></p>
-                                        <input type="text" onChange={(e) => setCity(e.target.value)} />
-
+                                        <input
+                                            type="text"
+                                            value={city}
+                                            onChange={handleCityChange}
+                                            maxLength={60}
+                                        />
+                                        {errors.city && <span className="error">{errors.city}</span>}
                                     </td>
-
                                 </tr>
-
-
                                 <tr>
-
                                     <td>
                                         <p>State <span>*</span></p>
-                                        <input type="text" onChange={(e) => setState(e.target.value)} />
-
-
+                                        <input
+                                            type="text"
+                                            value={state}
+                                            onChange={handleStateChange}
+                                            maxLength={40}
+                                        />
+                                        {errors.state && <span className="error">{errors.state}</span>}
                                     </td>
-
                                 </tr>
-
-
                                 <tr>
-
                                     <td>
                                         <p>Country <span>*</span></p>
-                                        <input type="text" onChange={(e) => setCountry(e.target.value)} />
-
+                                        <input
+                                            type="text"
+                                            value={country}
+                                            onChange={handleCountryChange}
+                                            maxLength={40}
+                                        />
+                                        {errors.country && <span className="error">{errors.country}</span>}
                                     </td>
-
                                 </tr>
                             </tbody>
-
-
                         </table>
-
                     </div>
 
                 </div>
@@ -386,13 +516,13 @@ const Order = () => {
                                             isCard ?
 
                                                 <Link to="">
-                                                    <button type="button" onClick={() => isCard && checkoutHandler(orderGrandTotal)}>Pay Now</button>
+                                                    <button type="submit" onClick={() => isCard && checkoutHandler(orderGrandTotal)}>Pay Now</button>
                                                 </Link>
 
                                                 :
 
                                                 <Link to={'/paymentsuccess?32423'}>
-                                                    <button type="button" onClick={() => CODOrderHandler()}>Order Now</button>
+                                                    <button type="submit" onClick={() => CODOrderHandler()}>Order Now</button>
                                                 </Link>
                                         }
 
