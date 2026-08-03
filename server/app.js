@@ -13,6 +13,11 @@ import bodyParser from "body-parser";
 
 import { v2 as cloudinary } from 'cloudinary';
 import Razorpay from "razorpay";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 
 
@@ -51,8 +56,14 @@ app.use('/api/v1/order/', orderDetailsRouter);
 app.use('/api/v1/paymets/', paymentRouter);
 
 
-app.get('/', (req, res) => {
-    res.send("Working fine sir");
+const clientDistPath = path.join(__dirname, "../client/dist");
+app.use(express.static(clientDistPath));
+
+app.get("*", (req, res) => {
+    if (!req.path.startsWith("/api")) {
+        return res.sendFile(path.join(clientDistPath, "index.html"));
+    }
+    res.status(404).json({ success: false, message: "API route not found" });
 });
 
 
