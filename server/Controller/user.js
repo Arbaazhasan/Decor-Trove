@@ -31,9 +31,10 @@ export const register = async (req, res) => {
         // console.log(token);
 
         res.status(200).cookie("userToken", userToken, {
-            maxAge: 1000 * 60 * 60,
+            maxAge: 1000 * 60 * 60 * 24 * 15,
             httpOnly: true,
-
+            sameSite: process.env.NODE_ENV === "Development" ? "lax" : "none",
+            secure: process.env.NODE_ENV === "Development" ? false : true,
         }).json({
             success: true,
             message: "Registerd !!!"
@@ -74,8 +75,10 @@ export const login = async (req, res) => {
         // console.log(token);
 
         res.status(200).cookie("userToken", userToken, {
-            maxAge: 1000 * 60 * 60,
-            httpOnly: true
+            maxAge: 1000 * 60 * 60 * 24 * 15,
+            httpOnly: true,
+            sameSite: process.env.NODE_ENV === "Development" ? "lax" : "none",
+            secure: process.env.NODE_ENV === "Development" ? false : true,
         }).json({
             success: true,
             message: `Welcome Back ${User.name}`
@@ -97,7 +100,9 @@ export const logout = (req, res) => {
     try {
         res.status(200).cookie("userToken", null, {
             expires: new Date(Date.now()),
-            httpOnly: true
+            httpOnly: true,
+            sameSite: process.env.NODE_ENV === "Development" ? "lax" : "none",
+            secure: process.env.NODE_ENV === "Development" ? false : true,
         }).json({
             success: true,
             message: "Logout"

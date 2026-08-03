@@ -26,8 +26,10 @@ export const registerAdmin = async (req, res) => {
         const token = jwt.sign({ _id: Admin._id }, process.env.JWT_URI);
 
         res.status(200).cookie("token", token, {
-            maxAge: 1000 * 60 * 60,
-            httpOnly: true
+            maxAge: 1000 * 60 * 60 * 24 * 15,
+            httpOnly: true,
+            sameSite: process.env.NODE_ENV === "Development" ? "lax" : "none",
+            secure: process.env.NODE_ENV === "Development" ? false : true,
         }).json({
             success: true,
             message: "Registerd !!!",
@@ -73,8 +75,10 @@ export const adminLogin = async (req, res) => {
         const token = jwt.sign({ _id: isUser._id }, process.env.JWT_URI);
 
         res.status(200).cookie("token", token, {
-            maxAge: 1000 * 60 * 60,
-            httpOnly: true
+            maxAge: 1000 * 60 * 60 * 24 * 15,
+            httpOnly: true,
+            sameSite: process.env.NODE_ENV === "Development" ? "lax" : "none",
+            secure: process.env.NODE_ENV === "Development" ? false : true,
         }).json({
             status: true,
             message: `Welcome Back ${isUser.name}`,
@@ -99,7 +103,9 @@ export const adminLogout = (req, res) => {
 
         res.status(200).cookie("token", null, {
             expires: new Date(Date.now()),
-            httpOnly: true
+            httpOnly: true,
+            sameSite: process.env.NODE_ENV === "Development" ? "lax" : "none",
+            secure: process.env.NODE_ENV === "Development" ? false : true,
         }).json({
             success: true,
             message: "Logout "

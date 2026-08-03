@@ -34,6 +34,7 @@ dbConnection(process.env.DB_CONNECTION);
 
 // Middlewares
 const app = express();
+app.set("trust proxy", 1);
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
@@ -78,26 +79,17 @@ app.get("*", (req, res) => {
 });
 
 
-// Cloudinary Configrination
-
+// Cloudinary Configuration
 cloudinary.config({
-    cloud_name: process.env.Cloudinary_cloud_name,
-    api_key: process.env.Cloudinary_api_key,
-    api_secret: process.env.Cloudinary_api_secret
+    cloud_name: process.env.Cloudinary_cloud_name || "ddixq9qyw",
+    api_key: process.env.Cloudinary_api_key || "457974513769685",
+    api_secret: process.env.Cloudinary_api_secret || "vtXUFQ4XPDtF7xYlCASYgIolvtE"
 });
 
-
-// cloudinary.config({
-//     cloud_name: "ddixq9qyw",
-//     api_key: "457974513769685",
-//     api_secret: "vtXUFQ4XPDtF7xYlCASYgIolvtE"
-// });
-
 // Razorpay Instance
-
 export const instance = new Razorpay({
-    key_id: process.env.Razorpay_Key_Id,
-    key_secret: process.env.Razorpay_Key_Secret,
+    key_id: process.env.Razorpay_Key_Id || "rzp_test_b8U50api1N1vw5",
+    key_secret: process.env.Razorpay_Key_Secret || "fp83ktSaduL87SvIphdVXh5t",
 });
 
 
