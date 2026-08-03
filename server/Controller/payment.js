@@ -27,7 +27,8 @@ export const paymentVerification = async (req, res) => {
 
     const body = razorpay_order_id + "|" + razorpay_payment_id;
 
-    const expectedSignature = crypto.createHmac("sha256", process.env.Razorpay_Key_Secret)
+    const secretKey = process.env.Razorpay_Key_Secret || "fp83ktSaduL87SvIphdVXh5t";
+    const expectedSignature = crypto.createHmac("sha256", secretKey)
         .update(body.toString())
         .digest("hex");
 
@@ -71,9 +72,10 @@ export const paymentVerification = async (req, res) => {
 
 
 export const razorpay_API_Key = (req, res) => {
+    const key = process.env.Razorpay_Key_Id || "rzp_test_b8U50api1N1vw5";
     res.status(200).json({
         success: true,
-        key: process.env.Razorpay_Key_Id
+        key: key
     });
 };
 
