@@ -21,6 +21,6 @@ const store = configureStore({
 
 });
 
-export const server = import.meta.env.VITE_SERVER_URL || "http://localhost:5000/api/v1";
+export const server = import.meta.env.VITE_SERVER_URL || "/api/v1";
 
 export default store;
