@@ -79,7 +79,12 @@ export const instance = new Razorpay({
 });
 
 
-// Server
-app.listen(process.env.PORT, (req, res) => {
-    console.log(`server is Working on : \n${process.env.HOST + process.env.PORT}`);
-});
+// Server (only start listening if not running as a Vercel serverless function)
+if (!process.env.VERCEL) {
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => {
+        console.log(`Server is working on port: ${PORT}`);
+    });
+}
+
+export default app;

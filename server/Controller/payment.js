@@ -43,8 +43,9 @@ export const paymentVerification = async (req, res) => {
         });
 
         //web hook
+        const redirectBaseUrl = process.env.CORS_ORIGIN_URL || process.env.CLIENT_URL || "http://localhost:5173";
         res.redirect(
-            `http://localhost:5173/paymentsuccess?reference=${razorpay_payment_id}`
+            `${redirectBaseUrl}/paymentsuccess?reference=${razorpay_payment_id}`
         );
 
         await Order.create({

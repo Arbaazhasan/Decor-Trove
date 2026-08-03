@@ -62,6 +62,7 @@ export const adminLogin = async (req, res) => {
 
         const pass = await bcrypt.compare(password, isUser.password);
 
+        console.log(pass)
 
         if (!pass) return res.status(401).json({
             success: false,
