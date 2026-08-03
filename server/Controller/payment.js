@@ -43,8 +43,21 @@ export const paymentVerification = async (req, res) => {
 
         });
 
-        //web hook
-        const redirectBaseUrl = process.env.CORS_ORIGIN_URL || process.env.CLIENT_URL || "http://localhost:5173";
+        // Dynamic redirect URL resolution
+        let redirectBaseUrl = process.env.CLIENT_URL || process.env.CORS_ORIGIN_URL;
+        if (!redirectBaseUrl) {
+            const reqSource = req.get('referer') || req.get('origin');
+            if (reqSource) {
+                try {
+                    redirectBaseUrl = new URL(reqSource).origin;
+                } catch (e) {
+                    redirectBaseUrl = "https://client-livid-iota-e4019c1kek.vercel.app";
+                }
+            } else {
+                redirectBaseUrl = "https://client-livid-iota-e4019c1kek.vercel.app";
+            }
+        }
+
         res.redirect(
             `${redirectBaseUrl}/paymentsuccess?reference=${razorpay_payment_id}`
         );
