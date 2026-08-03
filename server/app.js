@@ -35,11 +35,11 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 
-// Configure for cros Origin 
+// Configure for Cross Origin 
 app.use(cors({
-    origin: process.env.CORS_ORIGIN_URL,
+    origin: (origin, callback) => callback(null, true),
     credentials: true,
-    methods: ["GET", "POST", "DELETE", "PUT"]
+    methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"]
 }));
 
 
