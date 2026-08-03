@@ -14,6 +14,7 @@ import bodyParser from "body-parser";
 import { v2 as cloudinary } from 'cloudinary';
 import Razorpay from "razorpay";
 import path from "path";
+import fs from "fs";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -56,14 +57,24 @@ app.use('/api/v1/order/', orderDetailsRouter);
 app.use('/api/v1/paymets/', paymentRouter);
 
 
-const clientDistPath = path.join(process.cwd(), "client/dist");
+const candidatePaths = [
+    path.join(__dirname, "../client/dist"),
+    path.join(process.cwd(), "client/dist"),
+    path.join(process.cwd(), "../client/dist"),
+    path.join(__dirname, "client/dist")
+];
+
+const clientDistPath = candidatePaths.find(p => fs.existsSync(p)) || candidatePaths[0];
 app.use(express.static(clientDistPath));
 
 app.get("*", (req, res) => {
     if (!req.path.startsWith("/api")) {
-        return res.sendFile(path.join(clientDistPath, "index.html"));
+        const indexPath = path.join(clientDistPath, "index.html");
+        if (fs.existsSync(indexPath)) {
+            return res.sendFile(indexPath);
+        }
     }
-    res.status(404).json({ success: false, message: "API route not found" });
+    res.status(404).json({ success: false, message: "Route not found" });
 });
 
 
